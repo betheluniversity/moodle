@@ -5014,6 +5014,9 @@ function remove_course_contents($courseid, $showfeedback = true, array $options 
     // Cleanup the rest of plugins. Deprecated since Moodle 3.2. TODO MDL-53297 remove in 3.6.
     $cleanuplugintypes = array('report', 'coursereport', 'format');
     $callbacks = get_plugins_with_function('delete_course', 'lib.php');
+    echo "<pre>";
+    print_r($callbacks);
+    echo "</pre>";
     foreach ($cleanuplugintypes as $type) {
         if (!empty($callbacks[$type])) {
             foreach ($callbacks[$type] as $pluginfunction) {

@@ -1036,7 +1036,7 @@ class core_renderer extends renderer_base {
 
         // Find the appropriate page layout file, based on $this->page->pagelayout.
         $layoutfile = $this->page->theme->layout_file($this->page->pagelayout);
-        // Render the layout using the layout file.
+	// Render the layout using the layout file.
         $rendered = $this->render_page_layout($layoutfile);
 
         // Slice the rendered output into header and footer.

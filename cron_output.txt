@@ -1,0 +1,327 @@
+Server Time: Thu, 19 Oct 2017 11:07:21 -0500
+
+
+Execute scheduled task: Cleanup old sessions (core\task\session_cleanup_task)
+... started 11:07:21. Current memory use 8.1MB.
+... used 47 dbqueries
+... used 0.093463182449341 seconds
+Scheduled task complete: Cleanup old sessions (core\task\session_cleanup_task)
+Execute scheduled task: Send new user passwords (core\task\send_new_user_passwords_task)
+... started 11:07:22. Current memory use 9.2MB.
+... used 1 dbqueries
+... used 0.051850080490112 seconds
+Scheduled task complete: Send new user passwords (core\task\send_new_user_passwords_task)
+Execute scheduled task: Send failed login notifications (core\task\send_failed_login_notifications_task)
+... started 11:07:22. Current memory use 9.2MB.
+... used 0 dbqueries
+... used 5.4836273193359E-5 seconds
+Scheduled task complete: Send failed login notifications (core\task\send_failed_login_notifications_task)
+Execute scheduled task: Legacy cron processing for plugins (core\task\legacy_plugin_cron_task)
+... started 11:07:22. Current memory use 9.2MB.
+Running auth crons if required...
+Running cron for auth/mnet...
+Running enrol crons if required...
+Running cron for enrol_manual...
+Verifying manual enrolment expiration...
+...manual enrolment updates finished.
+manual enrolment expiry notifications were already sent today at Thursday, October 19, 2017, 6:10 AM.
+Running cron for enrol_lmb...
+Checking LMB last message sent time.
+Running cron for enrol_self...
+Verifying self-enrolments...
+...user self-enrolment updates finished.
+No expired enrol_self enrolments detected
+self enrolment expiry notifications were already sent today at Thursday, October 19, 2017, 6:05 AM.
+Starting activity modules
+Processing module function chat_cron ...
+... used 5 dbqueries
+... used 0.47764897346497 seconds
+done.
+Processing module function quiz_cron ...
+
+  Looking for quiz overdue quiz attempts...
+  Considered 0 attempts in 0 quizzes.
+Starting quiz reports
+Finished quiz reports
+... used 2 dbqueries
+... used 0.0052220821380615 seconds
+done.
+Processing module function scorm_cron ...
+... used 1 dbqueries
+... used 0.00089907646179199 seconds
+done.
+Processing module function assign_cron ...
+Processing 16 assignment submissions ...
+Processing assignment submission 653476 ...
+Processing assignment submission 653484 ...
+Processing assignment submission 653768 ...
+Processing assignment submission 653482 ...
+Processing assignment submission 653740 ...
+Processing assignment submission 653480 ...
+Processing assignment submission 653734 ...
+Processing assignment submission 653477 ...
+Processing assignment submission 653502 ...
+Processing assignment submission 653773 ...
+Processing assignment submission 653483 ...
+Processing assignment submission 653749 ...
+Processing assignment submission 653481 ...
+Processing assignment submission 653736 ...
+Processing assignment submission 653478 ...
+Processing assignment submission 653726 ...
+Done processing 16 assignment submissions
+... used 118 dbqueries
+... used 1.1562180519104 seconds
+done.
+Finished activity modules
+Starting blocks
+Processing cron function for recent_activity....done.
+Processing cron function for rss_client....
+    http://moodle.org/rss/file.php/5/10642/forum/24/rss.xml ok
+    http://news.search.yahoo.com/news/rss?p=moodle&ei=UTF-8&fl=0&x=wrt skipping until Thursday, October 19, 2017, 5:25 PM
+    http://www.bethel.edu/news/bu-news/atom.xml skipping until Thursday, October 19, 2017, 5:25 PM
+    http://library.bethel.edu/bul-news-viewer/rss skipping until Thursday, October 19, 2017, 12:25 PM
+    http://rss.cnn.com/rss/cnn_topstories.rss ok
+    http://feeds.nytimes.com/nyt/rss/Politics ok
+    http://newsroom.cisco.com/data/syndication/rss2/headlinesAndNewsReleases_20.xml ok
+    http://www.msnbc.com ok
+    http://online.wsj.com/xml/rss/3_7014.xml ok
+    http://online.wsj.com/xml/rss/3_7086.xml ok
+    http://online.wsj.com/xml/rss/3_7433.xml ok
+    http://feeds.nytimes.com/nyt/rss/Business ok
+    http://feeds.wired.com/wired/index?format=xml ok
+    http://link.brightcove.com/services/mrss/1564549380/player1813626064/new ok
+    http://www.wired.com/threatlevel/feed/ ok
+    http://cecblog.typepad.com/policy/atom.xml ok
+    CNN skipping until Thursday, October 19, 2017, 2:00 PM
+    http://www.socialstudies.org/sites/all/modules/site_map/feed-small.png skipping until Thursday, October 19, 2017, 2:00 PM
+    http://www.socialstudies.org/sites/all/modules/site_map/feed-small.png skipping until Thursday, October 19, 2017, 2:00 PM
+    http://www.ncte.org/rss ok
+    http://feeds.feedburner.com/EducationWeekHighschools?format=xml ok
+    http://feeds.grist.org/rss/gristfeed ok
+    http://www.ens-newswire.com/ENS.xml ok
+    http://www.enn.com/news/feeds/enn_top_stories.xml ok
+    http://www.mnn.com/rss/all-mnn-content ok
+    http://news.cnet.com/2547-1_3-0-20.xml?tag=txt ok
+    http://news.cnet.com/8300-1_105-1-0.xml?categoryId=1999&keywords=Gadget%20news&tag=rb_content;rb_mtx ok
+    http://feeds.feedburner.com/tedtalks_video ok
+    http://feeds.nytimes.com/nyt/rss/World ok
+    http://online.wsj.com/xml/rss/3_7085.xml ok
+    http://globaldevelopmentcommons.net/rss.xml skipping until Thursday, October 19, 2017, 10:35 PM
+    http://feeds.feedburner.com/cable360/ct/strategy/emergingtech ok
+    http://feeds.feedburner.com/cable360/ct/news/thewire ok
+    http://www.state.gov/rss/channels/back.xml ok
+    http://news.cnet.com/8300-1_105-1-0.xml?categoryId=2040&keywords=Future%20tech&tag=rb_content;rb_mtx ok
+    http://www.state.gov/rss/channels/dhrr.xml ok
+    http://feeds.feedburner.com/InterculturalCommunicationAndTranslationNews ok
+    http://findarticles.com/p/articles/mi_m0341/is_1_56/ai_63716504/ skipping until Thursday, October 19, 2017, 9:30 PM
+    http://feeds.feedburner.com/BusinessCommunicationHeadlineNews skipping until Thursday, October 19, 2017, 9:30 PM
+    http://feeds.feedburner.com/prweekusnews ok
+    http://www.enn.com/rss_feeds ok
+    http://www.enn.com/rss_feeds ok
+    http://www.bethel.edu/homepage-news-viewer/atom.xml skipping until Thursday, October 19, 2017, 10:35 PM
+    http://www.nmsa.org/Home/tabid/64/moduleid/1196/RSS.aspx ok
+    http://yalsa.ala.org/blog/feed/ ok
+    http://www.alan-ya.org/feed/ ok
+    http://www.worldpress.org/feeds/topstories.xml ok
+    http://news.cnet.com/8300-11128_3-54.xml ok
+    http://feeds.mpr.org/MPR_NewsFeatures ok
+    http://www.worldatwork.org/waw/wawpost/blog-rss.jsp?nonav skipping until Thursday, October 19, 2017, 11:45 AM
+    https://www.memonic.com/user/aebcf1cb-d061-468f-92e9-762c92686deb/set/425e5048-b918-4ff6-9068-5c6063642ecf.atom skipping until Thursday, October 19, 2017, 11:45 AM
+    http://scottstrand.blogspot.com/feeds/posts/default ok
+    http://feeds.feedburner.com/rayortlund ok
+    http://feeds2.feedburner.com/beliefnet/religionandpubliclife?format=xml ok
+    http://feeds2.feedburner.com/beliefnet/beliefbeat?format=xml ok
+    http://www.pbs.org/wnet/religionandethics/feed/ ok
+    http://pewforum.org/RSS/Press-Room/Press-Releases.rss ok
+    http://scottstrand.blogspot.com/feeds/posts/default?alt=rss ok
+    http://www.worldatwork.org/waw/wawpost/blog-rss.jsp?nonav skipping until Thursday, October 19, 2017, 11:45 AM
+    http://www.state.gov/rss/channels/dhrr.xml ok
+    http://feeds.feedburner.com/InterculturalCommunicationAndTranslationNews ok
+    http://www.worldpress.org/feeds/topstories.xml ok
+    http://chronicle.com/blogs/wiredcampus/feed/ ok
+    http://feeds.feedburner.com/uis/edtech ok
+    http://feeds2.feedburner.com/EmergingEdTech ok
+    http://chronicle.com/blogs/wiredcampus/feed/ ok
+    http://feeds.feedburner.com/uis/edtech ok
+    http://feeds2.feedburner.com/EmergingEdTech ok
+    http://scottstrand.blogspot.com/feeds/posts/default?alt=rss ok
+    http://online.wsj.com/xml/rss/3_7014.xml ok
+    http://online.wsj.com/xml/rss/3_7086.xml ok
+    http://online.wsj.com/xml/rss/3_7433.xml ok
+    http://feeds.nytimes.com/nyt/rss/Business ok
+    http://rss.sciam.com/all-blogs/feed ok
+    http://sojourningtogether.org/feed/ skipping until Thursday, October 19, 2017, 1:25 PM
+    http://yalsa.ala.org/blog/feed/ ok
+    http://www.alan-ya.org/feed/ ok
+    http://www.state.gov/rss/channels/dhrr.xml ok
+    http://feeds.feedburner.com/InterculturalCommunicationAndTranslationNews ok
+    http://www.worldpress.org/feeds/topstories.xml ok
+    http://www.worldatwork.org/waw/wawpost/blog-rss.jsp?nonav skipping until Thursday, October 19, 2017, 1:25 PM
+    http://scottstrand.blogspot.com/feeds/posts/default?alt=rss ok
+    http://online.wsj.com/xml/rss/3_7014.xml ok
+    http://online.wsj.com/xml/rss/3_7086.xml ok
+    http://online.wsj.com/xml/rss/3_7433.xml ok
+    http://online.wsj.com/xml/rss/3_7014.xml ok
+    http://online.wsj.com/xml/rss/3_7086.xml ok
+    http://online.wsj.com/xml/rss/3_7433.xml ok
+    http://feeds.nytimes.com/nyt/rss/Business ok
+    http://scottstrand.blogspot.com/feeds/posts/default?alt=rss ok
+    http://www.worldatwork.org/waw/wawpost/blog-rss.jsp?nonav skipping until Thursday, October 19, 2017, 1:25 PM
+    http://scottstrand.blogspot.com/feeds/posts/default?alt=rss ok
+    http://www.worldatwork.org/waw/wawpost/blog-rss.jsp?nonav skipping until Thursday, October 19, 2017, 4:00 PM
+    http://feeds.wired.com/wired/index?format=xml ok
+    http://news.cnet.com/2547-1_3-0-20.xml?tag=txt ok
+    http://feeds.feedburner.com/tedtalks_video ok
+    http://feeds.feedburner.com/blogspot/SOpj?format=xml ok
+    http://feeds.feedburner.com/EconomistsView ok
+    http://feeds.feedburner.com/whynationsfail ok
+    http://cecblog.typepad.com/policy/atom.xml ok
+83 feeds refreshed (took 28.438399 seconds)
+done.
+Finished blocks
+Starting admin reports
+Finished admin reports
+Starting course reports
+Finished course reports
+Starting gradebook plugins
+Finished gradebook plugins
+Starting repository plugins
+Processing cron function for repository_dropbox...
+... started 11:07:52. Current memory use 14.7MB.
+done. (1 dbqueries, 0 seconds)
+Processing cron function for repository_filesystem...
+... started 11:07:52. Current memory use 14.8MB.
+done. (3 dbqueries, 0 seconds)
+Finished repository plugins
+... used 153 dbqueries
+... used 30.219925165176 seconds
+Scheduled task complete: Legacy cron processing for plugins (core\task\legacy_plugin_cron_task)
+Execute scheduled task: Background processing for events (core\task\events_cron_task)
+... started 11:07:52. Current memory use 14.7MB.
+... used 2 dbqueries
+... used 0.0016639232635498 seconds
+Scheduled task complete: Background processing for events (core\task\events_cron_task)
+Execute scheduled task: Background processing for portfolio plugins (core\task\portfolio_cron_task)
+... started 11:07:52. Current memory use 14.8MB.
+... used 2 dbqueries
+... used 0.0019259452819824 seconds
+Scheduled task complete: Background processing for portfolio plugins (core\task\portfolio_cron_task)
+Execute scheduled task: Background processing for legacy cron in plagiarism plugins (core\task\plagiarism_cron_task)
+... started 11:07:52. Current memory use 14.9MB.
+Processing cron function for plagiarism_plugin_turnitin...... started 11:07:52. Current memory use 15.5MB.
+[Turnitin Plagiarism Plugin] Aborted Cron call because of active task mode
+... used 0 dbqueries
+... used 0.0028159618377686 seconds
+Scheduled task complete: Background processing for legacy cron in plagiarism plugins (core\task\plagiarism_cron_task)
+Execute scheduled task: Send calendar notifications (core\task\calendar_cron_task)
+... started 11:07:52. Current memory use 15.5MB.
+Updating calendar subscriptions:
+... started 11:07:52. Current memory use 15.9MB.
+Finished updating calendar subscriptions.
+... used 1 dbqueries
+... used 0.012414932250977 seconds
+Scheduled task complete: Send calendar notifications (core\task\calendar_cron_task)
+Execute scheduled task: Sync external blogs (core\task\blog_cron_task)
+... started 11:07:52. Current memory use 15.9MB.
+... used 2 dbqueries
+... used 0.0025479793548584 seconds
+Scheduled task complete: Sync external blogs (core\task\blog_cron_task)
+Execute scheduled task: Background processing for gradebook (core\task\grade_cron_task)
+... started 11:07:52. Current memory use 15.9MB.
+    Deleted old grade history records from 'grade_outcomes_history'
+    Deleted old grade history records from 'grade_categories_history'
+    Deleted old grade history records from 'grade_items_history'
+    Deleted old grade history records from 'grade_grades_history'
+    Deleted old grade history records from 'scale_history'
+... used 7 dbqueries
+... used 4.7763690948486 seconds
+Scheduled task complete: Background processing for gradebook (core\task\grade_cron_task)
+Execute scheduled task: Background processing for question engine (core\task\question_cron_task)
+... started 11:07:57. Current memory use 16MB.
+
+  Cleaning up old question previews...done.
+
+  Cleaning up old question statistics cache records...done.
+... used 6 dbqueries
+... used 0.9224100112915 seconds
+Scheduled task complete: Background processing for question engine (core\task\question_cron_task)
+Execute scheduled task: Forum mailings and maintenance jobs (mod_forum\task\cron_task)
+... started 11:07:58. Current memory use 16MB.
+Processing user 67062
+Sending post 1686057: CORRUPT FILES
+Processing user 67902
+Sending post 1686057: CORRUPT FILES
+Processing user 41904
+Sending post 1686057: CORRUPT FILES
+Processing user 21193
+Sending post 1686057: CORRUPT FILES
+Processing user 67160
+Sending post 1686057: CORRUPT FILES
+Processing user 71788
+Sending post 1686057: CORRUPT FILES
+Processing user 1170
+Sending post 1686057: CORRUPT FILES
+Processing user 67254
+Sending post 1686057: CORRUPT FILES
+Processing user 74459
+Sending post 1686057: CORRUPT FILES
+Processing user 65371
+Sending post 1686057: CORRUPT FILES
+Processing user 57783
+Processing user 50178
+Processing user 50874
+Processing user 50479
+Processing user 49941
+Processing user 52807
+Processing user 50280
+Sending post 1686058: Family perpective 
+Processing user 1958
+Processing user 46337
+Processing user 63594
+10 users were sent post 1686057, 'CORRUPT FILES'
+1 users were sent post 1686058, 'Family perpective '
+Starting digest processing...
+Cleaned old digest records
+... used 496 dbqueries
+... used 5.8054549694061 seconds
+Scheduled task complete: Forum mailings and maintenance jobs (mod_forum\task\cron_task)
+Execute scheduled task: Incoming email pickup (tool_messageinbound\task\pickup_task)
+... started 11:08:04. Current memory use 22.5MB.
+Inbound Message not fully configured - exiting early.
+... used 0 dbqueries
+... used 0.003046989440918 seconds
+Scheduled task complete: Incoming email pickup (tool_messageinbound\task\pickup_task)
+Execute scheduled task: Cleanup event monitor events (tool_monitor\task\clean_events)
+... started 11:08:04. Current memory use 22.5MB.
+... used 0 dbqueries
+... used 5.1975250244141E-5 seconds
+Scheduled task complete: Cleanup event monitor events (tool_monitor\task\clean_events)
+Execute scheduled task: Calculate regular completion data (core\task\completion_regular_task)
+... started 11:08:04. Current memory use 22.8MB.
+Running completion_criteria_date->cron()
+Running completion_criteria_activity->cron()
+Running completion_criteria_duration->cron()
+Running completion_criteria_grade->cron()
+Running completion_criteria_course->cron()
+Aggregating completions
+... used 6 dbqueries
+... used 0.083585023880005 seconds
+Scheduled task complete: Calculate regular completion data (core\task\completion_regular_task)
+Execute adhoc task: core_course\task\course_delete_modules
+... started 11:08:04. Current memory use 23MB.
+... used 434 dbqueries
+... used 4.2417030334473 seconds
+Adhoc task complete: core_course\task\course_delete_modules
+Execute adhoc task: core_course\task\course_delete_modules
+... started 11:08:08. Current memory use 27.1MB.
+... used 355 dbqueries
+... used 2.0970220565796 seconds
+Adhoc task complete: core_course\task\course_delete_modules
+Execute adhoc task: core_course\task\course_delete_modules
+... started 11:08:10. Current memory use 27.1MB.
+... used 355 dbqueries
+... used 2.0216729640961 seconds
+Adhoc task complete: core_course\task\course_delete_modules
+Cron script completed correctly
+Cron completed at 11:08:12. Memory used 27.1MB.
+Execution took 50.944756 seconds

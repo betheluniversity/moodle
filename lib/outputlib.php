@@ -2116,7 +2116,7 @@ class theme_config {
         }
 
         foreach ($themes as $theme) {
-            if ($dir = $this->find_theme_location($theme)) {
+	   if ($dir = $this->find_theme_location($theme)) {
                 $path = "$dir/layout/$layoutfile";
 
                 // Check the template exists, return general base theme template if not.
