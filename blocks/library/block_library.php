@@ -247,84 +247,132 @@ a.hiddenajaxlink{display: none}
         <a style="border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; border-width: initial; border-color: initial; border-image: initial;" href="http://www.bethel.edu/library/"><img src="https://moodle.bethel.edu/blocks/library/library_graphic.png"></a>
       </div>
 
+<!– This script applies the PrimoQuery to the searchForm –>
+<script type="text/javascript">
+    function searchPrimo() 
+    {
+        document.getElementById("primoQuery").value = "any,contains," + document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
+        document.forms["searchForm"].submit();
+    }
+</script>
 <div class="arrowlistmenu">
-<!--Menu Item 1-->
-  <h3 class="menuheader expandable openheader" headerindex="0h">
-    <span class="accordprefix"></span>
-    <span class="accordprefix"></span>
-            Library Search
-    <span class="accordsuffix"></span>
-    <span class="accordsuffix"></span>
-  </h3>
+    <!--Menu Item 1 -->
+    <!-- First Drop down menu --> 
+    <h3 class="menuheader expandable openheader" headerindex="0h">
+        <span class="accordprefix"></span>
+        <span class="accordprefix"></span>
+        Library Search
+        <span class="accordsuffix"></span>
+        <span class="accordsuffix"></span>
+    </h3>
 
-  <ul class="categoryitems" contentindex="0c" style="display: block;">
-    <li>
-      <p>Articles, Books, Videos and More</p>
-      <div id="wcs2n">
-        <!-- BEGIN Summon search box -->
-        <form class="summon" method="get" action="http://bethel.summon.serialssolutions.com/search" name="summonSearch" target="_blank" onsubmit="window.location = this.action + \'?q=\' + encodeURIComponent(this.q.value); return false;">
-          <input type="text" class="summon-search-field" id="q" name="q" style="border-left: 1px solid #bbb; border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; width: 100px;border-radius: 4px 0px 0px 4px;">
-          <input type="submit" value="search" name="summon-search-button" class="summon-search-button" style="margin-left: -1px; border-radius: 0px 4px 4px 0px; padding: 4px 8px; box-shadow: inset 0px 0px 0px #fff !important;">
-        </form><!-- END Summon search box -->
-    </li>
-    <li>
-      <p style="clear:both;">Or, Find Something Specific</p>
-      <ul class="specific">
+    <ul class="categoryitems" contentindex="0c" style="display: block;">
         <li>
-          <a href="http://www.bethel.edu/library/research/find/scholarly-articles">Scholarly Articles</a>
-        </li>
-        <li>
-          <a href="http://www.bethel.edu/library/research/find/books">Books</a>
-        </li>                                                        
-        <li>
-          <a href="http://www.bethel.edu/library/research/find/theses-dissertations">Theses</a>
-        </li>
-        <li>
-          <a href="http://www.bethel.edu/library/research/find/ebooks">eBooks</a>
-        </li>
-        <li>
-          <a href="http://www.bethel.edu/library/research/find/video">Video</a>
-        </li>
-      </ul>
-      <div style="clear:both;">
-      </div>
-    </li>
-  </ul>
-                    
-<!--Menu Item 2-->
-  <h3 class="menuheader expandable" headerindex="1h">
-    <span class="accordprefix"></span>
-    <span class="accordprefix"></span>
-          In-depth Research
-    <span class="accordsuffix"></span>
-    <span class="accordsuffix"></span>
-  </h3>
-  <ul class="categoryitems specific" contentindex="1c" style="display: none;">
-    <li>
-      <a href="http://www.bethel.edu/library/research/find/scholarly-articles">Use article databases</a>
-      <p>Find scholarly articles in your subject</p>                             
-    </li>         
-    <li>
-      <a href="http://libguides.bethel.edu/browse.php?o=s" target="_blank">Lookup Research Guide</a>
-      <p>Consult a subject page--find where to search &amp; how to get right to what you need.</p>
-    </li>
-    <li>
-      <a href="https://www.bethel.edu/library/research/research-appointment">Meet with a librarian</a>
-      <p>Gain confidence and expertise in your research</p>
-    </li>
-  </ul>
-  <div style="clear:both"></div>
-                
+            <p>
+                Articles, Books, Videos and More
+            </p>
+            <p>
+                <a href="http://libguides.bethel.edu/c.php?g=670772&p=4721385">Find out more about how to use CLICsearch</a>
+            </p>
+            <div id="wcs2n">
+                <!– Search field for Primo excludes newspaper articles, reviews, and dissertations–>
+                <form action="https://clicsearch.bethel.edu/primo-explore" enctype="application/x-www-form-urlencoded; charset=utf-8" id="simple" method="get" name="searchForm" onsubmit="searchPrimo()" target="_blank">
+                    <!-- Customizable Parameters -->
+                    <input name="institution" type="hidden" value="01CLIC_BETHEL" /> 
+                    <input name="vid" type="hidden" value="BETHEL" /> 
+                    <input name="tab" type="hidden" value="default_tab" /> 
+                    <input name="search_scope" type="hidden" value="bethel" /> 
 
-<!--End Menu-->
+                    <input name="mode" type="hidden" value="Basic" /> 
+                    <!-- Fixed parameters --> 
+                    <input name="displayMode" type="hidden" value="full" /> 
+                    <input name="bulkSize" type="hidden" value="35" /> 
+                    <input name="highlight" type="hidden" value="true" /> 
+                    <input name="dum" type="hidden" value="true" /> 
+                    <input id="primoQuery" name="query" type="hidden" /> 
+                    <input name="displayField" type="hidden" value="all" /> 
+                    <!-- Enable this if "Expand My Results" is enabled by default in Views Wizard --> 
+                    <input name="pcAvailabiltyMode" type="hidden" value="true" /> 
+                    <input id="primoQueryTemp" size="50" style="line-height: 3em; height: 3em; width: 75%; border-radius: .3em .3em .3em .3em; position: relative; top: 1px;" type="text" value="" />
+                    <!-- Added three lines to create necessary exclude facets --> 
+                    <input type="hidden" name="facet" value="rtype,exclude,newspaper_articles">
+                    <input type="hidden" name="facet" value="rtype,exclude,reviews">
+                    <input type="hidden" name="facet" value="rtype,exclude,dissertations">
+                    <!-- Search Button --> 
+                    <input class="btn search-go"; alt="Search" id="go" onclick="searchPrimo()" style="border-radius: .3em .3em .3em .3em;" title="Search" type="button" value="Search" />
+                    <a style="font-family: Gotham A,Gotham B,Helvetica,Arial,sans" href="https://clicsearch.bethel.edu/primo-explore/search?vid=BETHEL&lang=en_US&sortby=rank&mode=advanced">Advanced Search</a>
+                </form>
+            </div>
+        </li>
+        <!-- Links to library pages on these topics --> 
+        <li>
+            <p style="clear:both;">
+                Or, Find Something Specific
+            </p>
+            <ul class="specific">
+                <li>
+                    <a href="http://www.bethel.edu/library/research/find/scholarly-articles">Scholarly Articles</a>
+                </li>
+                <li>
+                    <a href="http://www.bethel.edu/library/research/find/books">Books</a>
+                </li>                                                        
+                <li>
+                    <a href="https://www.bethel.edu/library/research/find/theses">Theses</a>
+                </li>
+                <li>
+                    <a href="http://www.bethel.edu/library/research/find/ebooks">eBooks</a>
+                </li>
+                <li>
+                    <a href="http://www.bethel.edu/library/research/find/video">Video</a>
+                </li>
+            </ul>
+            <div style="clear:both;"></div>
+        </li>
+    </ul>
+
+    <!--Menu Item 2-->
+    <!-- Second Drop down menu --> 
+    <h3 class="menuheader expandable" headerindex="1h">
+        <span class="accordprefix"></span>
+        <span class="accordprefix"></span>
+        In-depth Research
+        <span class="accordsuffix"></span>
+        <span class="accordsuffix"></span>
+    </h3>
+    <ul class="categoryitems specific" contentindex="1c" style="display: none;">
+        <li>
+            <a href="http://www.bethel.edu/library/research/find/scholarly-articles">Use article databases</a>
+            <p>
+                Find scholarly articles in your subject
+            </p>
+        </li>         
+        <li>
+            <a href="http://libguides.bethel.edu/browse.php?o=s" target="_blank">Lookup Research Guide</a>
+            <p>
+                Consult a subject page--find where to search &amp; how to get right to what you need.
+            </p>
+        </li>
+        <li>
+            <a href="https://www.bethel.edu/library/research/research-appointment">Meet with a librarian</a>
+            <p>
+                Gain confidence and expertise in your research
+            </p>
+        </li>
+    </ul>
+    <div style="clear:both"></div>
+
+
+    <!--End Menu-->
 </div>
 <div class="fancylist">
-  <ul>
-      <li>
-        <a href="https://www.bethel.edu/library/accounts#refworks" target="_blank">RefWorks Login & Help</a>
-      </li>
+    <ul>
+        <li>
+            <a href="https://www.bethel.edu/library/accounts#refworks" target="_blank">RefWorks Login &amp; Help</a>
+        </li>
     </ul>
-  <p>Questions? <a href="http://www.bethel.edu/library/help/">Contact the Library</a></p>
+    <p>
+        Questions? <a href="http://www.bethel.edu/library/help/">Contact the Library</a>
+    </p>
 </div>
                 
 

@@ -585,7 +585,8 @@ class enrol_lmb_plugin extends enrol_plugin {
                 $moodlecourse->category = $cat->id;
             }
 
-            $moodlecourse->startdate = $course->startdate;
+	    // ejc84332 -- for some reason the LMB/LMG started overwriting the courses dates when TLT thinks it hasn't int he past
+            // $moodlecourse->startdate = $course->startdate;
 
             if ($this->get_config('forcecomputesections') && $this->get_config('computesections')) {
                 $moodlecourseconfig = get_config('moodlecourse');

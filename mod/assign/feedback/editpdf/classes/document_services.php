@@ -199,6 +199,7 @@ EOD;
                         $record->filepath = '/';
                         $record->filename = $plugin->get_type() . '-' . $filename;
 
+
                         $htmlfile = $fs->create_file_from_string($record, $file);
                         try {
                             $convertedfile = $fs->get_converted_document($htmlfile, 'pdf');

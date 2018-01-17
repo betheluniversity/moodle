@@ -386,9 +386,9 @@ class file_storage {
         $currentdir = getcwd();
         chdir($tmp);
         $result = exec($cmd, $output);
-        chdir($currentdir);
+	chdir($currentdir);
         touch($newtmpfile);
-        if (filesize($newtmpfile) === 0) {
+	if (filesize($newtmpfile) === 0) {
             remove_dir($tmp);
             // Cleanup.
             return false;
@@ -2220,7 +2220,7 @@ class file_storage {
         // Fix permissions, only if needed.
         $currentperms = octdec(substr(decoct(fileperms($trashfile)), -4));
         if ((int)$this->filepermissions !== $currentperms) {
-            chmod($trashfile, $this->filepermissions);
+	    chmod($trashfile, $this->filepermissions);
         }
     }
 

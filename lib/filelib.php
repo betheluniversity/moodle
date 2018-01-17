@@ -1829,7 +1829,7 @@ function readfile_allow_large($path, $filesize = -1) {
     }
     if ($filesize <= 2147483647) {
         // If the file is up to 2^31 - 1, send it normally using readfile.
-        return readfile($path);
+	 return readfile($path);
     } else {
         // For large files, read and output in 64KB chunks.
         $handle = fopen($path, 'r');
