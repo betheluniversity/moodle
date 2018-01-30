@@ -49,10 +49,6 @@ class behat_theme_boost_behat_course extends behat_course {
 
         // Find the menu.
         $menunode = $activitynode->find('css', 'a[data-toggle=dropdown]');
-        if (!$menunode) {
-            throw new ExpectationException(sprintf('Could not find actions menu for the activity "%s"', $activityname),
-                    $this->getSession());
-        }
         $expanded = $menunode->getAttribute('aria-expanded');
         if ($expanded == 'true') {
             return;
@@ -75,10 +71,6 @@ class behat_theme_boost_behat_course extends behat_course {
         $activitynode = $this->get_activity_node($activityname);
         // Find the menu.
         $menunode = $activitynode->find('css', 'a[data-toggle=dropdown]');
-        if (!$menunode) {
-            throw new ExpectationException(sprintf('Could not find actions menu for the activity "%s"', $activityname),
-                    $this->getSession());
-        }
         $expanded = $menunode->getAttribute('aria-expanded');
         if ($expanded != 'true') {
             return;
@@ -98,10 +90,6 @@ class behat_theme_boost_behat_course extends behat_course {
         $activitynode = $this->get_activity_node($activityname);
         // Find the menu.
         $menunode = $activitynode->find('css', 'a[data-toggle=dropdown]');
-        if (!$menunode) {
-            throw new ExpectationException(sprintf('Could not find actions menu for the activity "%s"', $activityname),
-                    $this->getSession());
-        }
         $expanded = $menunode->getAttribute('aria-expanded');
         if ($expanded != 'true') {
             throw new ExpectationException(sprintf("The action menu for '%s' is not open", $activityname), $this->getSession());
