@@ -42,19 +42,9 @@ define(['jquery', './tether', 'core/event'], function(jQuery, Tether, Event) {
             'theme_boost/popover'],
             function(Aria) {
 
-        // We do twice because: https://github.com/twbs/bootstrap/issues/10547
         jQuery('body').popover({
-            trigger: 'focus',
-            selector: "[data-toggle=popover][data-trigger!=hover]"
-        });
-
-        jQuery("html").popover({
-            container: "body",
-            selector: "[data-toggle=popover][data-trigger=hover]",
-            trigger: "hover",
-            delay: {
-                hide: 500
-            }
+            selector: '[data-toggle="popover"]',
+            trigger: 'focus'
         });
 
         // We need to call popover automatically if nodes are added to the page later.
