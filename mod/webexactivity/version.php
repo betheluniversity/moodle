@@ -15,15 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Boost.
+ * An activity to interface with WebEx.
  *
- * @package    theme_boost
- * @copyright  2016 Frédéric Massart
+ * @package    mod_webexactvity
+ * @author     Eric Merrill <merrill@oakland.edu>
+ * @copyright  2014 Oakland University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017111300;
-$plugin->requires  = 2016112900;
-$plugin->component = 'theme_boost';
+$plugin->version   = 2017111400;
+$plugin->requires  = 2016120500; // Moodle 3.2.0.
+$plugin->component = 'mod_webexactivity';
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->release   = '3.4.0';
