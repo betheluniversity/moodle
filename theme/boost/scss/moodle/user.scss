@@ -29,11 +29,6 @@
     }
 }
 
-// This rule overrides the automatic no-overflow on the participants table. It kills the auto-complete.
-#participantsform .no-overflow {
-    overflow: visible;
-}
-
 .userprofile dl.list {
     // Copied from dl.row.
     > dd + dt {
@@ -119,13 +114,9 @@
     text-align: center;
 }
 
-.userlist table#participants td {
-    text-align: left;
-    padding: 4px;
-    vertical-align: middle;
-}
-
+.userlist table#participants td,
 .userlist table#participants th {
+    vertical-align: middle;
     text-align: left;
     padding: 4px;
 }
@@ -199,22 +190,6 @@
     white-space: nowrap;
     vertical-align: top;
     font-weight: bold;
-}
-
-.group-edit {
-    position: absolute;
-    right: 0;
-    margin-right: 0.6em;
-}
-
-.group-image {
-    display: block;
-    float: left;
-    margin-right: 1em;
-
-    .grouppicture {
-        border-radius: 50%;
-    }
 }
 
 .groupinfobox {
@@ -299,6 +274,21 @@
         div,
         input {
             margin: 0;
+        }
+    }
+}
+
+#groupeditform {
+    .groups,
+    .members {
+        min-width: 175px;
+        width: 49%;
+        float: left;
+        text-align: left;
+
+        select {
+            min-width: 175px;
+            max-width: 90%;
         }
     }
 }
