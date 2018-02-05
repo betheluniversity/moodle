@@ -1,0 +1,173 @@
+// Bethel_custom preset file
+
+//Variables section - Create variables to override the default value for variables used in the Moodle and Bootstrap SCSS files.
+
+$brand-primary: #0f2c52 !default;
+$body-bg: #fafafa !default;
+$brand-inverse: $body-bg !default;
+$link-color: #0069aa !default;
+$link-hover: #0056b3 !default;
+$button-color: #0056B5 !default;
+$button-hover: #0069d9 !default;
+$font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif !default;
+$font-size-root: 14px !default;
+$font-size-h1: 1.4rem !default;
+$font-size-h2: 1.4rem !default;
+$font-size-h3: 	1.2rem !default;
+$font-size-h4: 1.1rem !default;
+$font-size-h5: 1.1rem !default;
+$font-size-h6: 1rem !default;
+$btn-primary-bg: $link-color !default;
+$input-border-focus: $link-color !default;
+$breadcrumb-bg: $body-bg !default;
+$navbar-light-color: #fff !default;
+$navbar-light-hover-color: #fff !default;
+$navbar-light-active-color: #fdc60a !default;
+
+//Import section - Always the same.
+
+@import "moodle";
+
+//Rules section
+
+
+// This is the only difference from Bethel Default
+body {
+	font-family: "Times New Roman", Times, serif !important;
+}
+
+.navbar-brand {
+	float: left;
+	padding-top: 0;
+  padding-bottom: 0;
+  margin-right: 1rem;
+  font-size: $font-size-h3;
+}
+
+.navbar-light {
+  background-color: $brand-primary;
+	color: $navbar-light-color;
+}
+.navbar-nav {
+	max-width: 1680px;
+}
+a.nav-item {
+	margin-left: 0rem !important;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	border-radius: 4px;
+}
+a.nav-item.nav-link:hover {
+    text-decoration: underline;
+}
+#page {
+	max-width: 1680px;
+}
+
+.logo {
+	margin-top: 5rem;
+	margin-bottom: 5rem;
+}
+
+span.site-name.hidden-sm-down {
+    display: none;
+}
+
+#action-menu-11-menubar.menubar {
+	color: #fff;
+}
+
+//a.dropdown-toggle:link, a.dropdown-toggle:hover {
+//	color: #fff;
+//	}
+
+//.dropdown-d:link, a.dropdown-toggle:hover {
+//	color: #fff;
+//	}
+
+#page-footer, .logininfo, {
+	color: #373a3c;
+	text-align: center;
+}
+
+#page-footer a:link, #page-footer a:visited {
+	color: $link-color;
+}
+
+// Library block
+.block_library .card-text .wrapper .image {
+  text-align: center;
+}
+
+.block_library .card-text .wrapper .image img {
+  width: 100%;
+  max-width: 300px;
+}
+
+// User menu
+.usermenu .dropdown-toggle {
+  color: #fff;
+}
+.usermenu:hover .usertext, .usermenu:focus .usertext, .usermenu:active .usertext,
+.usermenu:target .usertext {
+	text-decoration: underline;
+}
+.popover-region-messages {
+    display: none;
+}
+
+// Drawer
+[data-region="drawer-toggle"] button {
+  color: #fff;
+  background-color: $button-color;
+  border-color: $button-color;
+}
+[data-region="drawer-toggle"] button,
+[data-region="drawer-toggle"] button:focus,
+[data-region="drawer-toggle"] button:visited {
+  color: #fff;
+  background-color: #102c51;
+  border-color: #102c51;
+  padding: 0em;
+  margin: 0em;
+}
+[data-region="drawer-toggle"] button > span {
+	font-size: 1.75rem;
+}
+[data-region="drawer-toggle"] button:hover,
+[data-region="drawer-toggle"] button:active,
+[data-region="drawer-toggle"] button:target {
+	color: #fff !important;
+  	background-color: #102c51 !important;
+	border-color: #102c51 !important;
+}
+.btn-primary, button, [type="button"], [type="reset"], [type="submit"] {
+	color: #fff;
+	background-color: $button-color;
+	border: 2px solid $button-color;
+	border-radius: 4px;
+	margin: 5px;
+	transition: all .15s ease-in-out;
+}
+.btn-primary:hover, button:hover, [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
+.btn-primary:focus, button:focus, [type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus,
+.btn-primary:active, button:active, [type="button"]:active, [type="reset"]:active, [type="submit"]:active {
+	color: #fff;
+	background-color: $button-hover;
+	border: 2px solid $button-hover;
+}
+a {
+	color: $link-color;
+}
+a:hover, a:active, a:focus {
+	color: $link-hover;
+}
+.container-fluid.navbar-nav {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.m-l-1 {
+  border-left: 2px solid #ccc;
+  padding-left: 1em;
+	margin-left: 0.25em !important;
+}
