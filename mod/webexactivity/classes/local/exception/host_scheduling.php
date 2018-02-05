@@ -15,15 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Boost.
+ * An activity to interface with WebEx.
  *
- * @package    theme_boost
- * @copyright  2016 Frédéric Massart
+ * @package    mod_webexactvity
+ * @author     Eric Merrill <merrill@oakland.edu>
+ * @copyright  2014 Oakland University
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_webexactivity\local\exception;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017111300;
-$plugin->requires  = 2016112900;
-$plugin->component = 'theme_boost';
+/**
+ * Exception for WebEx bad password error.
+ *
+ * @package    mod_webexactvity
+ * @author     Eric Merrill <merrill@oakland.edu>
+ * @copyright  2014 Oakland University
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class host_scheduling extends webexactivity_exception {
+    /**
+     * Constructor
+     *
+     * @param string $debuginfo Additional info about the error.
+     */
+    public function __construct($debuginfo=null) {
+        parent::__construct('hostschedulingexception', '', null, $debuginfo);
+    }
+}
