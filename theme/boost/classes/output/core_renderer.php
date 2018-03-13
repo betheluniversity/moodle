@@ -391,6 +391,20 @@ class core_renderer extends \core_renderer {
         }
         $context = $menu->export_for_template($this);
 
+        // We do not want the icon with the caret, the caret is added by Bootstrap.
+        if (empty($context->primary->menutrigger)) {
+            $newurl = $this->pix_icon('t/edit', 'moodle');
+            $context->primary->attributes = array_reduce($context->primary->attributes,
+                function($carry, $item) use ($newurl) {
+                    if ($item['name'] === 'src') {
+                        $item['value'] = $newurl->out(false);
+                    }
+                    $carry[] = $item;
+                    return $carry;
+                }, []
+            );
+        }
+
         return $this->render_from_template('core/action_menu', $context);
     }
 
