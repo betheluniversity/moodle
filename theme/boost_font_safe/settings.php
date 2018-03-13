@@ -50,7 +50,7 @@ if ($ADMIN->fulltree) {
 
     // Preset files setting.
     $name = 'theme_boost_font_safe/presetfiles';
-    $title = get_string('presetfiles','theme_boost_boost');
+    $title = get_string('presetfiles','theme_boost');
     $description = get_string('presetfiles_desc', 'theme_boost_font_safe');
 
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
