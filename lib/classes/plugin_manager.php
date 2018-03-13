@@ -26,8 +26,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
+//defined('MOODLE_INTERNAL') || die();
 /**
  * Singleton class providing general plugins management functionality.
  */
@@ -91,8 +90,8 @@ class core_plugin_manager {
     /**
      * Direct initiation not allowed, use the factory method {@link self::instance()}
      */
-    protected function __construct() {
-    }
+//    protected function __construct() {
+//    }
 
     /**
      * Sorry, this is singleton
@@ -370,9 +369,7 @@ class core_plugin_manager {
      */
     public function get_plugins_of_type($type) {
         global $CFG;
-
         $this->init_pluginsinfo_property();
-
         if (!array_key_exists($type, $this->pluginsinfo)) {
             return array();
         }

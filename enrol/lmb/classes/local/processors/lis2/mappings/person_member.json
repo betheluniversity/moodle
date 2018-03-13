@@ -1,0 +1,26 @@
+{
+  "MEMBERSHIPRECORD": {
+    "SOURCEDGUID": {
+        "REFAGENTINSTANCEID": "referenceagent",
+        "SOURCEDID": "messagereference"
+    },
+    "MEMBERSHIP": {
+      "DATASOURCE": "membersdidsource",
+      "COLLECTIONSOURCEDID": "groupsdid",
+      "MEMBERSHIPIDTYPE": "membershiptype",
+      "MEMBER": {
+        "PERSONSOURCEDID": "membersdid",
+        "ROLE": {
+          "ROLETYPE": {
+            "lmbinternal": true,
+            "function": "process_roletype_node"
+          },
+          "STATUS": {
+            "lmbinternal": true,
+            "function": "process_status_node"
+          }
+        }
+      }
+    }
+  }
+}

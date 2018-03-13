@@ -1,0 +1,41 @@
+{
+  "SOURCEDID": "messagereference",
+  "PERSONRECORD": {
+    "SOURCEDGUID": {
+        "REFAGENTINSTANCEID": "referenceagent",
+        "SOURCEDID": "sdid"
+    },
+    "PERSON": {
+      "DATASOURCE": "sdidsource",
+      "FORMNAME": {
+        "lmbinternal": true,
+        "function": "process_formname_node"
+      },
+      "NAME": {
+        "lmbinternal": true,
+        "function": "process_name_node"
+      },
+      "CONTACTINFO": {
+        "lmbinternal": true,
+        "function": "process_contactinfo_node"
+      },
+      "ROLES": {
+        "INSTITUTIONROLE": {
+          "lmbinternal": true,
+          "function": "process_institutionrole_node"
+        },
+        "USERID": {
+          "lmbinternal": true,
+          "function": "process_userid_node"
+        }
+      },
+      "EXTENSION": {
+        "EXTENSIONFIELD": {
+          "lmbinternal": true,
+          "function": "process_extensionfield_node"
+        }
+      }
+      
+    }
+  }
+}

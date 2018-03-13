@@ -1,0 +1,56 @@
+{
+  "SOURCEDID": {
+    "SOURCE": "sdidsource",
+    "ID": "sdid"
+  },
+  "USERID": {
+    "lmbinternal": true,
+    "function": "process_userid_node"
+  },
+  "NAME": {
+    "FN": "fullname",
+    "NICKNAME": "nickname",
+    "N": {
+      "FAMILY": "familyname",
+      "GIVEN": "givenname",
+      "PREFIX": "prefix",
+      "SUFFIX": "suffix",
+      "PARTNAME": {
+        "lmbinternal": true,
+        "reqattrs": [{"name": "PARTNAMETYPE", "value": "MiddleName"}],
+        "objname": "middlename"
+      }
+    }
+  },
+  "DEMOGRAPHICS": {
+    "GENDER": "gender"
+  },
+  "EMAIL": "email",
+  "TEL": {
+    "lmbinternal": true,
+    "function": "process_telephone_node"
+  },
+  "ADR": {
+    "STREET": "streetadr",
+    "LOCALITY": "city",
+    "REGION": "region",
+    "PCODE": "postalcode",
+    "COUNTRY": "country"
+  },
+  "INSTITUTIONROLE": {
+    "lmbinternal": true,
+    "function": "process_instituterole_node"
+  },
+  "EXTENSION": {
+    "LUMINISPERSON": {
+      "ACADEMICMAJOR": "major",
+      "ACADEMICTITLE": "title",
+      "ACADEMICDEGREE": "degree",
+      "CUSTOMROLE": {
+        "lmbinternal": true,
+        "type": "array",
+        "objname": "customrole"
+      }
+    }
+  }
+}
