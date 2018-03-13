@@ -1,0 +1,38 @@
+{
+  "SOURCEDID": {
+    "SOURCE": "sdidsource",
+    "ID": "sdid"
+  },
+  "DESCRIPTION": {
+    "LONG": "description"
+  },
+  "TIMEFRAME": {
+    "BEGIN": {
+      "lmbinternal": true,
+      "function": "process_timeframe_node",
+      "nodetype": "begin"
+    },
+    "END": {
+      "lmbinternal": true,
+      "function": "process_timeframe_node",
+      "nodetype": "end"
+    }
+  },
+  "ENROLLCONTROL": {
+    "ENROLLACCEPT": {
+      "lmbinternal": true,
+      "type": "bool",
+      "objname": "enrollaccept"
+    },
+    "ENROLLALLOWED": {
+      "lmbinternal": true,
+      "type": "bool",
+      "objname": "enrollallowed"
+    }
+  },
+  "EXTENSION": {
+    "LUMINISGROUP": {
+      "SORT": "sortorder"
+    }
+  }
+}
