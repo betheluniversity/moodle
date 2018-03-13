@@ -1,16 +1,17 @@
 <?php
-    class block_library extends block_base {
-    public function init() {
-        $this->title = get_string('library', 'block_library');
-    }
+    	class block_library extends block_base {
+    		public function init() {
+        		$this->title = get_string('library', 'block_library');
+			$this->version = 2018031300;
+    		}
 
-public function get_content() {
-    if ($this->content !== NULL) {
-        return $this->content;
-    }
+		public function get_content() {
+    			if ($this->content !== NULL) {
+        			return $this->content;
+    			}
 
-    $this->content = new stdClass;
-    $this->content->text = '
+    			$this->content = new stdClass;
+    			$this->content->text = '
 <style type="text/css">
 .categoryitems{display: none}
 a.hiddenajaxlink{display: none}
@@ -379,9 +380,8 @@ a.hiddenajaxlink{display: none}
 <!--End Wrapper-->
   </div>
 ';
-    $this->content->footer = '';
-
-    return $this->content;
-}
-}
+    			$this->content->footer = '';
+			return $this->content;
+		}
+	}
 ?>
