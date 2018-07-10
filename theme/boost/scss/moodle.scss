@@ -1,7 +1,12 @@
 $breadcrumb-divider: "▶" !default;
 $breadcrumb-divider-rtl: "◀" !default;
+<<<<<<< HEAD
 // Making BS4 Stable compatible with BS4 Alpha for moodle core sass
 @import "moodle/bs4alphacompat";
+
+// Import font awesome.
+@import "fontawesome/moodle-path";
+@import "fontawesome/font-awesome";
 
 // Specific overrides to make Bootstrap RTL.
 @import "moodle/bootstrap-rtl";

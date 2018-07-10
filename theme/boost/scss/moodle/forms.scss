@@ -333,9 +333,10 @@ fieldset.coursesearchbox label {
     outline: none;
 }
 /** Undo some bootstrap things */
-.form-autocomplete-selection + .form-control {
+.form-autocomplete-selection + input.form-control {
     width: auto;
     display: inline-block;
+    vertical-align: middle;
 }
 
 .form-autocomplete-selection [data-active-selection=true] {
@@ -356,6 +357,24 @@ select[size="1"] {
 
 textarea[data-auto-rows] {
     overflow-x: hidden;
+}
+
+/** Display elements under labels in vertical forms regardless of the screen size. */
+.mform.full-width-labels {
+    .fitem.row {
+        margin-left: 0;
+        margin-right: 0;
+        & > .col-md-3,
+        & > .col-md-9 {
+            float: none;
+            width: inherit;
+            padding-right: 0;
+            padding-left: 0;
+        }
+        &.femptylabel > .col-md-3 {
+            display: none;
+        }
+    }
 }
 
 /** Allow wrapping an mform in a div with the form-inline class to have an inline, responsive form. */
@@ -434,5 +453,14 @@ textarea[data-auto-rows] {
         */
         /*rtl:remove*/
         background-image: url([[pix:t/collapsed]]);
+    }
+}
+
+// Styles for the JS file types browser provided by the "filetypes" element.
+[data-filetypesbrowserbody] {
+    [aria-expanded="false"] > [role="group"],
+    [aria-expanded="false"] [data-filetypesbrowserfeature="hideifcollapsed"],
+    [aria-expanded="true"] [data-filetypesbrowserfeature="hideifexpanded"] {
+        display: none;
     }
 }
