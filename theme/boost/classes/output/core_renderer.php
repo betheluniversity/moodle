@@ -31,6 +31,7 @@ use preferences_groups;
 use action_menu;
 use help_icon;
 use single_button;
+use paging_bar;
 use context_course;
 use pix_icon;
 
@@ -391,20 +392,6 @@ class core_renderer extends \core_renderer {
         }
         $context = $menu->export_for_template($this);
 
-        // We do not want the icon with the caret, the caret is added by Bootstrap.
-        if (empty($context->primary->menutrigger)) {
-            $newurl = $this->pix_icon('t/edit', 'moodle');
-            $context->primary->attributes = array_reduce($context->primary->attributes,
-                function($carry, $item) use ($newurl) {
-                    if ($item['name'] === 'src') {
-                        $item['value'] = $newurl->out(false);
-                    }
-                    $carry[] = $item;
-                    return $carry;
-                }, []
-            );
-        }
-
         return $this->render_from_template('core/action_menu', $context);
     }
 
@@ -429,6 +416,18 @@ class core_renderer extends \core_renderer {
      */
     protected function render_single_button(single_button $button) {
         return $this->render_from_template('core/single_button', $button->export_for_template($this));
+    }
+
+    /**
+     * Renders a paging bar.
+     *
+     * @param paging_bar $pagingbar The object.
+     * @return string HTML
+     */
+    protected function render_paging_bar(paging_bar $pagingbar) {
+        // Any more than 10 is not usable and causes wierd wrapping of the pagination in this theme.
+        $pagingbar->maxdisplay = 10;
+        return $this->render_from_template('core/paging_bar', $pagingbar->export_for_template($this));
     }
 
     /**

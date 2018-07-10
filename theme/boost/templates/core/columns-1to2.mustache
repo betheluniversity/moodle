@@ -15,11 +15,12 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template core/pix_icon
+    @template core/columns-1to2
 
-    Moodle pix_icon template.
+    Moodle columns-1to2 template.
 
-    The purpose of this template is to render a pix_icon.
+    The purpose of this template is to render 2 columns where the second column has twice the width of the first one.
+    On mobile the second column collapses underneath the first.
 
     Classes required for JS:
     * none
@@ -28,15 +29,17 @@
     * none
 
     Context variables required for this template:
-    * attributes Array of name / value pairs.
+    * col1content Column 1 contents.
+    * col2content Column 2 contents.
 
     Example context (json):
     {
-        "attributes": [
-            {"name": "src", "value": "http://moodle.com/wp-content/themes/moodle/images/logo-hat2.png"},
-            {"name": "alt", "value": "Alt text for icon"}
-        ]
+        "col1content": "<div class='alert alert-info'>1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor vulputate turpis, quis tempor arcu.</div>",
+        "col2content": "<div class='alert alert-success'>2. Vivamus ac orci in velit fringilla aliquam a a nisl. Cras luctus quam laoreet magna pulvinar aliquet.</div>"
     }
 
 }}
-<img class="icon {{extraclasses}}"{{#attributes}} {{name}}="{{value}}"{{/attributes}}/>
+<div class="row">
+    <div class="col-md-4">{{$ column1 }}{{{ col1content }}}{{/ column1 }}</div>
+    <div class="col-md-8">{{$ column2 }}{{{ col2content }}}{{/ column2 }}</div>
+</div>
