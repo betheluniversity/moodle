@@ -32,7 +32,6 @@ require_once($CFG->dirroot .'/course/lib.php');
 require_once($CFG->libdir .'/filelib.php');
 
 redirect_if_major_upgrade_required();
-
 $urlparams = array();
 if (!empty($CFG->defaulthomepage) && ($CFG->defaulthomepage == HOMEPAGE_MY) && optional_param('redirect', 1, PARAM_BOOL) === 0) {
     $urlparams['redirect'] = 0;
@@ -63,7 +62,7 @@ if ($hassiteconfig && moodle_needs_upgrading()) {
 
 // If site registration needs updating, redirect.
 \core\hub\registration::registration_reminder('/index.php');
-
+// $DB->set_debug(true);
 if (get_home_page() != HOMEPAGE_SITE) {
     // Redirect logged-in users to My Moodle overview if required.
     $redirect = optional_param('redirect', 1, PARAM_BOOL);
