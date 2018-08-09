@@ -75,10 +75,10 @@ $string['xmlpath_help'] = 'The path (on the Moodle server) where the XML file th
 $string['exception_bad_course'] = 'Course object has no id or source';
 $string['exception_bad_crosslist_id'] = 'Crosslist missing id';
 $string['exception_bad_crosslist_member_id'] = 'Crosslist member missing id';
-$string['exception_bad_person_member'] = 'Membership person or group has no source or id';
-$string['exception_bad_person'] = 'Person object has no id or source';
-$string['exception_bad_term'] = 'Term object has no id or source';
-$string['exception_bad_section'] = 'Section object has no id or source';
+$string['exception_bad_person_member'] = 'Membership person or group has no id';
+$string['exception_bad_person'] = 'Person object has no id';
+$string['exception_bad_term'] = 'Term object has no id';
+$string['exception_bad_section'] = 'Section object has no id';
 $string['exception_insert_failure'] = 'Failure inserting in database';
 $string['exception_grouptype_not_found'] = 'Group type not found';
 $string['exception_lis_namespace'] = 'LIS message namespace incorrect';
@@ -226,6 +226,8 @@ $string['imsrolename02'] = 'Instructor (02)';
 $string['imsrolename03'] = 'Extra 1 (03)';
 $string['imsrolename04'] = 'Extra 2 (04)';
 $string['imsrolename05'] = 'Extra 3 (05)';
+$string['restrictenroldates'] = 'TODO';
+$string['restrictenroldates_help'] = 'TODO';
 
 // XLS Settings.
 $string['parsexls'] = 'Crosslist Processing';
