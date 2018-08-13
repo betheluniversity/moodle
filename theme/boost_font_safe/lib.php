@@ -17,7 +17,7 @@
 /**
  * Theme functions.
  *
- * @package    theme_boost
+ * @package    theme_boost_font_safe
  * @copyright  2016 Frédéric Massart - FMCorz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,8 +30,8 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $tree The CSS tree.
  * @param theme_config $theme The theme config object.
  */
-function theme_boost_css_tree_post_processor($tree, $theme) {
-    $prefixer = new theme_boost\autoprefixer($tree);
+function theme_boost_font_safe_css_tree_post_processor($tree, $theme) {
+    $prefixer = new theme_boost_font_safe\autoprefixer($tree);
     $prefixer->prefix();
 }
 
@@ -41,7 +41,7 @@ function theme_boost_css_tree_post_processor($tree, $theme) {
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_boost_get_extra_scss($theme) {
+function theme_boost_font_safe_get_extra_scss($theme) {
     $content = '';
     $imageurl = $theme->setting_file_url('backgroundimage', 'backgroundimage');
 
@@ -68,9 +68,9 @@ function theme_boost_get_extra_scss($theme) {
  * @param array $options
  * @return bool
  */
-function theme_boost_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function theme_boost_font_safe_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'logo' || $filearea === 'backgroundimage')) {
-        $theme = theme_config::load('boost');
+        $theme = theme_config::load('boost_font_safe');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
             $options['cacheability'] = 'public';
@@ -87,7 +87,7 @@ function theme_boost_pluginfile($course, $cm, $context, $filearea, $args, $force
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_boost_get_main_scss_content($theme) {
+function theme_boost_font_safe_get_main_scss_content($theme) {
     global $CFG;
 
     $scss = '';
@@ -96,14 +96,14 @@ function theme_boost_get_main_scss_content($theme) {
 
     $context = context_system::instance();
     if ($filename == 'default.scss') {
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_font_safe/scss/preset/default.scss');
     } else if ($filename == 'plain.scss') {
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/plain.scss');
-    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_boost', 'preset', 0, '/', $filename))) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_font_safe/scss/preset/plain.scss');
+    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_boost_font_safe', 'preset', 0, '/', $filename))) {
         $scss .= $presetfile->get_content();
     } else {
         // Safety fallback - maybe new installs etc.
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost/scss/preset/default.scss');
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_font_safe/scss/preset/default.scss');
     }
 
     return $scss;
@@ -115,7 +115,7 @@ function theme_boost_get_main_scss_content($theme) {
  * @param theme_config $theme The theme config object.
  * @return array
  */
-function theme_boost_get_pre_scss($theme) {
+function theme_boost_font_safe_get_pre_scss($theme) {
     global $CFG;
 
     $scss = '';

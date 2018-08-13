@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Boost.
+ * boost_font_safe.
  *
  * @package    theme_boost_font_safe
  * @copyright  2016 Frédéric Massart
