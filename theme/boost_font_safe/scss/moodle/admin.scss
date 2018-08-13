@@ -782,7 +782,7 @@
     bottom: 0;
     right: 0;
     overflow: hidden;
-    z-index: $zindex-dropdown;
+    z-index: 1;
 
     &.error {
         @extend .form-control-danger;
@@ -800,8 +800,4 @@
 
 .modal.modal-in-page {
     z-index: 0;
-}
-
-#overriderolestable .overriddenpermission {
-    @extend .table-warning;
 }

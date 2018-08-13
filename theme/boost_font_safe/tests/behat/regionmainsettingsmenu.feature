@@ -20,7 +20,8 @@ Feature: Region main settings menu
 
   Scenario: Teacher can use the region main settings menu
     And I log in as "teacher1"
-    And I am on "Course 1" course homepage
+    And I am on site homepage
+    And I follow "Course 1"
     And "#region-main-settings-menu [role=button]" "css_element" should not exist
     And I follow "Choice name"
     And I click on "#region-main-settings-menu [role=button]" "css_element"
@@ -34,7 +35,8 @@ Feature: Region main settings menu
 
   Scenario: Student cannot use all options in the region main settings menu
     And I log in as "student1"
-    And I am on "Course 1" course homepage
+    And I am on site homepage
+    And I follow "Course 1"
     And "#region-main-settings-menu [role=button]" "css_element" should not exist
     And I follow "Choice name"
     And "#region-main-settings-menu [role=button]" "css_element" should not exist
