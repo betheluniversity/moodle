@@ -17,7 +17,7 @@
 /**
  * A one column layout for the boost theme.
  *
- * @package   theme_boost_font_safe
+ * @package   theme_boost
  * @copyright 2016 Damyon Wiese
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -32,5 +32,5 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes
 ];
 
-echo $OUTPUT->render_from_template('theme_boost_font_safe/columns1', $templatecontext);
+echo $OUTPUT->render_from_template('theme_boost/columns1', $templatecontext);
 
