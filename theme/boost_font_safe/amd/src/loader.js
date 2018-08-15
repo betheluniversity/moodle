@@ -28,22 +28,32 @@ define(['jquery', './tether', 'core/event'], function(jQuery, Tether, Event) {
     window.jQuery = jQuery;
     window.Tether = Tether;
 
-    require(['theme_boost/util',
-            'theme_boost/alert',
-            'theme_boost/button',
-            'theme_boost/carousel',
-            'theme_boost/collapse',
-            'theme_boost/dropdown',
-            'theme_boost/modal',
-            'theme_boost/scrollspy',
-            'theme_boost/tab',
-            'theme_boost/tooltip',
-            'theme_boost/popover'],
+    require(['theme_boost_font_safe/util',
+            'theme_boost_font_safe/alert',
+            'theme_boost_font_safe/button',
+            'theme_boost_font_safe/carousel',
+            'theme_boost_font_safe/collapse',
+            'theme_boost_font_safe/dropdown',
+            'theme_boost_font_safe/modal',
+            'theme_boost_font_safe/scrollspy',
+            'theme_boost_font_safe/tab',
+            'theme_boost_font_safe/tooltip',
+            'theme_boost_font_safe/popover'],
             function() {
 
+        // We do twice because: https://github.com/twbs/bootstrap/issues/10547
         jQuery('body').popover({
-            selector: '[data-toggle="popover"]',
-            trigger: 'focus'
+            trigger: 'focus',
+            selector: "[data-toggle=popover][data-trigger!=hover]"
+        });
+
+        jQuery("html").popover({
+            container: "body",
+            selector: "[data-toggle=popover][data-trigger=hover]",
+            trigger: "hover",
+            delay: {
+                hide: 500
+            }
         });
 
         // We need to call popover automatically if nodes are added to the page later.

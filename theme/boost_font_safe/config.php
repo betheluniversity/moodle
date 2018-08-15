@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Boost config.
+ * boost_font_safe config.
  *
  * @package   theme_boost_font_safe
  * @copyright 2016 Frédéric Massart
@@ -29,6 +29,7 @@ require_once(__DIR__ . '/lib.php');
 $THEME->name = 'boost_font_safe';
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
+$THEME->usefallback = true;
 $THEME->scss = function($theme) {
     return theme_boost_font_safe_get_main_scss_content($theme);
 };
@@ -153,3 +154,4 @@ $THEME->yuicssmodules = array();
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
+$THEME->iconsystem = \core\output\icon_system::FONTAWESOME;

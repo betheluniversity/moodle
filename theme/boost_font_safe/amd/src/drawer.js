@@ -16,7 +16,7 @@
 /**
  * Contain the logic for a drawer.
  *
- * @package    theme_boost
+ * @package    theme_boost_font_safe
  * @copyright  2016 Damyon Wiese
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,7 +28,8 @@ define(['jquery', 'core/custom_interaction_events', 'core/log'],
         TOGGLE_ACTION: '[data-action="toggle-drawer"]',
         TOGGLE_TARGET: 'aria-controls',
         TOGGLE_SIDE: 'left',
-        BODY: 'body'
+        BODY: 'body',
+        SECTION: '.list-group-item[href*="#section-"]'
     };
 
     /**
@@ -103,10 +104,6 @@ define(['jquery', 'core/custom_interaction_events', 'core/log'],
         body.addClass('drawer-ease');
         var open = trigger.attr('aria-expanded') == 'true';
         if (!open) {
-            var small = $(document).width() < 768;
-            if (small) {
-                this.closeAll();
-            }
             // Open.
             trigger.attr('aria-expanded', 'true');
             drawer.attr('aria-hidden', 'false');
@@ -155,6 +152,12 @@ define(['jquery', 'core/custom_interaction_events', 'core/log'],
             }.bind(this));
         }.bind(this));
 
+        $(SELECTORS.SECTION).click(function() {
+            var small = $(document).width() < 768;
+            if (small) {
+                this.closeAll();
+            }
+        }.bind(this));
     };
 
     return {

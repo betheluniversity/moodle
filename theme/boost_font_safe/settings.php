@@ -50,11 +50,19 @@ if ($ADMIN->fulltree) {
 
     // Preset files setting.
     $name = 'theme_boost_font_safe/presetfiles';
-    $title = get_string('presetfiles','theme_boost');
+    $title = get_string('presetfiles','theme_boost_font_safe');
     $description = get_string('presetfiles_desc', 'theme_boost_font_safe');
 
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
         array('maxfiles' => 20, 'accepted_types' => array('.scss')));
+    $page->add($setting);
+
+    // Background image setting.
+    $name = 'theme_boost_font_safe/backgroundimage';
+    $title = get_string('backgroundimage', 'theme_boost_font_safe');
+    $description = get_string('backgroundimage_desc', 'theme_boost_font_safe');
+    $setting = new admin_setting_configstoredfile($name, $title, $description, 'backgroundimage');
+    $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     // Variable $body-color.

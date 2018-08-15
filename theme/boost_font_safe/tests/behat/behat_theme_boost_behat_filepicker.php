@@ -34,7 +34,7 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException,
  * @copyright  2016 Damyon Wiese
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_theme_boost_font_safe_behat_filepicker extends behat_theme_boost_behat_files {
+class behat_theme_boost_font_safe_behat_filepicker extends behat_theme_boost_font_safe_behat_files {
     /**
      * Creates a folder with specified name in the current folder and in the specified filemanager field.
      *

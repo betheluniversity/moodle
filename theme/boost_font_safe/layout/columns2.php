@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A two column layout for the boost theme.
+ * A two column layout for the boost_font_safe theme.
  *
  * @package   theme_boost_font_safe
  * @copyright 2016 Damyon Wiese

@@ -17,7 +17,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * A login page layout for the boost theme.
+ * A login page layout for the boost_font_safe theme.
  *
  * @package   theme_boost_font_safe
  * @copyright 2016 Damyon Wiese
