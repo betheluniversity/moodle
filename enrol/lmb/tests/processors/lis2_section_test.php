@@ -35,6 +35,8 @@ require_once($CFG->dirroot.'/enrol/lmb/tests/helper.php');
 class lis2_section_test extends xml_helper {
     public function test_section() {
         global $CFG;
+
+        $this->setTimezone('America/Detroit');
         $this->resetAfterTest(true);
 
         $node = $this->get_node_for_file($CFG->dirroot.'/enrol/lmb/tests/fixtures/lis2/parse/section_replace.xml');
@@ -61,9 +63,9 @@ class lis2_section_test extends xml_helper {
         $this->assertEquals('ENG', $section->deptsdid);
         $this->assertEquals('Active', $section->status);
 
-        $this->assertEquals(1504224000, $section->begindate);
+        $this->assertEquals(1504238400, $section->begindate);
         $this->assertEquals(0, $section->beginrestrict);
-        $this->assertEquals(1514678400, $section->enddate);
+        $this->assertEquals(1514696400, $section->enddate);
         $this->assertEquals(0, $section->endrestrict);
 
         $this->assertEquals('ENG.3705', $section->coursesdid);
@@ -83,6 +85,67 @@ class lis2_section_test extends xml_helper {
 
         //print "<pre>";var_export($section);print "</pre>\n";
         // TODO.
+
+    }
+
+    public function test_section_date_corrections() {
+        global $CFG;
+
+        $this->setTimezone('America/Detroit');
+        $this->resetAfterTest(true);
+
+        settings_helper::temp_set('quirktimezoneoffsets', 0);
+
+        $node = $this->get_node_for_file($CFG->dirroot.'/enrol/lmb/tests/fixtures/lis2/parse/section_replace.xml');
+
+        $converter = new lis2\section();
+
+        $beginnode = $node->COURSESECTIONRECORD->COURSESECTION->TIMEFRAME->BEGIN;
+
+        $beginnode->set_data("2018-06-30T21:00:00-03:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530403200, $section->begindate);
+        $this->assertEquals("2018-06-30T21:00:00-03:00", $section->begindate_raw);
+
+        $beginnode->set_data("2018-06-30T20:00:00-04:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530403200, $section->begindate);
+        $this->assertEquals("2018-06-30T20:00:00-04:00", $section->begindate_raw);
+
+        settings_helper::temp_set('quirktimezoneoffsets', 1);
+
+        // Now some specific test cases related to a bad behavior from ILP.
+        $beginnode->set_data("2018-07-01T00:00:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530417600, $section->begindate);
+        $this->assertEquals("2018-07-01T00:00:00", $section->begindate_raw);
+
+        // There is a flaw in ILP that causes the date to be reported with an incorrect offset.
+        // We try to correct that. All of these should be July 1, 2018, at midnight, local time.
+        $beginnode->set_data("2018-06-30T20:00:00-04:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530417600, $section->begindate);
+        $this->assertEquals("2018-06-30T20:00:00-04:00", $section->begindate_raw);
+
+        $beginnode->set_data("2018-06-30T21:00:00-03:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530417600, $section->begindate);
+        $this->assertEquals("2018-06-30T21:00:00-03:00", $section->begindate_raw);
+
+        $beginnode->set_data("2018-07-01T03:00:00+03:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530417600, $section->begindate);
+        $this->assertEquals("2018-07-01T03:00:00+03:00", $section->begindate_raw);
+
+        $beginnode->set_data("2018-07-01T00:00:00+00:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530417600, $section->begindate);
+        $this->assertEquals("2018-07-01T00:00:00+00:00", $section->begindate_raw);
+
+        $beginnode->set_data("2018-07-01T00:00:00-00:00");
+        $section = $converter->process_xml_to_data($node);
+        $this->assertEquals(1530417600, $section->begindate);
+        $this->assertEquals("2018-07-01T00:00:00-00:00", $section->begindate_raw);
 
     }
 

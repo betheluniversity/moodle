@@ -54,6 +54,25 @@ if ($ADMIN->fulltree) {
     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/logwsmessages', get_string('logwsmessages', 'enrol_lmb'),
             get_string('logwsmessages_help', 'enrol_lmb'), 0));
 
+    // Banner Extract Import -----------------------------------------------------------------------.
+    $settingslmb->add(new admin_setting_heading('enrol_lmb_bannerextractimport',
+            get_string('bannerextractimport', 'enrol_lmb'), ''));
+//     $settingslmb->add(new admin_setting_configfile('enrol_lmb/bannerxmllocation', get_string('bannerxmllocation', 'enrol_lmb'),
+//             get_string('bannerxmllocationhelp', 'enrol_lmb'), ''));
+//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/bannerxmllocationcomp',
+//             get_string('bannerxmllocationcomp', 'enrol_lmb'), get_string('bannerxmllocationcomphelp', 'enrol_lmb'), 0));
+//     $settingslmb->add(new admin_setting_configdirectory('enrol_lmb/bannerxmlfolder', get_string('bannerxmlfolder', 'enrol_lmb'),
+//             get_string('bannerxmlfolderhelp', 'enrol_lmb'), ''));
+//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/bannerxmlfoldercomp',
+//             get_string('bannerxmlfoldercomp', 'enrol_lmb'), get_string('bannerxmlfoldercomphelp', 'enrol_lmb'), 0));
+    unset($options);
+    $options = array(0 => '0%', 5 => '5%', 10 => '10%', 20 => '20%', 30 => '30%', 40 => '40%',
+            50 => '50%', 60 => '60%', 70 => '70%', 80 => '80%', 90 => '90%', 100 => '100%');
+    $settingslmb->add(new admin_setting_configselect('enrol_lmb/dropprecentlimit', get_string('dropprecentlimit', 'enrol_lmb'),
+            get_string('dropprecentlimit_help', 'enrol_lmb'), '10', $options));
+//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/usestatusfiles', get_string('usestatusfiles', 'enrol_lmb'),
+//             get_string('usestatusfileshelp', 'enrol_lmb'), 0));
+
     // Parse Person --------------------------------------------------------------------------------.
     $settingslmb->add(new admin_setting_heading('enrol_lmb_parseperson', get_string('parseperson', 'enrol_lmb'), ''));
 
@@ -279,8 +298,9 @@ if ($ADMIN->fulltree) {
         }
     }
 
-//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/userestrictdates', get_string('userestrictdates', 'enrol_lmb'),
-//             get_string('userestrictdateshelp', 'enrol_lmb'), 0));
+    $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/restrictenroldates',
+            get_string('restrictenroldates', 'enrol_lmb'),
+            get_string('restrictenroldates_help', 'enrol_lmb'), 0));
 //
 //     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/unenrolmember', get_string('unenrolmember', 'enrol_lmb'),
 //             get_string('unenrolmemberhelp', 'enrol_lmb'), 0));
@@ -323,6 +343,17 @@ if ($ADMIN->fulltree) {
 
     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/xlsmergegroups', get_string('xlsmergegroups', 'enrol_lmb'),
             get_string('xlsmergegroups_help', 'enrol_lmb'), 1));
+
+    // LMB Quirks ----------------------------------------------------------------------------------.
+    $settingslmb->add(new admin_setting_heading('enrol_lmb_quirks', get_string('quirks', 'enrol_lmb'), ''));
+
+    $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/quirksectiondatebulk',
+            get_string('quirksectiondatebulk', 'enrol_lmb'),
+            get_string('quirksectiondatebulk_help', 'enrol_lmb'), 1));
+
+    $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/quirktimezoneoffsets',
+            get_string('quirktimezoneoffsets', 'enrol_lmb'),
+            get_string('quirktimezoneoffsets_help', 'enrol_lmb'), 1));
 }
 
 $settings->add('enrolsettingscat', $settingslmb);

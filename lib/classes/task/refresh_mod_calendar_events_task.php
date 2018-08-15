@@ -70,8 +70,8 @@ class refresh_mod_calendar_events_task extends adhoc_task {
                 continue;
             }
             // Refresh events.
-            mtrace('Refreshing events for ' . $plugin->name);
-            course_module_bulk_update_calendar_events($plugin->name, $courseid);
+            // mtrace('Refreshing events for ' . $plugin->name);
+            // course_module_bulk_update_calendar_events($plugin->name, $courseid);
         }
     }
 }

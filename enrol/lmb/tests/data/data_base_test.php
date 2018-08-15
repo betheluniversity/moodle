@@ -55,6 +55,9 @@ class data_base_testcase extends xml_helper {
 
         $this->assertEquals(2, $obj->single);
         $this->assertEquals(4, $obj->double);
+
+        $this->assertNull($obj->single_raw);
+        $this->assertEquals(2, $obj->double_raw);
     }
 
     public function test_handler_boolean() {
@@ -62,34 +65,45 @@ class data_base_testcase extends xml_helper {
 
         $obj->boolean = true;
         $this->assertEquals(1, $obj->boolean);
+        $this->assertEquals(true, $obj->boolean_raw);
 
         $obj->boolean = false;
         $this->assertEquals(0, $obj->boolean);
+        $this->assertEquals(false, $obj->boolean_raw);
 
         $obj->boolean = "something";
         $this->assertEquals(1, $obj->boolean);
+        $this->assertEquals("something", $obj->boolean_raw);
 
         $obj->boolean = "";
         $this->assertEquals(0, $obj->boolean);
+        $this->assertEquals("", $obj->boolean_raw);
     }
 
     public function test_handler_date() {
+        $this->resetAfterTest();
+        $this->setTimezone('America/Detroit');
+
         $obj = new data_test();
 
         $obj->date = "2016-01-10";
-        $this->assertEquals(1452384000, $obj->date);
+        $this->assertEquals(1452402000, $obj->date);
+        $this->assertEquals("2016-01-10", $obj->date_raw);
 
         $log = new logging_helper();
         $log->set_logging_level(\enrol_lmb\logging::ERROR_NONE);
 
         $obj->date = "1552384000";
         $this->assertEquals(1552384000, $obj->date);
+        $this->assertEquals("1552384000", $obj->date_raw);
 
         $obj->date = 1552384000;
         $this->assertEquals(1552384000, $obj->date);
+        $this->assertEquals(1552384000, $obj->date_raw);
 
         $obj->date = "2016-45-10";
         $this->assertEquals(0, $obj->date);
+        $this->assertEquals("2016-45-10", $obj->date_raw);
         $this->assertRegExp("|WARNING: |", $log->test_get_flush_buffer());
     }
 

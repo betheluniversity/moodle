@@ -27,6 +27,7 @@ namespace enrol_lmb\local\data;
 
 defined('MOODLE_INTERNAL') || die();
 
+use enrol_lmb\date_util;
 use enrol_lmb\logging;
 use enrol_lmb\local\moodle;
 
@@ -136,22 +137,28 @@ abstract class base {
      * @param string $value The value
      */
     public function __set($name, $value) {
+        $handler = false;
         if (array_key_exists($name, $this->handlers)) {
             $func = $this->handlers[$name];
             $v = $this->$func($name, $value);
+            $handler = true;
         } else {
             $v = $value;
         }
 
         if (in_array($name, $this->dbkeys)) {
             $this->record->$name = $v;
-            return;
+        } else {
+            $this->additionaldata->$name = $v;
         }
-        $this->additionaldata->$name = $v;
+
+        if ($handler) {
+            $this->__set($name.'_raw', $value);
+        }
     }
 
     /**
-     * Set a property, either in the db object, ot the additional data object, but skipping the handler.
+     * Set a property, either in the db object, or the additional data object, but skipping the handler.
      *
      * @param string $name Name of property to set
      * @param string $value The value
@@ -213,19 +220,14 @@ abstract class base {
     /**
      * Concerts an incoming date string to a timestamp.
      *
+     * This function is also effectively overridden by the processor/lis2/trait_timeframe when used.
+     *
      * @param string $name Name of property to convert
      * @param string $value The value
      * @return int The new property value
      */
     protected function handler_date($name, $value) {
-        if (is_int($value) || ctype_digit($value)) {
-            // If this is either an actual integer, or all the characters are ints, then don't convert.
-            return (int)$value;
-        }
-
-        // TODO This really needs timezone work...
-        // Need to convert to straight date in some cases...
-        $time = strtotime($value.' UTC');
+        $time = date_util::string_to_timestamp($value);
 
         if ($time === false) {
             logging::instance()->log_line("Could not convert time \"{$value}\".", logging::ERROR_WARN);
@@ -415,6 +417,22 @@ abstract class base {
         $params = array('sdid' => $this->__get('sdid'));
 
         return $DB->get_record(static::TABLE, $params);
+    }
+
+    public static function get_for_id($id) {
+        global $DB;
+
+        $record = $DB->get_record(static::TABLE, ['id' => $id]);
+
+        if (empty($record)) {
+            return false;
+        }
+
+        $obj = new static();
+
+        $obj->load_from_record($record);
+
+        return $obj;
     }
 
     public function exists() {
