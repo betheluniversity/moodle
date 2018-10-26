@@ -31,9 +31,12 @@ $navbar-light-active-color: #fdc60a !default;
 //Rules section
 
 
-// This is the only difference from Bethel Default
+// These are the only differences from Bethel Default
 body {
 	font-family: "Times New Roman", Times, serif !important;
+}
+* {
+	font-size: 101% !important;
 }
 
 .navbar-brand {
