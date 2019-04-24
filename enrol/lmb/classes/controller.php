@@ -76,6 +76,9 @@ class controller {
         // TODO - Authentication, etc.
         $xml = file_get_contents('php://input');
 
+	// phg49389 -- added Jan 11, 2019
+	logging::instance()->log_line($xml);
+
         if (settings::get_settings()->get('logwsmessages')) {
             logging::instance()->log_line($xml);
         }
