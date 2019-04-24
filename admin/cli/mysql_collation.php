@@ -140,7 +140,7 @@ if (!empty($options['collation'])) {
     foreach ($rs as $table) {
         echo str_pad($table->name, 40). " - ";
 
-        if ($table->collation === $collation) {
+        if ($table->collation === $collation or $table->name === "mdl_logstore_standard_log" or $table->name === "mdl_wiki_pages") {
             echo "NO CHANGE\n";
             $skipped++;
 
@@ -168,7 +168,7 @@ if (!empty($options['collation'])) {
         foreach ($rs2 as $column) {
             $column = (object)array_change_key_case((array)$column, CASE_LOWER);
             echo '    '.str_pad($column->field, 36). " - ";
-            if ($column->collation === $collation) {
+            if ($column->collation === $collation or $table->name === "mdl_logstore_standard_log" or $table->name === "mdl_wiki_pages") {
                 echo "NO CHANGE\n";
                 $skipped++;
                 continue;
