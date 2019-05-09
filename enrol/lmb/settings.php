@@ -228,7 +228,8 @@ if ($ADMIN->fulltree) {
     $settingslmb->add(new admin_setting_configselect('enrol_lmb/cattype', get_string('categorytype', 'enrol_lmb'),
             get_string('categorytype_help', 'enrol_lmb'), settings::COURSE_CATS_TERMS, $options));
 
-    $displaylist = coursecat::make_categories_list();
+    //$displaylist = coursecat::make_categories_list();
+    $displaylist = core_course_category::make_categories_list();
 
     $settingslmb->add(new admin_setting_configselect('enrol_lmb/catselect', get_string('catselect', 'enrol_lmb'),
             get_string('catselect_help', 'enrol_lmb'), 1, $displaylist));
