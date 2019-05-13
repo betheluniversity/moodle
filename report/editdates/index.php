@@ -26,8 +26,6 @@
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once(dirname(__FILE__) . '/form.php');
 
-define('REPORT_EDITDATES_ENABLE_FILTER_THRESHOLD', 20);
-
 $id = required_param('id', PARAM_INT);
 $activitytype = optional_param('activitytype', '', PARAM_PLUGIN);
 
@@ -55,7 +53,7 @@ $cms = $modinfo->get_cms();
 // Prepare a list of activity types used in this course, and count the number that
 // might be displayed.
 $activitiesdisplayed = 0;
-$activitytypes = array();
+$activitytypes = array("all" => get_string('allactivities'));
 foreach ($modinfo->get_sections() as $sectionnum => $section) {
     foreach ($section as $cmid) {
         $cm = $cms[$cmid];
@@ -74,17 +72,6 @@ foreach ($modinfo->get_sections() as $sectionnum => $section) {
     }
 }
 core_collator::asort($activitytypes);
-
-if ($activitiesdisplayed <= REPORT_EDITDATES_ENABLE_FILTER_THRESHOLD) {
-    $activitytypes = array('' => get_string('all')) + $activitytypes;
-}
-
-// If activity count is above the threshold, activate the filter controls.
-if (!$activitytype && $activitiesdisplayed > REPORT_EDITDATES_ENABLE_FILTER_THRESHOLD) {
-    reset($activitytypes);
-    redirect(new moodle_url('/report/editdates/index.php',
-            array('id' => $id, 'activitytype' => key($activitytypes))));
-}
 
 // Creating the form.
 $baseurl = new moodle_url('/report/editdates/index.php', array('id' => $id));
@@ -107,6 +94,8 @@ if ($mform->is_cancelled()) {
     foreach ($data as $key => $value) {
         if ($key == "coursestartdate") {
             $course->startdate = $value;
+        } else if ($key == "courseenddate") {
+            $course->enddate = $value;
         } else {
             // It is a module. Need to extract date settings for each module.
             $cmsettings = explode('_', $key);
@@ -130,7 +119,7 @@ if ($mform->is_cancelled()) {
                                     && ($cmsettings['3'] == "completionexpected"
                                     || $cmsettings['3'] == "availablefrom"
                                     || $cmsettings['3'] == "availableuntil") ) {
-                                $forceddatesettings[$cmsettings['2']][$cmsettings['3']]=$value;
+                                $forceddatesettings[$cmsettings['2']][$cmsettings['3']] = $value;
                             } else {
                                 // Module date setting.
                                 $moddatesettings[$cmsettings['2']][$cmsettings['3']] = $value;
@@ -157,6 +146,7 @@ if ($mform->is_cancelled()) {
     // Allow to update only if user is capable.
     if (has_capability('moodle/course:update', $coursecontext)) {
         $DB->set_field('course', 'startdate', $course->startdate, array('id' => $course->id));
+        $DB->set_field('course', 'enddate', $course->enddate, array('id' => $course->id));
     }
 
     // Update forced date settings.
@@ -172,17 +162,17 @@ if ($mform->is_cancelled()) {
 
     // Update section date settings.
     foreach ($sectiondatesettings as $sectionid => $datesettings) {
-       $sectionsettings = array('availablefrom', 'availableuntil');
-       $section = new stdClass();
-       $section->id = $sectionid;
-       foreach($sectionsettings as $setting) {
-           if (isset($datesettings[$setting])) {
-               $section->{$setting} = $datesettings[$setting];
-           } else {
-               $section->{$setting} = 0;
-           }
-       }
-       $DB->update_record('course_sections', $section, true);
+        $sectionsettings = array('availablefrom', 'availableuntil');
+        $section = new stdClass();
+        $section->id = $sectionid;
+        foreach ($sectionsettings as $setting) {
+            if (isset($datesettings[$setting])) {
+                $section->{$setting} = $datesettings[$setting];
+            } else {
+                $section->{$setting} = 0;
+            }
+        }
+        $DB->update_record('course_sections', $section, true);
     }
 
     // Update mod date settings.

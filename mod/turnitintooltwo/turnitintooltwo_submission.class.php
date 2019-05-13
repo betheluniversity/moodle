@@ -180,7 +180,7 @@ class turnitintooltwo_submission {
                 $this->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
             }
 
-            if (count($turnitintooltwoassignment->get_parts() > 1)) {
+            if (count($turnitintooltwoassignment->get_parts()) > 1) {
                 if ($submission->userid != 0) {
                     $usersubmissions = $turnitintooltwoassignment->get_user_submissions($submission->userid,
                                                             $submission->turnitintooltwoid);
@@ -811,7 +811,7 @@ class turnitintooltwo_submission {
                 $sub->id = $DB->insert_record("turnitintooltwo_submissions", $sub, true, $bulk);
             }
 
-            //Update the Moodle gradebook.
+            // Update the Moodle gradebook.
             $this->update_gradebook($sub, $turnitintooltwoassignment);
         }
     }
@@ -861,10 +861,12 @@ class turnitintooltwo_submission {
      * @return boolean
      */
     public function unanonymise_submission($reason) {
+        global $USER;
+
         // Get user and part details.
         $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
         $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part);
-        $user = new turnitintooltwo_user($this->userid);
+        $user = new turnitintooltwo_user($USER->id);
 
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
@@ -888,5 +890,17 @@ class turnitintooltwo_submission {
             $turnitincomms->handle_exceptions($e, "unanonymiseerror", false);
             return false;
         }
+    }
+
+    /**
+     * Checking if grade exists for assignment
+     *
+     * @param string $turnitintooltwoid
+     * @return int
+     */
+    public function count_graded_submissions($turnitintooltwoid) {
+        global $DB;
+        return $DB->count_records_select("turnitintooltwo_submissions", "turnitintooltwoid = :turnitintooltwoid AND submission_grade > 0",
+            array("turnitintooltwoid" => $turnitintooltwoid));
     }
 }

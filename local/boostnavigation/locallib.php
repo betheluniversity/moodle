@@ -65,12 +65,18 @@ function local_boostnavigation_get_all_childrenkeys(navigation_node $navigationn
  * @param bool $showinflatnavigation
  * @param bool $collapse
  * @param bool $collapsedefault
+ * @param bool $accordion
  * @return array
  */
 function local_boostnavigation_build_custom_nodes($customnodes, navigation_node $node,
         $keyprefix='localboostnavigationcustom', $showinflatnavigation=true, $collapse=false,
-        $collapsedefault=false) {
-    global $USER;
+        $collapsedefault=false, $accordion=false) {
+    global $USER, $FULLME;
+
+    // Build full page URL if we have it available to be used down below.
+    if (!empty($FULLME)) {
+        $pagefullurl = new moodle_url($FULLME);
+    }
 
     // Initialize counter which is later used for the node IDs.
     $nodecount = 0;
@@ -82,6 +88,9 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
     // Initialize variables for remembering the node keys for collapsing.
     $collapsenodesforjs = array();
     $collapselastparentprepared = false;
+
+    // Initialize variables for remembering the status of an accordion.
+    $accordionalreadyopen = false;
 
     // Make a new array on delimiter "new line".
     $lines = explode("\n", $customnodes);
@@ -103,6 +112,13 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
         $nodevisible = false;
         $nodeischild = false;
         $nodekey = null;
+        $nodelanguage = null;
+        $nodeicon = null;
+        $nodebeforenodekey = null;
+
+        // Initialize the logical combination operator and stack.
+        $logicalcombinationoperator = 'AND';
+        $logicalcombinationstack = array();
 
         // Make a new array on delimiter "|".
         $settings = explode('|', $line);
@@ -110,7 +126,7 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
         // Check for the mandatory conditions first.
         // If array contains too less or too many settings, do not proceed and therefore do not create the node.
         // Furthermore check it at least the first two mandatory params are not an empty string.
-        if (count($settings) >= 2 && count($settings) <= 5 && $settings[0] !== '' && $settings[1] !== '') {
+        if (count($settings) >= 2 && count($settings) <= 10 && $settings[0] !== '' && $settings[1] !== '') {
             foreach ($settings as $i => $setting) {
                 $setting = trim($setting);
                 if (!empty($setting)) {
@@ -120,10 +136,10 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                             // Check if this is a child node and get the node title.
                             if (substr($setting, 0, 1) == '-') {
                                 $nodeischild = true;
-                                $nodetitle = substr($setting, 1);
+                                $nodetitle = local_boostnavigation_build_node_title(substr($setting, 1));
                             } else {
                                 $nodeischild = false;
-                                $nodetitle = $setting;
+                                $nodetitle = local_boostnavigation_build_node_title($setting);
                             }
 
                             // Set the node to be basically visible.
@@ -149,47 +165,122 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                             // Only proceed if something is entered here. This parameter is optional.
                             // If no language is given the node will be added to the navigation by default.
                             $nodelanguages = array_map('trim', explode(',', $setting));
-                            $nodevisible &= in_array(current_language(), $nodelanguages);
+                            $nodelanguage = in_array(current_language(), $nodelanguages);
+                            $nodevisible &= $nodelanguage;
 
                             break;
                         // Check for the optional fourth param: cohort filter.
                         case 3:
                             // Only proceed if something is entered here. This parameter is optional.
                             // If no cohort is given the node will be added to the navigation by default.
-                            $nodevisible &= local_boostnavigation_cohort_is_member($USER->id, $setting);
+                            // Otherwise, it is checked whether the user is a member of any of the provided cohorts and the result
+                            // will be added to the logical combination stack for later evaluation.
+                            $logicalcombinationstack[] = local_boostnavigation_cohort_is_member($USER->id, $setting);
 
                             break;
                         // Check for the optional fifth parameter: role filter.
                         case 4:
                             // Only proceed if some role is entered here. This parameter is optional.
                             // If no role shortnames are given, the node will be added to the navigation by default.
-                            // Otherwise, it is checked whether the user has any of the provided roles,
-                            // so that the custom node is displayed.
-                            $nodevisible &= local_boostnavigation_user_has_role_on_page($USER->id, $setting);
+                            // Otherwise, it is checked whether the user has any of the provided roles and the result
+                            // will be added to the logical combination stack for later evaluation.
+                            $logicalcombinationstack[] = local_boostnavigation_user_has_role_on_page($USER->id, $setting);
 
                             break;
-                    }
+                        // Check for the optional sixth parameter: system role filter.
+                        case 5:
+                            // Only proceed if some role is entered here. This parameter is optional.
+                            // If no system role shortnames are given, the node will be added to the navigation by default.
+                            // Otherwise, it is checked whether the user has any of the provided system roles and the result
+                            // will be added to the logical combination stack for later evaluation.
+                            $logicalcombinationstack[] = local_boostnavigation_user_has_role_on_system($USER->id, $setting);
 
-                    // Support for inheritance of the parent node's visibility to his child notes.
-                    if ($nodeischild == false) {
-                        // To inherit the parent node's visibility to his child nodes later, we have to remember
-                        // this visibility now.
-                        $lastparentnodevisible = $nodevisible;
-                    } else {
-                        // Inherit the parent node's visibility. This overrules the child node's visibility.
-                        $nodevisible &= $lastparentnodevisible;
-                    }
+                            break;
+                        // Check for the optional seventh parameter: logical combination operator.
+                        case 6:
+                            // Check if a valid logical combination operator is given and remember it for later use.
+                            // The logical combination operator AND corresponds to the default combination which is automatically
+                            // used if no logical operator is given.
+                            // To change the combination only the OR operator is valid.
+                            if (in_array($setting, ['AND', 'OR'])) {
+                                switch ($setting) {
+                                    case 'OR':
+                                        $logicalcombinationoperator = 'OR';
+                                        break;
+                                    case 'AND':
+                                    default:
+                                        $logicalcombinationoperator = 'AND';
+                                }
+                            }
 
+                            break;
+                        // Check for the optional eighth parameter: icon.
+                        case 7:
+                            // Only proceed if some valid FontAwesome icon is entered here. This parameter is optional.
+                            // If no valid icon is given, the node will be added to the navigation with the default icon.
+                            if (local_boostnavigation_verify_faicon($setting) == true) {
+                                $nodeicon = new pix_icon($setting, '', 'local_boostnavigation');
+                            }
+
+                            break;
+                        // Check for the optional ninth parameter: id.
+                        case 8:
+                            // Only proceed if some id is entered here. This parameter is optional.
+                            // If no id is given, the node will get an automatically created id later.
+                            $nodekey = $keyprefix.clean_param($setting, PARAM_ALPHANUM);
+
+                            break;
+                        // Check for the optional tenth parameter: before node key.
+                        case 9:
+                            // Only proceed if some before node key is entered here. This parameter is optional.
+                            // If no before node key is given, the node will be added to the end of the navigation.
+                            $nodebeforenodekey = clean_param($setting, PARAM_ALPHANUM);
+
+                            break;
+
+                    }
                 }
+            }
+
+            // Evaluate the cohort, role and system role settings together with the logical combination operator and calculate
+            // these settings into node visibility.
+            if (count($logicalcombinationstack) >= 2) {
+                if ($logicalcombinationoperator == 'OR') {
+                    $nodevisible &= array_reduce($logicalcombinationstack,
+                            function($a, $b) {
+                                return $a || $b;
+                            },
+                            false);
+                } else {
+                    $nodevisible &= array_reduce($logicalcombinationstack,
+                            function($a, $b) {
+                                return $a && $b;
+                            },
+                            true);
+                }
+            } else if (count($logicalcombinationstack) == 1) {
+                $nodevisible &= $logicalcombinationstack[0];
+            }
+
+            // Support for inheritance of the parent node's visibility to his child notes.
+            if ($nodeischild == false) {
+                // To inherit the parent node's visibility to his child nodes later, we have to remember
+                // this visibility now.
+                $lastparentnodevisible = $nodevisible;
+            } else {
+                // Inherit the parent node's visibility. This overrules the child node's visibility.
+                $nodevisible &= $lastparentnodevisible;
             }
         }
 
         // Add a custom node to the given navigation_node.
-        // This is if all mandatory params are set and the node matches the optional given language setting.
+        // This is if all mandatory params are set and the node is visible.
         if ($nodevisible) {
 
-            // Generate node key.
-            $nodekey = $keyprefix.++$nodecount;
+            // Generate automatic node key if no custom node key was set.
+            if ($nodekey == null) {
+                $nodekey = $keyprefix.++$nodecount;
+            }
 
             // Create custom node.
             $customnode = navigation_node::create($nodetitle,
@@ -220,22 +311,56 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                 }
 
                 // Add the custom node to the given navigation_node.
-                $node->add_node($customnode);
+                $node->add_node($customnode, $nodebeforenodekey);
 
                 // Remember the node as a potential parent node for the next node.
                 $lastparentnode = $customnode;
 
                 // Get the user preference for the collapse state of this custom node and set the collapse attribute accordingly.
                 $userprefcustomnode = get_user_preferences('local_boostnavigation-collapse_'.$nodekey.'node', $collapsedefault);
+                // The user preference is to collapse the node.
                 if ($userprefcustomnode == 1) {
+                    // Set the node to be collapsed.
                     $customnode->collapse = true;
+
+                    // The user preference is to expand the node.
                 } else {
-                    $customnode->collapse = false;
+                    // If we create an accordion, we have to be careful now.
+                    if ($accordion == true) {
+                        // If have already created one expanded node, we must not open another one,
+                        // regardless of the user preference.
+                        if ($accordionalreadyopen == true) {
+                            // Set the node to be collapsed.
+                            $customnode->collapse = true;
+                        } else {
+                            // Set the node to be expanded.
+                            $customnode->collapse = false;
+
+                            // If we have set this node to be the expanded node, we must remember this fact for the
+                            // remaining accordion nodes.
+                            $accordionalreadyopen = true;
+                        }
+
+                        // If we don't create an accordion, we can respect the user preference in any case.
+                    } else {
+                        // Set the node to be expanded.
+                        $customnode->collapse = false;
+                    }
+                }
+
+                // If the code should be collapsed, remove the active status in any case because otherwise it might get highlighted
+                // as active which does not make sense for collapse parent nodes.
+                if ($collapse) {
+                    $customnode->make_inactive();
                 }
 
                 // Finally, if the node shouldn't be collapsed or if it does not have children, set the node icon.
                 if (!$collapse || $customnode->has_children() == false) {
-                    $customnode->icon = new pix_icon('customnode', '', 'local_boostnavigation');
+                    if ($nodeicon instanceof pix_icon) {
+                        $customnode->icon = $nodeicon;
+                    } else {
+                        $customnode->icon = new pix_icon('customnode', '', 'local_boostnavigation');
+                    }
                 }
 
                 // Otherwise, if it's a child node.
@@ -257,21 +382,27 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                 // For some crazy reason, if we add the child node directly to the parent node, it is not shown in the
                 // course navigation section.
                 // Thus, add the custom node to the given navigation_node.
-                $node->add_node($customnode);
+                $node->add_node($customnode, $nodebeforenodekey);
                 // And change the parent node directly afterwards.
                 $customnode->set_parent($lastparentnode);
 
-                // Get the user preference for the collapse state of the last parent node and set the hidden attribute accordingly.
-                $userprefcustomnode = get_user_preferences('local_boostnavigation-collapse_'.$lastparentnode->key.'node',
-                        $collapsedefault);
-                if ($userprefcustomnode == 1) {
-                    $customnode->hidden = true;
-                } else {
-                    $customnode->hidden = false;
+                // Set the hidden attribute according to the collapse state of the last parent node.
+                $customnode->hidden = $lastparentnode->collapse;
+
+                // For some strange reason, Moodle core does only compare the URL base when searching the active navigation node.
+                // This will result in the wrong node being highlighted if we add multiple nodes which only differ by the URL
+                // parameter as custom nodes.
+                // We try to overcome this problem as best as possible by actively setting the active node.
+                if ($pagefullurl instanceof moodle_url && $nodeurl->compare($pagefullurl, URL_MATCH_PARAMS)) {
+                    $customnode->make_active();
                 }
 
                 // Finally, set the node icon.
-                $customnode->icon = new pix_icon('customnode', '', 'local_boostnavigation');
+                if ($nodeicon instanceof pix_icon) {
+                    $customnode->icon = $nodeicon;
+                } else {
+                    $customnode->icon = new pix_icon('customnode', '', 'local_boostnavigation');
+                }
             }
         }
     }
@@ -336,6 +467,7 @@ function local_boostnavigation_build_node_url($url) {
     // Define placeholders which should be replaced later.
     $placeholders = array('courseid' => (isset($COURSE->id) ? $COURSE->id : ''),
             'courseshortname' => (isset($COURSE->shortname) ? $COURSE->shortname : ''),
+            'editingtoggle' => ($PAGE->user_is_editing() ? 'off' : 'on'),
             'userid' => (isset($USER->id) ? $USER->id : ''),
             'userusername' => (isset($USER->username) ? $USER->username : ''),
             'pagecontextid' => (is_object($PAGE->context) ? $PAGE->context->id : ''),
@@ -351,6 +483,50 @@ function local_boostnavigation_build_node_url($url) {
     }
 
     return new moodle_url($url);
+}
+
+/**
+ * This function takes the plugin's custom node title, replaces placeholders if necessary and returns the title.
+ *
+ * @param string $title
+ * @return string
+ */
+function local_boostnavigation_build_node_title($title) {
+    global $USER, $COURSE, $PAGE;
+
+    // Define placeholders which should be replaced later.
+    $placeholders = array('coursefullname' => (isset($COURSE->fullname) ? format_string($COURSE->fullname) : ''),
+            'courseshortname' => (isset($COURSE->shortname) ? $COURSE->shortname : ''),
+            'editingtoggle' => ($PAGE->user_is_editing() ? get_string('turneditingoff') : get_string('turneditingon')),
+            'userfullname' => fullname($USER),
+            'userusername' => (isset($USER->username) ? $USER->username : ''));
+
+    // Check if there is any placeholder in the title.
+    if (strpos($title, '{') !== false) {
+        // If yes, replace the placeholders in the title.
+        foreach ($placeholders as $search => $replace) {
+            $title = str_replace('{' . $search . '}', $replace, $title);
+        }
+    }
+
+    return $title;
+}
+
+/**
+ * Checks if the provided string is a valid FontAwesome icon name.
+ * @param string $icon
+ * @return bool
+ */
+function local_boostnavigation_verify_faicon($icon) {
+    // The regex to identify a FontAwesome icon name.
+    $faiconpattern = '~^fa-[\w\d-]+$~';
+
+    // Check if it's matching the Font Awesome pattern.
+    if (preg_match($faiconpattern, $icon) > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -415,4 +591,36 @@ function local_boostnavigation_user_has_role_on_page($userid, $setting) {
         // Check if the user has at least one of the required roles.
         return count(array_intersect($rolesincontextshortnames, $showforroles)) > 0;
     }
+}
+
+/**
+ * Checks if the user has any of the allowed global system roles.
+ * @param int $userid
+ * @param string $setting A comma-separated whitelist of allowed system role shortnames.
+ * @return bool
+ */
+function local_boostnavigation_user_has_role_on_system($userid, $setting) {
+
+    // Split optional setting by comma.
+    $showforroles = explode(',', $setting);
+
+    // Retrieve the assigned roles for the system context only once and remember for next calls of this function.
+    static $rolesinsystemshortnames;
+    if ($rolesinsystemshortnames == null) {
+        // Get the assigned roles.
+        $rolesinsystem = get_user_roles(context_system::instance(), $userid);
+        $rolesinsystemshortnames = array();
+        foreach ($rolesinsystem as $role) {
+            array_push($rolesinsystemshortnames, $role->shortname);
+        }
+
+        // Is the user an admin?
+        if (is_siteadmin($userid)) {
+            // Add it to the list of system roles.
+            array_push($rolesinsystemshortnames, 'admin');
+        }
+    }
+
+    // Check if the user has at least one of the required roles.
+    return count(array_intersect($rolesinsystemshortnames, $showforroles)) > 0;
 }

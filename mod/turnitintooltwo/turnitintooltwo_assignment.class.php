@@ -763,7 +763,8 @@ class turnitintooltwo_assignment {
             }
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->repositoryoption == 1) {
+            if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+                $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
                 $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }
@@ -863,7 +864,15 @@ class turnitintooltwo_assignment {
         $properties->timeduration = 0;
 
         require_once($CFG->dirroot.'/calendar/lib.php');
+
+        // Required parameters to support Moodle 3.3+ course overview block.
+        if ($CFG->branch >= 33) {
+            $properties->timesort = $duedate;
+            $properties->type = CALENDAR_EVENT_TYPE_ACTION;
+        }
+
         $event = new calendar_event($properties);
+
         return $event->update($properties, false);
     }
 
@@ -1283,22 +1292,7 @@ class turnitintooltwo_assignment {
 
         // Update existing events for this assignment part if title or due date changed.
         if ($fieldname == "partname" || $fieldname == "dtdue") {
-
-            $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
-            // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
-            // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
-            if ($CFG->branch <= 25 && $CFG->dbtype == "sqlsrv") {
-                $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? AND CAST(name AS nvarchar(max)) = ? ";
-            }
-
-            if ($event = $DB->get_record_select("event", $dbselect,
-                                                array('turnitintooltwo', $this->turnitintooltwo->id, $currenteventname))) {
-
-                $event->name = $this->turnitintooltwo->name." - ".$partdetails->partname;
-                $event->timestart = $partdetails->dtdue;
-                $event->userid = $USER->id;
-                $DB->update_record('event', $event);
-            }
+            turnitintooltwo_update_event($this->turnitintooltwo, $partdetails);
         }
 
         // Update grade settings.
@@ -1323,28 +1317,20 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->id = $this->id;
         $this->turnitintooltwo->timemodified = time();
 
-        // Get Moodle Course Object.
-        $legacy = (!empty($this->turnitintooltwo->legacy)) ? $this->turnitintooltwo->legacy : 0;
-        $coursetype = turnitintooltwo_get_course_type($legacy);
-        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
-
-        // Get the Turnitin owner of this this Course or make user the owner if none.
-        $ownerid = $this->get_tii_owner($course->id);
-        if (!empty($ownerid)) {
-            $owner = new turnitintooltwo_user($ownerid, 'Instructor');
-        } else {
-            $owner = new turnitintooltwo_user($USER->id, 'Instructor');
-        }
-
-        // Edit course in Turnitin.
-        $this->edit_tii_course($course);
-        $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
-
         // Get Current Moodle Turnitin Tool data (Assignment).
         if (!$turnitintooltwonow = $DB->get_record("turnitintooltwo", array("id" => $this->id))) {
             turnitintooltwo_print_error('turnitintooltwogeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }
+
+        // Get Moodle Course Object.
+        $legacy = (!empty($turnitintooltwonow->legacy)) ? $turnitintooltwonow->legacy : 0;
+        $coursetype = turnitintooltwo_get_course_type($legacy);
+        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
+
+        // Edit course in Turnitin.
+        $this->edit_tii_course($course, $coursetype);
+        $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
 
         // Get Current Moodle Turnitin Tool Parts Object.
         if (!$parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ", array($this->id), 'id ASC')) {
@@ -1353,15 +1339,8 @@ class turnitintooltwo_assignment {
         }
         $partids = array_keys($parts);
 
-        // Override submitpapersto if necessary when admin is forcing standard/no repository.
-        switch ($config->repositoryoption) {
-            case 2; // Standard repository being forced.
-                $this->turnitintooltwo->submitpapersto = 1;
-                break;
-            case 3; // No repository being forced.
-                $this->turnitintooltwo->submitpapersto = 0;
-                break;
-        }
+        // Override submitpapersto if necessary when admin is forcing repository setting.
+        $this->turnitintooltwo->submitpapersto = turnitintooltwo_override_repository($this->turnitintooltwo->submitpapersto);
 
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
@@ -1387,7 +1366,8 @@ class turnitintooltwo_assignment {
             $assignment->setSmallMatchExclusionType($this->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->repositoryoption == 1) {
+            if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+                $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
                 $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }

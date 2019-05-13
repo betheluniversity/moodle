@@ -199,6 +199,28 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         }
     }
 
+    // Check if admin wanted us to remove the grades node from Boost's nav drawer.
+    if (isset($config->removegradescoursenode) && $config->removegradescoursenode == true) {
+        // Only proceed if we are inside a course and we are _not_ on the frontpage.
+        if ($PAGE->context->get_course_context(false) == true && $COURSE->id != SITEID) {
+            if ($gradesnode = $navigation->find('grades', global_navigation::TYPE_SETTING)) {
+                // Remove grades node (Just hiding it with the showinflatnavigation attribute does not work here).
+                $gradesnode->remove();
+            }
+        }
+    }
+
+    // Check if admin wanted us to remove the participants node from Boost's nav drawer.
+    if (isset($config->removeparticipantscoursenode) && $config->removeparticipantscoursenode == true) {
+        // Only proceed if we are inside a course and we are _not_ on the frontpage.
+        if ($PAGE->context->get_course_context(false) == true && $COURSE->id != SITEID) {
+            if ($participantsnode = $navigation->find('participants', global_navigation::TYPE_CONTAINER)) {
+                // Remove participants node (Just hiding it with the showinflatnavigation attribute does not work here).
+                $participantsnode->remove();
+            }
+        }
+    }
+
     // Check if admin wants us to insert the coursesections node in Boost's nav drawer.
     // Or if admin wants us to insert the activities and / or resources node in Boost's nav drawer.
     // If one of these three settings is activated, we will need the modinfo and don't want
@@ -481,7 +503,7 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         $customnodesret = local_boostnavigation_build_custom_nodes($config->insertcustomnodesusers, $navigation,
                 'localboostnavigationcustomrootusers', true, $config->collapsecustomnodesusers,
-                $config->collapsecustomnodesusersdefault);
+                $config->collapsecustomnodesusersdefault, $config->collapsecustomnodesusersaccordion);
 
         // Check if admin wanted us to also collapse the custom nodes for users.
         if ($config->collapsecustomnodesusers == true) {
@@ -491,6 +513,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
             } else {
                 $collapsenodesforjs = $customnodesret;
             }
+
+            // Check if admin wanted us to collapse the custom nodes for users as accordion.
+            if ($config->collapsecustomnodesusersaccordion == true) {
+                $accordionnodesforjs[] = 'localboostnavigationcustomrootusers';
+            }
         }
     }
 
@@ -499,7 +526,7 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         $customnodesret = local_boostnavigation_build_custom_nodes($config->insertcustomnodesadmins, $navigation,
                 'localboostnavigationcustomrootadmins', true, $config->collapsecustomnodesadmins,
-                $config->collapsecustomnodesadminsdefault);
+                $config->collapsecustomnodesadminsdefault, $config->collapsecustomnodesadminsaccordion);
 
         // Check if admin wanted us to also collapse the custom nodes for admins.
         if ($config->collapsecustomnodesadmins == true) {
@@ -508,6 +535,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
                 $collapsenodesforjs = array_merge($collapsenodesforjs, $customnodesret);
             } else {
                 $collapsenodesforjs = $customnodesret;
+            }
+
+            // Check if admin wanted us to collapse the custom nodes for admins as accordion.
+            if ($config->collapsecustomnodesadminsaccordion == true) {
+                $accordionnodesforjs[] = 'localboostnavigationcustomrootadmins';
             }
         }
     }
@@ -519,7 +551,7 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
             // If yes, do it.
             $customnodesret = local_boostnavigation_build_custom_nodes($config->insertcustomcoursenodesusers, $coursehomenode,
                     'localboostnavigationcustomcourseusers', false, $config->collapsecustomcoursenodesusers,
-                    $config->collapsecustomcoursenodesusersdefault);
+                    $config->collapsecustomcoursenodesusersdefault, $config->collapsecustomcoursenodesusersaccordion);
 
             // Check if admin wanted us to also collapse the custom course nodes for users.
             if ($config->collapsecustomcoursenodesusers == true) {
@@ -528,6 +560,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
                     $collapsenodesforjs = array_merge($collapsenodesforjs, $customnodesret);
                 } else {
                     $collapsenodesforjs = $customnodesret;
+                }
+
+                // Check if admin wanted us to collapse the custom course nodes for users as accordion.
+                if ($config->collapsecustomcoursenodesusersaccordion == true) {
+                    $accordionnodesforjs[] = 'localboostnavigationcustomcourseusers';
                 }
             }
         }
@@ -540,7 +577,7 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
             // If yes, do it.
             $customnodesret = local_boostnavigation_build_custom_nodes($config->insertcustomcoursenodesadmins, $coursehomenode,
                     'localboostnavigationcustomcourseadmins', false, $config->collapsecustomcoursenodesadmins,
-                    $config->collapsecustomcoursenodesadminsdefault);
+                    $config->collapsecustomcoursenodesadminsdefault, $config->collapsecustomcoursenodesadminsaccordion);
 
             // Check if admin wanted us to also collapse the custom course nodes for admins.
             if ($config->collapsecustomcoursenodesadmins == true) {
@@ -549,6 +586,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
                     $collapsenodesforjs = array_merge($collapsenodesforjs, $customnodesret);
                 } else {
                     $collapsenodesforjs = $customnodesret;
+                }
+
+                // Check if admin wanted us to collapse the custom course nodes for admins as accordion.
+                if ($config->collapsecustomcoursenodesadminsaccordion == true) {
+                    $accordionnodesforjs[] = 'localboostnavigationcustomcourseadmins';
                 }
             }
         }
@@ -559,7 +601,7 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         $customnodesret = local_boostnavigation_build_custom_nodes($config->insertcustombottomnodesusers, $navigation,
                 'localboostnavigationcustombottomusers', true, $config->collapsecustombottomnodesusers,
-                $config->collapsecustombottomnodesusersdefault);
+                $config->collapsecustombottomnodesusersdefault, $config->collapsecustombottomnodesusersaccordion);
 
         // Check if admin wanted us to also collapse the custom bottom nodes for users.
         if ($config->collapsecustombottomnodesusers == true) {
@@ -569,6 +611,11 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
             } else {
                 $collapsenodesforjs = $customnodesret;
             }
+
+            // Check if admin wanted us to collapse the custom bottom nodes for users as accordion.
+            if ($config->collapsecustombottomnodesusersaccordion == true) {
+                $accordionnodesforjs[] = 'localboostnavigationcustombottomusers';
+            }
         }
     }
 
@@ -577,23 +624,37 @@ function local_boostnavigation_extend_navigation(global_navigation $navigation) 
         // If yes, do it.
         $customnodesret = local_boostnavigation_build_custom_nodes($config->insertcustombottomnodesadmins, $navigation,
                 'localboostnavigationcustombottomadmins', true, $config->collapsecustombottomnodesadmins,
-                $config->collapsecustombottomnodesadminsdefault);
+                $config->collapsecustombottomnodesadminsdefault, $config->collapsecustombottomnodesadminsaccordion);
 
         // Check if admin wanted us to also collapse the custom bottom nodes for admins.
         if ($config->collapsecustombottomnodesadmins == true) {
             // Remember the collapsible node for JavaScript.
-            if (is_array($collapsenodesforjs)) {
+            if (!empty($collapsenodesforjs) && is_array($collapsenodesforjs)) {
                 $collapsenodesforjs = array_merge($collapsenodesforjs, $customnodesret);
             } else {
                 $collapsenodesforjs = $customnodesret;
+            }
+
+            // Check if admin wanted us to collapse the custom bottom nodes for admins as accordion.
+            if ($config->collapsecustombottomnodesadminsaccordion == true) {
+                $accordionnodesforjs[] = 'localboostnavigationcustombottomadmins';
             }
         }
     }
 
     // If at least one setting to collapse a node is enabled.
     if (!empty($collapsenodesforjs)) {
-        // Add JavaScript for collapsing nodes to the page.
-        $PAGE->requires->js_call_amd('local_boostnavigation/collapsenavdrawernodes', 'init', [$collapsenodesforjs]);
+        // If at least one setting to collapse a node as accordion is enabled.
+        if (!empty($accordionnodesforjs)) {
+            // Add JavaScript for collapsing nodes to the page and pass the $collapsenodesforjs and $accordionnodesforjs data.
+            $PAGE->requires->js_call_amd('local_boostnavigation/collapsenavdrawernodes', 'init',
+                    [$collapsenodesforjs, $accordionnodesforjs]);
+            // Otherwise.
+        } else {
+            // Add JavaScript for collapsing nodes to the page and pass the $collapsenodesforjs data only.
+            $PAGE->requires->js_call_amd('local_boostnavigation/collapsenavdrawernodes', 'init',
+                    [$collapsenodesforjs, []]);
+        }
         // Allow updating the necessary user preferences via Ajax.
         foreach ($collapsenodesforjs as $node) {
             user_preference_allow_ajax_update('local_boostnavigation-collapse_'.$node.'node', PARAM_BOOL);
@@ -632,12 +693,91 @@ function local_boostnavigation_extend_navigation_course(navigation_node $navigat
 }
 
 /**
- * Get icon mapping for font-awesome.
+ * Get icon mapping for FontAwesome.
+ * This function is only processed when the Moodle cache is cleared and not on every page load.
+ * That's why we created the local_boostnavigation_reset_fontawesome_icon_map function and added it as a callback to this plugin's
+ * settings for mapping icons as configured in the plugin's in custom nodes.
  */
 function local_boostnavigation_get_fontawesome_icon_map() {
-    return [
+    // Fetch config.
+    $config = get_config('local_boostnavigation');
+
+    // Include local library.
+    require_once(__DIR__ . '/locallib.php');
+
+    // Create the icon map with the icons which are used in any case.
+    $iconmapping = [
             'local_boostnavigation:customnode' => 'fa-square local-boostnavigation-fa-sm',
             'local_boostnavigation:resources' => 'fa-archive',
             'local_boostnavigation:activities' => 'fa-share-alt',
     ];
+
+    // Fetch all FontAwesome icons from the custom nodes settings.
+    // Collect all settings which contain custom nodes.
+    $customnodesettings = array();
+    if (isset($config->insertcustomnodesusers) && !empty($config->insertcustomnodesusers)) {
+        $customnodesettings[] = $config->insertcustomnodesusers;
+    }
+    if (isset($config->insertcustomnodesadmins) && !empty($config->insertcustomnodesadmins)) {
+        $customnodesettings[] = $config->insertcustomnodesadmins;
+    }
+    if (isset($config->insertcustomcoursenodesusers) && !empty($config->insertcustomcoursenodesusers)) {
+        $customnodesettings[] = $config->insertcustomcoursenodesusers;
+    }
+    if (isset($config->insertcustomcoursenodesadmins) && !empty($config->insertcustomcoursenodesadmins)) {
+        $customnodesettings[] = $config->insertcustomcoursenodesadmins;
+    }
+    if (isset($config->insertcustombottomnodesusers) && !empty($config->insertcustombottomnodesusers)) {
+        $customnodesettings[] = $config->insertcustombottomnodesusers;
+    }
+    if (isset($config->insertcustombottomnodesadmins) && !empty($config->insertcustombottomnodesadmins)) {
+        $customnodesettings[] = $config->insertcustombottomnodesadmins;
+    }
+
+    // Process the settings one by one.
+    foreach ($customnodesettings as $c) {
+
+        // Make a new array on delimiter "new line".
+        $lines = explode("\n", $c);
+
+        // Parse node settings.
+        foreach ($lines as $line) {
+
+            // Skip empty lines.
+            if (strlen($line) == 0) {
+                continue;
+            }
+
+            // Make a new array on delimiter "|".
+            $settings = explode('|', $line);
+
+            // Check if there is an icon configured.
+            if (!empty($settings[7])) {
+
+                // Pick the setting which represents the icon.
+                $icon = trim($settings[7]);
+
+                // If a valid icon is given, we remember it for the iconmapping.
+                if (local_boostnavigation_verify_faicon($icon)) {
+                    $iconmapping['local_boostnavigation:'.$icon] = $icon;
+                }
+            }
+        }
+    }
+
+    return $iconmapping;
+}
+
+/**
+ * Helper function to reset the icon system used as updatecallback function when saving some of the plugin's settings.
+ */
+function local_boostnavigation_reset_fontawesome_icon_map() {
+    // Reset the icon system cache.
+    // There is the function \core\output\icon_system::reset_caches() which does seem to be only usable in unit tests.
+    // Thus, we clear the icon system cache brutally.
+    $cache = \cache::make('core', 'fontawesomeiconmapping');
+    $cache->delete('mapping');
+    // And rebuild it brutally.
+    $instance = \core\output\icon_system::instance(\core\output\icon_system::FONTAWESOME);
+    $instance->get_icon_name_map();
 }

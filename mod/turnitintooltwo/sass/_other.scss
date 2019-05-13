@@ -20,7 +20,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .mod_turnitintooltwo .hidden_class, .mod_turnitintooltwo #user_role, .mod_turnitintooltwo .launch_form,
 .mod_turnitintooltwo #useragreement_form form, .mod_turnitintooltwo #assignment_id, .mod_turnitintooltwo #course_id,
 .mod_turnitintooltwo #submission_id, .mod_turnitintooltwo #tii_course_id, .mod_turnitintooltwo #tii_course_name,
-.mod_turnitintooltwo .enrolling_container, .mod_turnitintooltwo .zip_downloads, .mod_turnitintooltwo #view_context,
+.mod_turnitintooltwo .enrolling_container, .mod_turnitintooltwo #view_context,
 .mod_turnitintooltwo #inbox_form, .mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form,
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #class_ids, .mod_turnitintooltwo #create_assignments,
 .mod_turnitintooltwo .row_peermark_reviews, .mod_turnitintooltwo .peermark_instructions,
@@ -113,31 +113,6 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     margin-right: 10px;
 }
 
-/**
- * Helpdesk Form
- */
-
-#tii_solution_template,
-.tii_wizard_options,
-.tii_solutions,
-#btn_tiisupportform_link,
-#tii_helpdesk_mod_id {
-    display: none;
-}
-
-#tii_solution_template, #tii_wizard_container {
-    border: 1px solid $light-grey;
-}
-
-#tii_solution_template {
-    padding: 0px 16px 16px;
-}
-
-#tii_wizard_container {
-    padding: 16px 16px 12px;
-    margin-bottom: 12px;
-}
-
 .mod_turnitintooltwo iframe {
     border: 1px solid $light-grey;
 }
@@ -156,7 +131,6 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     text-align: center;
     float: left;
     font-size: 14px;
-    text-align: center;
 }
 #migration-progress {
     background-color: #0073D2;
@@ -164,6 +138,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 }
 .migration-spinner {
     text-align: center;
+    padding: 30px;
 }
 
 .enablemigrationtool {
@@ -203,7 +178,6 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     text-align: center;
     float: left;
     font-size: 14px;
-    text-align: center;
 }
 #migration-progress {
     background-color: #0073D2;
@@ -240,10 +214,9 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     float: left;
     padding-right: 20px;
 }
-.yellowtest{color: yellow;}
 
-#migrationform #fitem_id_submitbutton, 
-#migration-delete-selected #fitem_id_submitbutton, 
+#migrationform #fitem_id_submitbutton,
+#migration-delete-selected #fitem_id_submitbutton,
 #fitem_id_enablemigrationtool {
     width: 75%;
     margin: 0 auto;
@@ -258,8 +231,9 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 
 .migrationheader {
     color: #003A69;
+    font-size: 18px;
     font-weight: normal;
-    margin-bottom: 15px;
+    margin: 10px 0 10px 0;
 }
 .mod_turnitintooltwo .btn-primary {
     background: #0073D2;

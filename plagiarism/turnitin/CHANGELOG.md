@@ -1,3 +1,198 @@
+### Date:       2019-May-02
+### Release:    v2019050201
+
+#### :zap: What's new
+
+---
+
+#### Moodle Plagiarism Plugin no longer dependant on Moodle V2
+
+Previously, the Plagiarism Plugin was bundled along with Moodle Direct V2. Now, the Plagiarism Plugin is installed and configured separately. 
+     
+If you are upgrading from a previous version of the Plagiarism Plugin, your existing configuration will be migrated over from Moodle V2.
+     
+For more details on how to configure your instance of Moodle Plagiarism Plugin, [please see the guidance](https://help.turnitin.com/feedback-studio/moodle/plagiarism-plugin/administrator/getting-started/step-3-configuring-turnitin-in-moodle.htm).
+     
+#### Forum messaging error resolved
+
+When creating a forum post within Turnitin, we were showing information about report regeneration times when resubmitting. As information about resubmissions is not relevant to forum users, we’ve removed this notification from this view.
+
+#### Improvements to plugin stability and modals
+
+We’ve improved the stability of the plugin and made changes to our modals (dialog boxes) within Moodle. Modals will now be clearer and adapt to the browser theme that you’re using to improve the usability of the plugin.
+
+---
+
+### Date:       2019-March-13
+### Release:    v2019031301
+
+#### :zap: What's new
+
+---
+
+#### Welcome to our new help site!
+
+We’ve updated the help links within the product to take you to our new help site [https://help.turnitin.com](https://help.turnitin.com). The site has been designed around actionable tasks to help you to find the guidance you need when you need it.
+
+
+### :wrench: Fixes and enhancements
+
+---
+
+#### Error code 13 will now only display when appropriate
+
+In a previous release, we introduced ‘Error Code 13’. This error is shown when we’ve managed to upload to our servers but weren’t able to generate a similarity report at the time of submission. Since then, we’ve reconsidered how this error state should be handled. With this release, we will reset all instances of Error code 13. Going forward, we will only accept an upload if the plugin is able to connect to Turnitin and generate a similarity report.
+
+#### Use Marking Workflows without errors
+
+In a rare number of cases, it was possible when using Marking Workflows for students to receive an error message when they attempt to view their submissions after grades have been released. We’ve reworked how the grade release happens when using Marking Workflows so that students will no longer see this error.
+
+#### Forum users can use Turnitin without seeing extraneous notifications
+
+When creating a forum post with Turnitin available we were showing information about our report regeneration times when resubmitting to Turnitin. As information about resubmissions is not relevant to forum users, we’ve removed this notification from this view. 
+
+#### Students can’t access the online grading view prematurely
+
+When using our online grading functionality, it was possible for students to launch the viewer despite there being no grading having been completed. To help reduce confusion, this link will now be disabled for students until after the post-date has passed.
+
+---
+
+### Date:       2018-October-29
+### Release:    v2018082802
+
+### :wrench: Fixes and enhancements
+
+---
+
+#### We've fixed a bug that prevented users from being able to accept the EULA
+
+On Friday 26th October, we released a plugin update that unexpectedly prevented new users from being able to accept the EULA in the Plagiarism Plugin, and were subsequently unable to submit to Turnitin. If you've updated your plugin since Friday, we're kindly requesting that you update again to resolve this bug.
+
+---
+
+### Date:	2018-August-28
+### Release:	v2018082802
+
+### :wrench: Fixes and enhancements
+
+---
+
+#### All files submitted to a multi-file assignment are now sent to Turnitin
+
+We received a report from one of our users who noticed an emerging issue for assignments allowing multiple-file submissions: only one of the submitted files was sent to Turnitin, therefore only generating one Similarity Report. We've resolved this!
+
+**Note:** This issue stemmed from the release of plugin version 2018062601.
+
+#### Rubric and grading forms now successfully attach to Turnitin assignments
+
+We apologize for any difficulty you may have encountered when trying to attach rubrics and grading forms to your assignments through the Moodle Plagiarism Plugin. We're very pleased to announce that normal service has resumed, and all rubric and grading form selections made during and after assignment creation will stick like glue!
+  	Hammer&Screwdriver_Blue.png 	
+
+**Note:** This issue stemmed from the release of plugin version 2018011602.
+
+#### We'll no longer attempt to process the Similarity Reports of deleted submissions
+
+Having mistakenly attempted to retrieve the Similarity Reports of deleted submissions, as a direct result, our system recently encountered difficulties with processing new submissions. "It's time to let go of the past!" we told the system, which reluctantly agreed. We'll now no longer try to pull Similarity Reports for deleted submissions... hoorah!
+
+---
+
+### 2018-June-26
+### v2018062601
+
+#### Fixes and enhancements
+
+---
+
+#### Resubmissions now overwrite the previous submission
+
+When a student made a resubmission to Turnitin, their previous submission wasn't removed from the assignment inbox; this led to confusion for instructors, who weren't too sure which submission was the most up-to-date version. We've made sure that resubmissions now overwrite the existing submission.
+
+> **Known issue:** While we've been able to fix this issue for students, if an instructor resubmits on behalf of a student, multiple submissions may still appear in Turnitin. We're working on a fix for this and will update you as soon as we find one!
+
+#### The Plagiarism Plugin now works on Moodle 3.1 and earlier versions
+
+Users running Moodle version 3.1 or earlier encountered an unexpected error when submitting a file. The error message, referring to an invalid parameter, was the result of a change made in our previous release. We apologize for the trouble this may have caused and can confirm that Moodle version 3.1 and earlier now function correctly.
+
+#### Moodle unit tests now pass
+
+We’ve ensured all Moodle unit tests now pass with the plugin installed. Thanks to @danmarsden and @kenneth-hendricks for their contributions.
+
+---
+
+### Date:		2018-May-24
+### Release:	v2018052401
+
+#### :zap: What's new
+
+---
+
+#### We now support Moodle 3.5
+
+You can find out more about Moodle 3.5 via Moodle's [release notes](https://docs.moodle.org/dev/Moodle_3.5_release_notes).
+
+#### Turnitin's Plagiarism Plugin is GDPR compliant!
+
+To support upcoming changes to European data protection law, we’ve focused our efforts on refreshing our processes around how we use your data.
+
+##### Repository settings are more transparent
+
+We've made the Moodle Plagiarism Plugin repository settings much clearer, by providing easy-to-understand, transparent language behind the Store student papers help icon. During assignment setup, administrators and instructors can now be completely sure that they're selecting the correct storage options for student papers.
+
+##### We're reporting on the data we store about our users
+
+Moodle has released two plugins with privacy features to assist with GDPR compliance. While we've successfully implemented [Moodle's new privacy features](https://docs.moodle.org/dev/Privacy_API), Moodle's update is only available to those using Moodle 3.3.5+, 3.4.2+, or 3.5. Therefore, if you're using an earlier version, you must upgrade to have access to these new features.
+
+To inform you about the data we store in relation to our users, we now provide a detailed list via the Moodle Privacy and Policies page. Learn more about the data we're reporting on via our [Moodle Plugins and GDPR](https://help.turnitin.com/feedback-studio/moodle/moodle-plugins-and-gdpr.htm) page.
+
+#### Students can request to download their data
+
+Students have the ability to request an export of their data stored in Moodle. This request can be accepted or declined by their Moodle administrator. If accepted, the student will be able to download all the data held about them, which includes data from Turnitin.
+
+#### Students can request to remove their data
+
+Students can also request their data to be removed from Moodle. This requested can be accepted or declined by their Moodle administrator. If accepted, the administrator will remove the student data from Moodle. However, administrators must contact support@turnitin.com to request that student data be removed from Turnitin itself.
+  
+> If you're a Moodle administrator, and using version 3.3.5+, 3.4.2+, or 3.5, follow the steps on the [Moodle Plugins and GDPR](https://help.turnitin.com/feedback-studio/moodle/moodle-plugins-and-gdpr.htm) page to view the data we store in Moodle.
+
+#### You can now send all papers to your institutional repository by default!
+
+We're aligning Turnitin repository options with the Plagiarism Plugin. If an institutional repository is enabled on their Turnitin account, administrators can now opt to **Submit all papers to the institutional repository**. This submission storage option sends all student submissions to the institutional repository without instructor intervention. For this repository option to work successfully, it must firstly be enabled in Turnitin, before it can be configured in Moodle.
+
+If you're a Moodle administrator, follow the steps below to enable this repository setting in Turnitin:
+
+1. Log into Turnitin.com or TurnitinUK.com.
+2. Under **Edit**, select the cog  icon.
+3. Select **Edit account settings**.
+4. Scroll to **Paper repository options** and select **Submit all papers to the institution repository**.
+6. Select the **Submit** button at the bottom of the page.
+
+Now, it's time to move to Moodle!
+
+1. From the Moodle left-hand side panel, select **Site administration**.
+2. Select **Plugins**.
+3. Select **Activity Modules**.
+4. Then **Manage Activities**.
+5. Scroll to **Turnitin Assignment 2** and select **Settings**.
+6. Scroll to **Paper Repository Assignments** and select **Submit all papers to the institutional repository**.
+
+### :wrench: Fixes and enhancements
+
+#### We've removed a technical notice from the assignment settings page
+
+In Moodle's debug mode, a peculiar notice appeared within the assignment settings: 'Array to string conversion in /usr/share/nginx/html/lib/pear/HTML/QuickForm/select.php on line 501'. We've made some adjustments to ensure that this doesn't appear in future.
+
+#### You can now exit lightboxes using the 'Close' button
+       	
+We received a report that the Close button in the Plagiarism Plugin's lightboxes wasn't performing correctly, in that it wasn't actually closing anything! Instead, users saw the following error: 'Uncaught TypeError: Cannot read property 'close' of undefined at HTMLAnchorElement.onclick'. Thanks for the heads up, @Haietza! We've fixed this issue.
+
+> **Lightboxes** display content by filling the screen and dimming out the rest of the web page. They can be closed to find the website contents still available. Items such as the QuickMark manager and the rubric manager are contained inside a lightbox.
+
+#### Instructors can now successfully submit on behalf of a student
+  	
+An instructor encountered an issue when attempting to resubmit on behalf of a student within a group submission. This was down to us incorrectly checking the permissions of the student, rather than the submitter. These permissions told us that the student wasn't permitted to resubmit to the assignment, but if we'd checked the instructor permissions, we'd have found that their permissions allowed this. Phew. A big thanks to @micaherne for his patch to fix this! It did the job nicely.
+
+---
+
 ### :snowflake: Date:		2018-January-16
 ### :snowflake: Release:	v2018011602
 
@@ -25,7 +220,7 @@ Revision Assistant's genre-specific rubrics are now available in Feedback Studio
 
 #### K-12 QuickMark sets in Feedback Studio (North America only)
 
-QuickMarks are Turnitin's most popular feedback tool among Feedback Studio instructors! But in finding that many of our default QuickMark sets failed to address the needs of our K-12 instructors and students, we've added two new sets to the Feedback Studio collection, available to our North American users! Our new drag-and-drop (and customizable!) comments will help instructors help their students to engage in revision, save time, and more importantly, achieve learning outcomes. [Read more](https://guides.turnitin.com/01_Manuals_and_Guides/Release_Notes/Turnitin_Release_Notes/Genre-specific_rubrics_in_Feedback_Studio).
+QuickMarks are Turnitin's most popular feedback tool among Feedback Studio instructors! But in finding that many of our default QuickMark sets failed to address the needs of our K-12 instructors and students, we've added two new sets to the Feedback Studio collection, available to our North American users! Our new drag-and-drop (and customizable!) comments will help instructors help their students to engage in revision, save time, and more importantly, achieve learning outcomes.
 > 
 > To view and edit your new QuickMarks, you can access the QuickMark manager from within the assignment settings of a new or existing assignment.
 >

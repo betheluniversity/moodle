@@ -76,25 +76,6 @@ if ($ADMIN->fulltree) {
         // Include javascript.
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
-        $PAGE->requires->string_for_js('upgradeavailable', 'turnitintooltwo');
-
-        if (is_siteadmin()) {
-            $data = turnitintooltwo_updateavailable($version);
-
-            if ($data['update']) {
-                $upgrade = html_writer::tag('a', get_string('upgradeavailable', 'turnitintooltwo'), array('href' => $data['file']));
-            } else {
-                $upgrade = html_writer::tag('span', get_string('upgradenotavailable', 'turnitintooltwo'),
-                                        array('class' => 'tii_no_upgrade'));
-                $upgrade .= html_writer::tag('a', $OUTPUT->pix_icon('refresh',
-                                        get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        array('href' => '#', 'class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
-            }
-        }
-
-        $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader',
-                                        get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        array('class' => 'tii_upgrading_check'));
     }
 
     // Offline mode provided by Androgogic. Set tiioffline in config.php.
@@ -121,10 +102,6 @@ if ($ADMIN->fulltree) {
     $testconnection .= html_writer::end_tag('div');
 
     $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.')';
-
-    if ($currentsection == 'modsettingturnitintooltwo') {
-        $desc .= ' - '.$upgrade;
-    }
 
     $settings->add(new admin_setting_heading(
         'turnitintooltwo_migration_status_header',
@@ -216,14 +193,16 @@ if ($ADMIN->fulltree) {
                                                     0, $ynoptions));
 
     $repositoryoptions = array(
-            0 => get_string('repositoryoptions_0', 'turnitintooltwo'),
-            1 => get_string('repositoryoptions_1', 'turnitintooltwo'),
-            2 => get_string('repositoryoptions_2', 'turnitintooltwo'),
-            3 => get_string('repositoryoptions_3', 'turnitintooltwo')
-        );
+        ADMIN_REPOSITORY_OPTION_STANDARD => get_string('repositoryoptions_0', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_EXPANDED => get_string('repositoryoptions_1', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_FORCE_STANDARD => get_string('repositoryoptions_2', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_FORCE_NO => get_string('repositoryoptions_3', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL => get_string('repositoryoptions_4', 'turnitintooltwo')
+    );
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/repositoryoption',
-                                                    get_string('turnitinrepositoryoptions', 'turnitintooltwo'),
+                                                    get_string('turnitinrepositoryoptions', 'turnitintooltwo').
+                                                    $OUTPUT->help_icon('turnitinrepositoryoptions', 'turnitintooltwo'),
                                                     get_string('turnitinrepositoryoptions_desc', 'turnitintooltwo'),
                                                     0, $repositoryoptions));
 
@@ -248,12 +227,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitininboxlayout', 'turnitintooltwo'),
                                                     get_string('turnitininboxlayout_desc', 'turnitintooltwo'),
                                                     0, $layoutoptions));
-
-    $settings->add(new admin_setting_configselect('turnitintooltwo/helpdeskwizard',
-                                                    get_string('turnitinsettingshelpwizard', 'turnitintooltwo'),
-                                                    get_string('turnitinsettingshelpwizard_desc', 'turnitintooltwo'),
-                                                    0, $ynoptions
-                                                ));
 
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
@@ -325,17 +298,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('numberofparts', 'turnitintooltwo'),
                                                     '', 1, array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5)));
 
-    $options = array();
-    $scales = get_scales_menu();
-    foreach ($scales as $value => $scale) {
-        $options[-$value] = $scale;
-    }
-    for ($i = 100; $i >= 1; $i--) {
-        $options[$i] = $i;
-    }
-    $settings->add(new admin_setting_configselect('turnitintooltwo/default_grade', get_string('overallgrade', 'turnitintooltwo'),
-                       '', 100, $options));
-
     if (!empty($config->useanon) && $currentsection == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
                         '', 0, $ynoptions ));
@@ -383,14 +345,16 @@ if ($ADMIN->fulltree) {
     switch ($config->repositoryoption) {
         case 0; // Standard options.
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
-                                                    get_string('submitpapersto', 'turnitintooltwo'),
+                                                    get_string('submitpapersto', 'turnitintooltwo').
+                                                    $OUTPUT->help_icon('submitpapersto', 'turnitintooltwo'),
                                                     '', 1, $suboptions ));
             break;
         case 1; // Standard options + Allow Instituional Repository.
             $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
 
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
-                                                    get_string('submitpapersto', 'turnitintooltwo'),
+                                                    get_string('submitpapersto', 'turnitintooltwo').
+                                                    $OUTPUT->help_icon('submitpapersto', 'turnitintooltwo'),
                                                     '', 1, $suboptions ));
             break;
     }
