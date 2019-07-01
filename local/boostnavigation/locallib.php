@@ -98,6 +98,9 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
     // Parse node settings.
     foreach ($lines as $line) {
 
+        // Remember the node which we add the custom node to individually as we might change this node afterwards.
+        $targetnode = $node;
+
         // Trim setting lines.
         $line = trim($line);
 
@@ -236,8 +239,22 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                             // If no before node key is given, the node will be added to the end of the navigation.
                             $nodebeforenodekey = clean_param($setting, PARAM_ALPHANUM);
 
-                            break;
+                            // The nodes 'myhome' and 'coursehome' cannot be taken as "beforenode".
+                            // The former because it is the root node of the hierarchy.
+                            // The latter since it only exists in the flatnavigation which can't be accessed here.
+                            if ($nodebeforenodekey === 'myhome' || $nodebeforenodekey === 'coursehome') {
+                                $nodebeforenodekey = null;
 
+                                // Handle "beforenodes" that are known to be not direct children of $node but grand children.
+                            } else if ($nodebeforenodekey === 'calendar' || $nodebeforenodekey === 'privatefiles') {
+                                $nodebeforenode = $targetnode->find($nodebeforenodekey, global_navigation::TYPE_UNKNOWN);
+
+                                if ($nodebeforenode) {
+                                    $targetnode = $nodebeforenode->parent;
+                                }
+                            }
+
+                            break;
                     }
                 }
             }
@@ -311,7 +328,7 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                 }
 
                 // Add the custom node to the given navigation_node.
-                $node->add_node($customnode, $nodebeforenodekey);
+                $targetnode->add_node($customnode, $nodebeforenodekey);
 
                 // Remember the node as a potential parent node for the next node.
                 $lastparentnode = $customnode;
@@ -382,7 +399,7 @@ function local_boostnavigation_build_custom_nodes($customnodes, navigation_node 
                 // For some crazy reason, if we add the child node directly to the parent node, it is not shown in the
                 // course navigation section.
                 // Thus, add the custom node to the given navigation_node.
-                $node->add_node($customnode, $nodebeforenodekey);
+                $targetnode->add_node($customnode, $nodebeforenodekey);
                 // And change the parent node directly afterwards.
                 $customnode->set_parent($lastparentnode);
 

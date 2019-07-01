@@ -26,6 +26,8 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/lib.php');
 
+global $CFG;
+
 if ($hassiteconfig) {
     // Create admin settings category.
     $ADMIN->add('appearance', new admin_category('local_boostnavigation',
@@ -136,7 +138,9 @@ if ($hassiteconfig) {
         $page->add(new admin_setting_configcheckbox('local_boostnavigation/removemycoursesnode',
                 get_string('setting_removemycoursesnode', 'local_boostnavigation', null, true),
                 get_string('setting_removemycoursesnode_desc', 'local_boostnavigation', null, true).'<br /><br />'.
-                        get_string('setting_removemycoursesnodeperformancehint', 'local_boostnavigation', null, true).
+                        get_string('setting_removemycoursesnodeperformancehint', 'local_boostnavigation',
+                                array('url' => $CFG->wwwroot.'/admin/search.php?query=linkcoursesections'),
+                                true).
                         '<br /><br />'.
                         get_string('setting_removenodestechnicalhint', 'local_boostnavigation', null, true),
                 0));
@@ -178,7 +182,10 @@ if ($hassiteconfig) {
                 get_string('setting_collapsemycoursesnode', 'local_boostnavigation', null, true),
                 get_string('setting_collapsemycoursesnode_desc', 'local_boostnavigation', null, true).'<br /><br />'.
                         get_string('setting_collapsenodestechnicalhint', 'local_boostnavigation', null, true).'<br /><br />'.
-                        get_string('setting_collapsemycoursesnodeperformancehint', 'local_boostnavigation', null, true),
+                        get_string('setting_collapsemycoursesnodeperformancehint',
+                                'local_boostnavigation',
+                                array('url' => $CFG->wwwroot.'/admin/search.php?query=linkcoursesections'),
+                                true),
                 0));
 
         // Create my courses node collapse default widget.
@@ -294,7 +301,9 @@ if ($hassiteconfig) {
         $page->add(new admin_setting_configcheckbox('local_boostnavigation/insertcoursesectionscoursenode',
                 get_string('setting_insertcoursesectionscoursenode', 'local_boostnavigation', null, true),
                 get_string('setting_insertcoursesectionscoursenode_desc', 'local_boostnavigation', null, true).'<br /><br />'.
-                        get_string('setting_insertcoursesectionscoursenodecorehint', 'local_boostnavigation', null, true).
+                        get_string('setting_insertcoursesectionscoursenodecorehint', 'local_boostnavigation',
+                                array('url' => $CFG->wwwroot.'/admin/search.php?query=linkcoursesections'),
+                                true).
                         '<br /><br />'.
                         get_string('setting_insertnodescollapsehint', 'local_boostnavigation', null, true),
                 0));
