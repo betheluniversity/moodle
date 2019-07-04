@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * boost_ancient.
+ * Boost.
  *
  * @package    theme_boost_ancient
  * @copyright  2016 Frédéric Massart
@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017111300;
-$plugin->requires  = 2017110800;
+$plugin->version   = 2018120300;
+$plugin->requires  = 2018112800;
 $plugin->component = 'theme_boost_ancient';
