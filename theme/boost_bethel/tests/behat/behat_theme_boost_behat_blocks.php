@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../../../../blocks/tests/behat/behat_blocks.php');
  * @copyright  2012 David Monllaó
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_theme_boost_font_safe_behat_blocks extends behat_blocks {
+class behat_theme_boost_bethel_behat_blocks extends behat_blocks {
 
     public function i_add_the_block($blockname) {
         $addblock = get_string('addblock');

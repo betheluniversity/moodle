@@ -17,7 +17,7 @@
  * Custom form error event handler to manipulate the bootstrap markup and show
  * nicely styled errors in an mform.
  *
- * @module     theme_boost_bethel/form-display-errors
+ * @module     theme_boost_font_safe/form-display-errors
  * @copyright  2016 Damyon Wiese <damyon@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -37,7 +37,7 @@ define(['jquery', 'core/event'], function($, Event) {
                 if (msg !== '') {
                     parent.addClass('has-danger');
                     parent.data('client-validation-error', true);
-                    $(element).addClass('is-invalid');
+                    $(element).addClass('form-control-danger');
                     $(element).attr('aria-describedby', feedback.attr('id'));
                     $(element).attr('aria-invalid', true);
                     feedback.attr('tabindex', 0);
@@ -53,7 +53,7 @@ define(['jquery', 'core/event'], function($, Event) {
                     if (parent.data('client-validation-error') === true) {
                         parent.removeClass('has-danger');
                         parent.data('client-validation-error', false);
-                        $(element).removeClass('is-invalid');
+                        $(element).removeClass('form-control-danger');
                         $(element).removeAttr('aria-describedby');
                         $(element).attr('aria-invalid', false);
                         feedback.hide();

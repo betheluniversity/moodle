@@ -17,7 +17,7 @@
 /**
  * Boost.
  *
- * @package    theme_boost_font_safe
+ * @package    theme_boost_bethel
  * @copyright  2016 Frédéric Massart
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,4 +26,4 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2018120300;
 $plugin->requires  = 2018112800;
-$plugin->component = 'theme_boost_font_safe';
+$plugin->component = 'theme_boost_bethel';

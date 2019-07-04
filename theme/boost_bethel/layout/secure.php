@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A secure layout for the boost_font_safe theme.
+ * A secure layout for the boost_bethel theme.
  *
- * @package   theme_boost_font_safe
+ * @package   theme_boost_bethel
  * @copyright 2016 Damyon Wiese
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -36,5 +36,5 @@ $templatecontext = [
     'hasblocks' => $hasblocks
 ];
 
-echo $OUTPUT->render_from_template('theme_boost_font_safe/secure', $templatecontext);
+echo $OUTPUT->render_from_template('theme_boost_bethel/secure', $templatecontext);
 

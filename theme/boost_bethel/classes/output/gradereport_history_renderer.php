@@ -17,12 +17,12 @@
 /**
  * Overriden gradereport_history renderer.
  *
- * @package    theme_boost_font_safe
+ * @package    theme_boost_bethel
  * @copyright  2016 Frédéric Massart - FMCorz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_boost_font_safe\output;
+namespace theme_boost_bethel\output;
 defined('MOODLE_INTERNAL') || die();
 
 use gradereport_history\output\user_button;
@@ -30,7 +30,7 @@ use gradereport_history\output\user_button;
 /**
  * Overriden gradereport_history renderer.
  *
- * @package    theme_boost_font_safe
+ * @package    theme_boost_bethel
  * @copyright  2016 Frédéric Massart - FMCorz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

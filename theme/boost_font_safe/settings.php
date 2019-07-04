@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   theme_boost_bethel
+ * @package   theme_boost_font_safe
  * @copyright 2016 Ryan Wyllie
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -23,18 +23,18 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
-    $settings = new theme_boost_bethel_admin_settingspage_tabs('themesettingboost_bethel', get_string('configtitle', 'theme_boost_bethel'));
-    $page = new admin_settingpage('theme_boost_bethel_general', get_string('generalsettings', 'theme_boost_bethel'));
+    $settings = new theme_boost_font_safe_admin_settingspage_tabs('themesettingboost_font_safe', get_string('configtitle', 'theme_boost_font_safe'));
+    $page = new admin_settingpage('theme_boost_font_safe_general', get_string('generalsettings', 'theme_boost_font_safe'));
 
     // Preset.
-    $name = 'theme_boost_bethel/preset';
-    $title = get_string('preset', 'theme_boost_bethel');
-    $description = get_string('preset_desc', 'theme_boost_bethel');
+    $name = 'theme_boost_font_safe/preset';
+    $title = get_string('preset', 'theme_boost_font_safe');
+    $description = get_string('preset_desc', 'theme_boost_font_safe');
     $default = 'default.scss';
 
     $context = context_system::instance();
     $fs = get_file_storage();
-    $files = $fs->get_area_files($context->id, 'theme_boost_bethel', 'preset', 0, 'itemid, filepath, filename', false);
+    $files = $fs->get_area_files($context->id, 'theme_boost_font_safe', 'preset', 0, 'itemid, filepath, filename', false);
 
     $choices = [];
     foreach ($files as $file) {
@@ -49,27 +49,27 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     // Preset files setting.
-    $name = 'theme_boost_bethel/presetfiles';
-    $title = get_string('presetfiles','theme_boost_bethel');
-    $description = get_string('presetfiles_desc', 'theme_boost_bethel');
+    $name = 'theme_boost_font_safe/presetfiles';
+    $title = get_string('presetfiles','theme_boost_font_safe');
+    $description = get_string('presetfiles_desc', 'theme_boost_font_safe');
 
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
         array('maxfiles' => 20, 'accepted_types' => array('.scss')));
     $page->add($setting);
 
     // Background image setting.
-    $name = 'theme_boost_bethel/backgroundimage';
-    $title = get_string('backgroundimage', 'theme_boost_bethel');
-    $description = get_string('backgroundimage_desc', 'theme_boost_bethel');
+    $name = 'theme_boost_font_safe/backgroundimage';
+    $title = get_string('backgroundimage', 'theme_boost_font_safe');
+    $description = get_string('backgroundimage_desc', 'theme_boost_font_safe');
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'backgroundimage');
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     // Variable $body-color.
     // We use an empty default value because the default colour should come from the preset.
-    $name = 'theme_boost_bethel/brandcolor';
-    $title = get_string('brandcolor', 'theme_boost_bethel');
-    $description = get_string('brandcolor_desc', 'theme_boost_bethel');
+    $name = 'theme_boost_font_safe/brandcolor';
+    $title = get_string('brandcolor', 'theme_boost_font_safe');
+    $description = get_string('brandcolor_desc', 'theme_boost_font_safe');
     $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
@@ -78,17 +78,17 @@ if ($ADMIN->fulltree) {
     $settings->add($page);
 
     // Advanced settings.
-    $page = new admin_settingpage('theme_boost_bethel_advanced', get_string('advancedsettings', 'theme_boost_bethel'));
+    $page = new admin_settingpage('theme_boost_font_safe_advanced', get_string('advancedsettings', 'theme_boost_font_safe'));
 
     // Raw SCSS to include before the content.
-    $setting = new admin_setting_scsscode('theme_boost_bethel/scsspre',
-        get_string('rawscsspre', 'theme_boost_bethel'), get_string('rawscsspre_desc', 'theme_boost_bethel'), '', PARAM_RAW);
+    $setting = new admin_setting_scsscode('theme_boost_font_safe/scsspre',
+        get_string('rawscsspre', 'theme_boost_font_safe'), get_string('rawscsspre_desc', 'theme_boost_font_safe'), '', PARAM_RAW);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     // Raw SCSS to include after the content.
-    $setting = new admin_setting_scsscode('theme_boost_bethel/scss', get_string('rawscss', 'theme_boost_bethel'),
-        get_string('rawscss_desc', 'theme_boost_bethel'), '', PARAM_RAW);
+    $setting = new admin_setting_scsscode('theme_boost_font_safe/scss', get_string('rawscss', 'theme_boost_font_safe'),
+        get_string('rawscss_desc', 'theme_boost_font_safe'), '', PARAM_RAW);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 

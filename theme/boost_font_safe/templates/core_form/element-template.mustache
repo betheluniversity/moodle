@@ -36,15 +36,14 @@
         "advanced": false,
         "error": null,
         "element": {
-            "wrapperid": "fitem_id_fullname",
             "id": "id_fullname",
             "name": "fullname"
         }
     }
 }}
-<div id="{{element.wrapperid}}" class="form-group row {{#error}}has-danger{{/error}} fitem {{#element.emptylabel}}femptylabel{{/element.emptylabel}} {{#advanced}}advanced{{/advanced}} {{{element.extraclasses}}}" {{#element.groupname}}data-groupname="{{.}}"{{/element.groupname}}>
+<div class="form-group row {{#error}}has-danger{{/error}} fitem {{#element.emptylabel}}femptylabel{{/element.emptylabel}} {{#advanced}}advanced{{/advanced}} {{{element.extraclasses}}}" {{#element.groupname}}data-groupname="{{.}}"{{/element.groupname}}>
     <div class="col-md-3">
-        <span class="float-sm-right text-nowrap">
+        <span class="pull-xs-right text-nowrap">
             {{#required}}<abbr class="initialism text-danger" title="{{#str}}required{{/str}}">{{#pix}}req, core, {{#str}}required{{/str}}{{/pix}}</abbr>{{/required}}
             {{#advanced}}<abbr class="initialism text-info" title="{{#str}}advanced{{/str}}">!</abbr>{{/advanced}}
             {{{helpbutton}}}
@@ -64,13 +63,13 @@
         {{$ element }}
             <!-- Element goes here -->
         {{/ element }}
-        <div class="form-control-feedback invalid-feedback" id="id_error_{{element.name}}" {{#error}} style="display: block;"{{/error}}>
+        <div class="form-control-feedback" id="id_error_{{element.name}}" {{^error}} style="display: none;"{{/error}}>
             {{{error}}}
         </div>
     </div>
 </div>
 {{#js}}
-require(['theme_boost_bethel/form-display-errors'], function(module) {
+require(['theme_boost_font_safe/form-display-errors'], function(module) {
     module.enhance({{#quote}}{{element.id}}{{/quote}});
 });
 {{/js}}

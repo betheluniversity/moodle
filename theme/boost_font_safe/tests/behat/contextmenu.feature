@@ -1,6 +1,6 @@
-@javascript @theme_boost_bethel
+@javascript @theme_boost_font_safe
 Feature: Context settings menu
-  To navigate in boost_bethel theme I need to use the context settings menu
+  To navigate in boost_font_safe theme I need to use the context settings menu
 
   Background:
     Given the following "courses" exist:

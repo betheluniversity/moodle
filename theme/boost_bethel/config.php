@@ -17,7 +17,7 @@
 /**
  * Boost config.
  *
- * @package   theme_boost_font_safe
+ * @package   theme_boost_bethel
  * @copyright 2016 Frédéric Massart
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,12 +26,12 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/lib.php');
 
-$THEME->name = 'boost_font_safe';
+$THEME->name = 'boost_bethel';
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
 $THEME->usefallback = true;
 $THEME->scss = function($theme) {
-    return theme_boost_font_safe_get_main_scss_content($theme);
+    return theme_boost_bethel_get_main_scss_content($theme);
 };
 
 $THEME->layouts = [
@@ -147,10 +147,10 @@ $THEME->layouts = [
 
 $THEME->parents = [];
 $THEME->enable_dock = false;
-$THEME->csstreepostprocessor = 'theme_boost_font_safe_css_tree_post_processor';
-$THEME->extrascsscallback = 'theme_boost_font_safe_get_extra_scss';
-$THEME->prescsscallback = 'theme_boost_font_safe_get_pre_scss';
-$THEME->precompiledcsscallback = 'theme_boost_font_safe_get_precompiled_css';
+$THEME->csstreepostprocessor = 'theme_boost_bethel_css_tree_post_processor';
+$THEME->extrascsscallback = 'theme_boost_bethel_get_extra_scss';
+$THEME->prescsscallback = 'theme_boost_bethel_get_pre_scss';
+$THEME->precompiledcsscallback = 'theme_boost_bethel_get_precompiled_css';
 $THEME->yuicssmodules = array();
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';

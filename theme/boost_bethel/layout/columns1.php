@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * A one column layout for the boost_font_safe theme.
+ * A one column layout for the boost_bethel theme.
  *
- * @package   theme_boost_font_safe
+ * @package   theme_boost_bethel
  * @copyright 2016 Damyon Wiese
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -32,5 +32,5 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes
 ];
 
-echo $OUTPUT->render_from_template('theme_boost_font_safe/columns1', $templatecontext);
+echo $OUTPUT->render_from_template('theme_boost_bethel/columns1', $templatecontext);
 

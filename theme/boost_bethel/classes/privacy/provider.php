@@ -15,21 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for theme_boost_font_safe.
+ * Privacy Subsystem implementation for theme_boost_bethel.
  *
- * @package    theme_boost_font_safe
+ * @package    theme_boost_bethel
  * @copyright  2018 Andrew Nicols <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_boost_font_safe\privacy;
+namespace theme_boost_bethel\privacy;
 
 use \core_privacy\local\metadata\collection;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The boost_font_safe theme stores a user preference data.
+ * The boost_bethel theme stores a user preference data.
  *
  * @copyright  2018 Andrew Nicols <andrew@nicols.co.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -63,12 +63,12 @@ class provider implements
         $draweropennavpref = get_user_preferences(self::DRAWER_OPEN_NAV, null, $userid);
 
         if (isset($draweropennavpref)) {
-            $preferencestring = get_string('privacy:drawernavclosed', 'theme_boost_font_safe');
+            $preferencestring = get_string('privacy:drawernavclosed', 'theme_boost_bethel');
             if ($draweropennavpref == 'true') {
-                $preferencestring = get_string('privacy:drawernavopen', 'theme_boost_font_safe');
+                $preferencestring = get_string('privacy:drawernavopen', 'theme_boost_bethel');
             }
             \core_privacy\local\request\writer::export_user_preference(
-                'theme_boost_font_safe',
+                'theme_boost_bethel',
                 self::DRAWER_OPEN_NAV,
                 $draweropennavpref,
                 $preferencestring

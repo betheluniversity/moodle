@@ -15,11 +15,11 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_bethel/columns2
+    @template theme_boost_font_safe/columns2
 
     Admin time setting template.
 
-    Boost 2 column layout template.
+    boost_font_safe 2 column layout template.
 
     Context variables required for this template:
     * sitename - The name of the site
@@ -48,7 +48,14 @@
         "hasregionmainsettingsmenu": false
     }
 }}
-{{> theme_boost_bethel/head }}
+{{{ output.doctype }}}
+<html {{{ output.htmlattributes }}}>
+<head>
+    <title>{{{ output.page_title }}}</title>
+    <link rel="shortcut icon" href="{{{ output.favicon }}}" />
+    {{{ output.standard_head_html }}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
 <body {{{ bodyattributes }}}>
 
@@ -56,20 +63,20 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{> theme_boost_bethel/navbar }}
+    {{>theme_boost_font_safe/header}}
 
     <div id="page" class="container-fluid">
         {{{ output.full_header }}}
 
-        <div id="page-content" class="row pb-3">
-            <div id="region-main-box" class="col-12">
+        <div id="page-content" class="row">
+            <div id="region-main-box" class="col-xs-12">
                 {{#hasregionmainsettingsmenu}}
-                <div id="region-main-settings-menu" class="d-print-none {{#hasblocks}}has-blocks{{/hasblocks}}">
+                <div id="region-main-settings-menu" class="hidden-print {{#hasblocks}}has-blocks{{/hasblocks}}">
                     <div> {{{ output.region_main_settings_menu }}} </div>
                 </div>
                 {{/hasregionmainsettingsmenu}}
-                <section id="region-main" {{#hasblocks}}class="has-blocks mb-3"{{/hasblocks}}>
-
+                <section id="region-main" {{#hasblocks}}class="has-blocks"{{/hasblocks}}>
+                    <div class="card card-block">
                     {{#hasregionmainsettingsmenu}}
                         <div class="region_main_settings_menu_proxy"></div>
                     {{/hasregionmainsettingsmenu}}
@@ -77,26 +84,46 @@
                     {{{ output.main_content }}}
                     {{{ output.activity_navigation }}}
                     {{{ output.course_content_footer }}}
-
+                    </div>
                 </section>
                 {{#hasblocks}}
-                <section data-region="blocks-column" class="d-print-none">
+                <section data-region="blocks-column" class="hidden-print">
                     {{{ sidepreblocks }}}
                 </section>
                 {{/hasblocks}}
             </div>
         </div>
     </div>
-    {{{ output.standard_after_main_region_html }}}
-    {{> theme_boost_bethel/nav-drawer }}
-    {{> theme_boost_bethel/footer }}
+    {{> theme_boost_font_safe/nav-drawer }}
 </div>
+<footer id="page-footer" class="p-y-1 bg-inverse">
+    <div class="container">
+        <div id="course-footer">{{{ output.course_footer }}}</div>
+
+        {{# output.page_doc_link }}
+            <p class="helplink">{{{ output.page_doc_link }}}</p>
+        {{/ output.page_doc_link }}
+
+        {{{ output.login_info }}}
+        <div class="tool_usertours-resettourcontainer"></div>
+        {{{ output.home_link }}}
+        <nav class="nav navbar-nav hidden-lg-up">
+            {{# output.custom_menu_flat }}
+                <ul class="list-unstyled p-t-1">
+                    {{> theme_boost_font_safe/custom_menu_footer }}
+                </ul>
+            {{/ output.custom_menu_flat }}
+        </nav>
+        {{{ output.standard_footer_html }}}
+        {{{ output.standard_end_of_body_html }}}
+    </div>
+</footer>
 
 </body>
 </html>
 {{#js}}
-require(['theme_boost_bethel/loader']);
-require(['theme_boost_bethel/drawer'], function(mod) {
+require(['theme_boost_font_safe/loader']);
+require(['theme_boost_font_safe/drawer'], function(mod) {
     mod.init();
 });
 {{/js}}

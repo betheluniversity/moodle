@@ -34,7 +34,7 @@ use Behat\Mink\Exception\ExpectationException as ExpectationException,
  * @copyright  2016 Damyon Wiese
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class behat_theme_boost_bethel_behat_repository_upload extends behat_repository_upload {
+class behat_theme_boost_font_safe_behat_repository_upload extends behat_repository_upload {
 
     protected function get_filepicker_node($filepickerelement) {
 
@@ -74,9 +74,8 @@ class behat_theme_boost_bethel_behat_repository_upload extends behat_repository_
         $noformexception = new ExpectationException('The upload file form is not ready', $this->getSession());
         $this->find(
             'xpath',
-            "//div[contains(concat(' ', normalize-space(@class), ' '), ' container ')]" .
+            "//div[contains(concat(' ', normalize-space(@class), ' '), ' file-picker ')]" .
                 "[contains(concat(' ', normalize-space(@class), ' '), ' repository_upload ')]" .
-                "/descendant::div[contains(concat(' ', normalize-space(@class), ' '), ' file-picker ')]" .
                 "/descendant::div[contains(concat(' ', normalize-space(@class), ' '), ' fp-content ')]" .
                 "/descendant::div[contains(concat(' ', normalize-space(@class), ' '), ' fp-upload-form ')]" .
                 "/descendant::form",
