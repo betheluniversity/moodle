@@ -1,6 +1,6 @@
-@javascript @theme_boost_font_safe
+@javascript @theme_boost_bethel
 Feature: Region main settings menu
-  To navigate in boost_font_safe theme I need to use the region main settings menu
+  To navigate in boost_bethel theme I need to use the region main settings menu
 
   Background:
     Given the following "courses" exist:

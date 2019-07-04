@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy tests for theme_boost_bethel.
+ * Privacy tests for theme_boost_font_safe.
  *
- * @package    theme_boost_bethel
+ * @package    theme_boost_font_safe
  * @category   test
  * @copyright  2018 Adrian Greeve <adriangreeve.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,15 +25,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-use \theme_boost_bethel\privacy\provider;
+use \theme_boost_font_safe\privacy\provider;
 
 /**
- * Unit tests for theme_boost_bethel/classes/privacy/policy
+ * Unit tests for theme_boost_font_safe/classes/privacy/policy
  *
  * @copyright  2018 Adrian Greeve <adriangreeve.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class theme_boost_bethel_privacy_testcase extends \core_privacy\tests\provider_testcase {
+class theme_boost_font_safe_privacy_testcase extends \core_privacy\tests\provider_testcase {
 
     /**
      * Test for provider::test_export_user_preferences().
@@ -54,10 +54,10 @@ class theme_boost_bethel_privacy_testcase extends \core_privacy\tests\provider_t
         $writer = \core_privacy\local\request\writer::with_context($contextuser);
         $this->assertTrue($writer->has_any_data());
 
-        $exportedpreferences = $writer->get_user_preferences('theme_boost_bethel');
+        $exportedpreferences = $writer->get_user_preferences('theme_boost_font_safe');
         $this->assertCount(1, (array) $exportedpreferences);
         $this->assertEquals('false', $exportedpreferences->{provider::DRAWER_OPEN_NAV}->value);
-        $this->assertEquals(get_string('privacy:drawernavclosed', 'theme_boost_bethel'),
+        $this->assertEquals(get_string('privacy:drawernavclosed', 'theme_boost_font_safe'),
                 $exportedpreferences->{provider::DRAWER_OPEN_NAV}->description);
 
         // Add a user home page preference for the User.
@@ -69,10 +69,10 @@ class theme_boost_bethel_privacy_testcase extends \core_privacy\tests\provider_t
         $writer = \core_privacy\local\request\writer::with_context($contextuser);
         $this->assertTrue($writer->has_any_data());
 
-        $exportedpreferences = $writer->get_user_preferences('theme_boost_bethel');
+        $exportedpreferences = $writer->get_user_preferences('theme_boost_font_safe');
         $this->assertCount(1, (array) $exportedpreferences);
         $this->assertEquals('true', $exportedpreferences->{provider::DRAWER_OPEN_NAV}->value);
-        $this->assertEquals(get_string('privacy:drawernavopen', 'theme_boost_bethel'),
+        $this->assertEquals(get_string('privacy:drawernavopen', 'theme_boost_font_safe'),
                 $exportedpreferences->{provider::DRAWER_OPEN_NAV}->description);
     }
 }

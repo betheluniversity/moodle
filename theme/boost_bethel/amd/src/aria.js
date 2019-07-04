@@ -16,7 +16,7 @@
 /**
  * Enhancements to Bootstrap components for accessibility.
  *
- * @module     theme_boost_bethel/aria
+ * @module     theme_boost_font_safe/aria
  * @copyright  2018 Damyon Wiese <damyon@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

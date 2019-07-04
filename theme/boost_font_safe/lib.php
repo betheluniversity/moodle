@@ -17,7 +17,7 @@
 /**
  * Theme functions.
  *
- * @package    theme_boost_font_safe
+ * @package    theme_boost_bethel
  * @copyright  2016 Frédéric Massart - FMCorz.net
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,8 +30,8 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $tree The CSS tree.
  * @param theme_config $theme The theme config object.
  */
-function theme_boost_font_safe_css_tree_post_processor($tree, $theme) {
-    $prefixer = new theme_boost_font_safe\autoprefixer($tree);
+function theme_boost_bethel_css_tree_post_processor($tree, $theme) {
+    $prefixer = new theme_boost_bethel\autoprefixer($tree);
     $prefixer->prefix();
 }
 
@@ -41,14 +41,14 @@ function theme_boost_font_safe_css_tree_post_processor($tree, $theme) {
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_boost_font_safe_get_extra_scss($theme) {
+function theme_boost_bethel_get_extra_scss($theme) {
     $content = '';
     $imageurl = $theme->setting_file_url('backgroundimage', 'backgroundimage');
 
     // Sets the background image, and its settings.
     if (!empty($imageurl)) {
         $content .= 'body { ';
-        $content .= "background-image: url('$imageurl');";
+        $content .= "background-image: url('$imageurl'); background-size: cover;";
         $content .= ' }';
     }
 
@@ -68,9 +68,9 @@ function theme_boost_font_safe_get_extra_scss($theme) {
  * @param array $options
  * @return bool
  */
-function theme_boost_font_safe_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+function theme_boost_bethel_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
     if ($context->contextlevel == CONTEXT_SYSTEM && ($filearea === 'logo' || $filearea === 'backgroundimage')) {
-        $theme = theme_config::load('boost_font_safe');
+        $theme = theme_config::load('boost_bethel');
         // By default, theme files must be cache-able by both browsers and proxies.
         if (!array_key_exists('cacheability', $options)) {
             $options['cacheability'] = 'public';
@@ -87,7 +87,7 @@ function theme_boost_font_safe_pluginfile($course, $cm, $context, $filearea, $ar
  * @param theme_config $theme The theme config object.
  * @return string
  */
-function theme_boost_font_safe_get_main_scss_content($theme) {
+function theme_boost_bethel_get_main_scss_content($theme) {
     global $CFG;
 
     $scss = '';
@@ -96,17 +96,27 @@ function theme_boost_font_safe_get_main_scss_content($theme) {
 
     $context = context_system::instance();
     if ($filename == 'default.scss') {
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_font_safe/scss/preset/default.scss');
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_bethel/scss/preset/default.scss');
     } else if ($filename == 'plain.scss') {
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_font_safe/scss/preset/plain.scss');
-    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_boost_font_safe', 'preset', 0, '/', $filename))) {
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_bethel/scss/preset/plain.scss');
+    } else if ($filename && ($presetfile = $fs->get_file($context->id, 'theme_boost_bethel', 'preset', 0, '/', $filename))) {
         $scss .= $presetfile->get_content();
     } else {
         // Safety fallback - maybe new installs etc.
-        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_font_safe/scss/preset/default.scss');
+        $scss .= file_get_contents($CFG->dirroot . '/theme/boost_bethel/scss/preset/default.scss');
     }
 
     return $scss;
+}
+
+/**
+ * Get compiled css.
+ *
+ * @return string compiled css
+ */
+function theme_boost_bethel_get_precompiled_css() {
+    global $CFG;
+    return file_get_contents($CFG->dirroot . '/theme/boost_bethel/style/moodle.css');
 }
 
 /**
@@ -115,13 +125,13 @@ function theme_boost_font_safe_get_main_scss_content($theme) {
  * @param theme_config $theme The theme config object.
  * @return array
  */
-function theme_boost_font_safe_get_pre_scss($theme) {
+function theme_boost_bethel_get_pre_scss($theme) {
     global $CFG;
 
     $scss = '';
     $configurable = [
         // Config key => [variableName, ...].
-        'brandcolor' => ['brand-primary'],
+        'brandcolor' => ['primary'],
     ];
 
     // Prepend variables first.
@@ -138,6 +148,10 @@ function theme_boost_font_safe_get_pre_scss($theme) {
     // Prepend pre-scss.
     if (!empty($theme->settings->scsspre)) {
         $scss .= $theme->settings->scsspre;
+    }
+
+    if (!empty($theme->settings->fontsize)) {
+        $scss .= '$font-size-base: ' . (1 / 100 * $theme->settings->fontsize) . "rem !default;\n";
     }
 
     return $scss;

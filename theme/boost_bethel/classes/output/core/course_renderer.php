@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace theme_boost_bethel\output\core;
+namespace theme_boost_font_safe\output\core;
 defined('MOODLE_INTERNAL') || die();
 
 use moodle_url;
@@ -79,7 +79,7 @@ class course_renderer extends \core_course_renderer {
             $data->helpicon = $helpicon->export_for_template($this);
         }
 
-        return $this->render_from_template('theme_boost_bethel/course_search_form', $data);
+        return $this->render_from_template('theme_boost_font_safe/course_search_form', $data);
     }
 
 }

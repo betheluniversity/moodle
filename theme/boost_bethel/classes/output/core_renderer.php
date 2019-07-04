@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace theme_boost_bethel\output;
+namespace theme_boost_font_safe\output;
 
 use coding_exception;
 use html_writer;
@@ -39,7 +39,7 @@ defined('MOODLE_INTERNAL') || die;
 /**
  * Renderers to align Moodle's HTML with that expected by Bootstrap
  *
- * @package    theme_boost_bethel
+ * @package    theme_boost_font_safe
  * @copyright  2012 Bas Brands, www.basbrands.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -79,7 +79,7 @@ class core_renderer extends \core_renderer {
         $header->navbar = $this->navbar();
         $header->pageheadingbutton = $this->page_heading_button();
         $header->courseheader = $this->course_header();
-        return $this->render_from_template('theme_boost_bethel/header', $header);
+        return $this->render_from_template('theme_boost_font_safe/header', $header);
     }
 
     /**

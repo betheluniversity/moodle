@@ -28,18 +28,18 @@ define(['jquery', './tether', 'core/event'], function(jQuery, Tether, Event) {
     window.jQuery = jQuery;
     window.Tether = Tether;
 
-    require(['theme_boost_bethel/aria',
-            'theme_boost_bethel/util',
-            'theme_boost_bethel/alert',
-            'theme_boost_bethel/button',
-            'theme_boost_bethel/carousel',
-            'theme_boost_bethel/collapse',
-            'theme_boost_bethel/dropdown',
-            'theme_boost_bethel/modal',
-            'theme_boost_bethel/scrollspy',
-            'theme_boost_bethel/tab',
-            'theme_boost_bethel/tooltip',
-            'theme_boost_bethel/popover'],
+    require(['theme_boost_font_safe/aria',
+            'theme_boost_font_safe/util',
+            'theme_boost_font_safe/alert',
+            'theme_boost_font_safe/button',
+            'theme_boost_font_safe/carousel',
+            'theme_boost_font_safe/collapse',
+            'theme_boost_font_safe/dropdown',
+            'theme_boost_font_safe/modal',
+            'theme_boost_font_safe/scrollspy',
+            'theme_boost_font_safe/tab',
+            'theme_boost_font_safe/tooltip',
+            'theme_boost_font_safe/popover'],
             function(Aria) {
 
         // We do twice because: https://github.com/twbs/bootstrap/issues/10547

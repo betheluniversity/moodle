@@ -1,5 +1,5 @@
 {{!
-    @template theme_boost_bethel/core_form/element-radio
+    @template theme_boost_font_safe/core_form/element-radio
 
     Example context (json):
     {
@@ -51,7 +51,7 @@
 </div>
 {{^element.frozen}}
 {{#js}}
-require(['theme_boost_bethel/form-display-errors'], function(module) {
+require(['theme_boost_font_safe/form-display-errors'], function(module) {
     module.enhance({{#quote}}{{element.id}}{{/quote}});
 });
 {{/js}}

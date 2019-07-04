@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template theme_boost_bethel/secure
+    @template theme_boost_font_safe/secure
 
     Boost secure layout template.
 
@@ -34,7 +34,7 @@
          }
     }
 }}
-{{> theme_boost_bethel/head }}
+{{> theme_boost_font_safe/head }}
 
 <body {{{ bodyattributes }}}>
 
@@ -42,7 +42,7 @@
 
     {{{ output.standard_top_of_body_html }}}
 
-    {{>theme_boost_bethel/navbar-secure}}
+    {{>theme_boost_font_safe/navbar-secure}}
 
     <div id="page" class="container-fluid">
         {{! Secured full header }}
@@ -87,5 +87,5 @@
 </body>
 </html>
 {{#js}}
-require(['theme_boost_bethel/loader']);
+require(['theme_boost_font_safe/loader']);
 {{/js}}
