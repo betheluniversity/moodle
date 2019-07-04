@@ -18,7 +18,7 @@
  * Autoprefixer.
  *
  * This autoprefixer has been developed to satisfy the basic needs of the
- * theme boost_font_safe when working with Bootstrap 4 alpha. We do not recommend
+ * theme Boost when working with Bootstrap 4 alpha. We do not recommend
  * that this tool is shared, nor used outside of this theme.
  *
  * @package    theme_boost_font_safe
