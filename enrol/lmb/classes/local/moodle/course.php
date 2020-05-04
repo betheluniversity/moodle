@@ -30,6 +30,8 @@ defined('MOODLE_INTERNAL') || die();
 use enrol_lmb\logging;
 use enrol_lmb\settings;
 use enrol_lmb\local\data;
+use enrol_lmb\local\exception;
+use enrol_lmb\lock_factory;
 
 require_once($CFG->dirroot.'/course/lib.php');
 
@@ -56,87 +58,81 @@ class course extends base {
             throw new \coding_exception('Expected instance of data\section to be passed.');
         }
 
-        $this->data = $data;
+        // We need a lock because course sortorder can cause collisions while lots of concurent inserts.
+        if (!$lock = lock_factory::get_course_modify_lock()) {
+            logging::instance()->log_line("Course not aquire course modification lock.", logging::ERROR_WARN);
 
-        // First see if we are going to be working with an existing or new course.
-        $new = false;
-        $course = $this->find_existing_course();
-        if (empty($course)) {
-            $new = true;
-            $course = $this->create_new_course_object();
-            $course->visible = $this->calculate_visibility($this->data->begindate);
+            throw new exception\course_lock_exception();
         }
-
-        // Set the titles if new or forcing.
-        if ($new || (bool)$this->settings->get('forcetitle')) {
-            $course->fullname = $this->create_course_title($this->settings->get('coursetitle'), $this->data);
-        }
-        if ($new || (bool)$this->settings->get('forceshorttitle')) {
-            $course->shortname = $this->create_course_title($this->settings->get('courseshorttitle'), $this->data);
-        }
-
-        // We always update dates.
-        if (empty($this->data->begindate)) {
-            if (!isset($course->startdate)) {
-                $course->startdate = 0;
-            }
-        } else {
-            $course->startdate = $this->data->begindate;
-        }
-        // A course can only have an end date if it has a start date.
-        if (empty($course->startdate)) {
-            $course->enddate = 0;
-        } else {
-            if (empty($this->data->enddate)) {
-                if (!isset($course->enddate)) {
-                    $course->enddate = 0;
-                }
-            } else {
-                $course->enddate = $this->data->enddate;
-            }
-        }
-
-        // Here we update the number of sections.
-        if ($new || $this->settings->get('forcecomputesections')) {
-            $newsectioncount = $this->calculate_section_count($this->data->begindate, $this->data->enddate);
-            if ($newsectioncount !== false) {
-                $course->numsections = $newsectioncount;
-            }
-        }
-
-        // Here we set the category
-        if ($new || $this->settings->get('forcecat')) {
-            // TODO Category finder.
-            $course->category = $this->get_category_id();
-        }
-
-        // TODO - Recalculate visibility based on changes in start date.
 
         try {
-            if ($new) {
-                logging::instance()->log_line('Creating new Moodle course');
-                $course = create_course($course);
+            $this->data = $data;
 
-            } else {
-                logging::instance()->log_line('Updating Moodle course');
-                update_course($course);
+            // First see if we are going to be working with an existing or new course.
+            $new = false;
+            $course = $this->find_existing_course();
+            if (empty($course)) {
+                $new = true;
+                $course = $this->create_new_course_object();
+                $course->visible = $this->calculate_visibility($this->data->begindate);
             }
-            // Update the count of sections.
-            // We can just use the presense of numsections to tell us if we need to do this or not.
-            if (!empty($course->numsections)) {
-                $sectioncount = $DB->count_records('course_sections', array('course' => $course->id));
-                // Remove 1 to account for the general section.
-                $sectioncount -= 1;
 
-                if ($course->numsections > $sectioncount) {
-                    course_create_sections_if_missing($course->id, range(0, $course->numsections));
+            // Set the titles if new or forcing.
+            if ($new || (bool)$this->settings->get('forcetitle')) {
+                $course->fullname = $this->create_course_title($this->settings->get('coursetitle'), $this->data);
+            }
+            if ($new || (bool)$this->settings->get('forceshorttitle')) {
+                $shortname = $this->create_course_title($this->settings->get('courseshorttitle'), $this->data);
+                $course->shortname = $this->deduplicate_shortname($shortname, $course->idnumber);
+            }
+
+            // We always update dates.
+            if (empty($this->data->begindate)) {
+                if (!isset($course->startdate)) {
+                    $course->startdate = 0;
+                }
+            } else {
+                $course->startdate = $this->data->begindate;
+            }
+            // A course can only have an end date if it has a start date.
+            if (empty($course->startdate)) {
+                $course->enddate = 0;
+            } else {
+                if (empty($this->data->enddate)) {
+                    if (!isset($course->enddate)) {
+                        $course->enddate = 0;
+                    }
+                } else {
+                    $course->enddate = $this->data->enddate;
                 }
             }
-        } catch (\moodle_exception $e) {
-            // TODO - catch exception and pass back up to message.
-            $error = 'Fatal exception while inserting/updating course. '.$e->getMessage();
-            logging::instance()->log_line($error, logging::ERROR_MAJOR);
-            throw $e;
+
+            // Here we update the number of sections.
+            if ($new || $this->settings->get('forcecomputesections')) {
+                $newsectioncount = $this->calculate_section_count($this->data->begindate, $this->data->enddate);
+                if ($newsectioncount !== false) {
+                    $course->numsections = $newsectioncount;
+                }
+            }
+
+            // Here we set the category
+            if ($new || $this->settings->get('forcecat')) {
+                $course->category = $this->get_category_id();
+            }
+
+            // TODO - Recalculate visibility based on changes in start date.
+
+            try {
+                $course = $this->create_or_modify_course($course);
+
+            } catch (\moodle_exception $e) {
+                // TODO - catch exception and pass back up to message.
+                $error = 'Fatal exception while inserting/updating course. '.$e->getMessage();
+                logging::instance()->log_line($error, logging::ERROR_MAJOR);
+                throw $e;
+            }
+        } finally {
+            $lock->release();
         }
 
         if ($new) {
@@ -293,5 +289,72 @@ class course extends base {
         }
 
         return $title;
+    }
+
+    /**
+     * Provides a unique shortname for a course by appending a random number of needed.
+     *
+     * @param string $shortname The starting shortname of the course.
+     * @param string $idnumber The idnumber of the course.
+     * @return string The fixed shortname.
+     */
+    protected function deduplicate_shortname($shortname, $idnumber) {
+        global $DB;
+
+        $name = $shortname;
+
+        $checked = [];
+
+        do {
+            $select = "shortname = :shortname AND idnumber <> :idnum";
+            $params = ['shortname' => $name, 'idnum' => $idnumber];
+
+            $count = $DB->count_records_select('course', $select, $params);
+
+            if (empty($count)) {
+                return $name;
+            }
+
+            do {
+                $rand = mt_rand(2, 999999);
+            } while (isset($checked[$rand]));
+
+            $checked[$rand] = 1;
+            $name = $shortname.'-'.$rand;
+
+        } while (true);
+    }
+
+    /**
+     * Create or modify a moodle course using the core library functions.
+     *
+     * @param stdClass $course The course to create or update.
+     * @return stdClass
+     * @throws exception\course_lock_exception
+     */
+    protected function create_or_modify_course($course) {
+        global $DB;
+
+        if (empty($course->id)) {
+            logging::instance()->log_line('Creating new Moodle course');
+            $course = create_course($course);
+        } else {
+            logging::instance()->log_line('Updating Moodle course');
+            update_course($course);
+        }
+
+        // Update the count of sections.
+        // We can just use the presense of numsections to tell us if we need to do this or not.
+        if (!empty($course->numsections)) {
+            $sectioncount = $DB->count_records('course_sections', array('course' => $course->id));
+            // Remove 1 to account for the general section.
+            $sectioncount -= 1;
+
+            if ($course->numsections > $sectioncount) {
+                course_create_sections_if_missing($course->id, range(0, $course->numsections));
+            }
+        }
+
+        return $course;
     }
 }

@@ -80,6 +80,7 @@ $string['exception_bad_person'] = 'Person object has no id';
 $string['exception_bad_term'] = 'Term object has no id';
 $string['exception_bad_section'] = 'Section object has no id';
 $string['exception_insert_failure'] = 'Failure inserting in database';
+$string['exception_id_number_mismatch'] = 'ID Number does not match for found user.';
 $string['exception_grouptype_not_found'] = 'Group type not found';
 $string['exception_lis_namespace'] = 'LIS message namespace incorrect';
 $string['exception_member_roletype_unknown'] = 'Membership role type value "{$a}" unknown.';
@@ -90,6 +91,13 @@ $string['exception_membershiptype_no_members'] = 'Membership has no members';
 $string['exception_membershiptype_not_found'] = 'Membership type could not be found';
 $string['exception_update_failure'] = 'Failure updating in database';
 $string['exception_xml_boolean'] = 'Could not convert data "{$a}" into boolean.';
+$string['exception_course_lock'] = 'Could not aquire course modification lock.';
+$string['exception_category_lock'] = 'Could not aquite category creation lock.';
+
+// Bulk settings.
+$string['bannerextractimport'] = 'Banner XML Import';
+$string['dropprecentlimit'] = 'Bulk comprehensive drop limit';
+$string['dropprecentlimit_help'] = 'When doing comprehensive or bulk post-processing, missing enrolments are treated as drops. This setting will cause the module to skip the drop process if more than this percent of total enrolments in a term are set to be dropped';
 
 // Person Settings.
 $string['parseperson'] = 'Person Processing';
@@ -210,6 +218,10 @@ $string['categorytype_help'] = 'This allows you select what categories you would
 </ul>';
 $string['catselect'] = 'Selected Category';
 $string['catselect_help'] = '';
+$string['unknowncat'] = 'Unknown Course Category';
+$string['unknowncat_help'] = 'If the category for a course cannot be determined, place the course in this category';
+$string['catinselected'] = 'Create Categories in Selected Category';
+$string['catinselected_help'] = 'If using a Categories setting that creates new categories (such as terms), new root level categories will be created inside of the Selected Category above.';
 $string['termcat'] = 'Terms';
 $string['deptcat'] = 'Departments - TODO';
 $string['termdeptcat'] = 'Terms then Departments - TODO';
@@ -255,3 +267,10 @@ $string['xlsmergegroups'] = 'TODO';
 $string['xlsmergegroups_help'] = 'TODO';
 $string['xlsmergecourse'] = 'TODOmerge';
 $string['xlsmetacourse'] = 'TODOmeta';
+
+// Quirk Settings.
+$string['quirks'] = 'ILP/LMB Quirk Settings';
+$string['quirksectiondatebulk'] = 'TODOBulk course dates are incorrect';
+$string['quirksectiondatebulk_help'] = 'When ILP sends courses to Moodle with a bulk job, start and end dates are off by a day. With this setting enabled, the bulk job end tool will attempt to correct this.';
+$string['quirktimezoneoffsets'] = 'Quirky timeframe date timezones';
+$string['quirktimezoneoffsets_help'] = 'Banner and ILP have some quirks with term and course start/end dates when processed through bulk jobs that can cause dates to be off. This setting will attempt to correct them.';

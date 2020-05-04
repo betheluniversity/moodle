@@ -25,9 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2018042600;
+$plugin->version  = 2019111800;
 $plugin->release = "0.0.1";
 $plugin->maturity = MATURITY_ALPHA;
-$plugin->requires = 2014051200; // Moodle 2.7.
+$plugin->requires = 2017111300; // Moodle 3.4.
 $plugin->component = 'enrol_lmb';
 $plugin->cron = 600;

@@ -54,6 +54,25 @@ if ($ADMIN->fulltree) {
     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/logwsmessages', get_string('logwsmessages', 'enrol_lmb'),
             get_string('logwsmessages_help', 'enrol_lmb'), 0));
 
+    // Banner Extract Import -----------------------------------------------------------------------.
+    $settingslmb->add(new admin_setting_heading('enrol_lmb_bannerextractimport',
+            get_string('bannerextractimport', 'enrol_lmb'), ''));
+//     $settingslmb->add(new admin_setting_configfile('enrol_lmb/bannerxmllocation', get_string('bannerxmllocation', 'enrol_lmb'),
+//             get_string('bannerxmllocationhelp', 'enrol_lmb'), ''));
+//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/bannerxmllocationcomp',
+//             get_string('bannerxmllocationcomp', 'enrol_lmb'), get_string('bannerxmllocationcomphelp', 'enrol_lmb'), 0));
+//     $settingslmb->add(new admin_setting_configdirectory('enrol_lmb/bannerxmlfolder', get_string('bannerxmlfolder', 'enrol_lmb'),
+//             get_string('bannerxmlfolderhelp', 'enrol_lmb'), ''));
+//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/bannerxmlfoldercomp',
+//             get_string('bannerxmlfoldercomp', 'enrol_lmb'), get_string('bannerxmlfoldercomphelp', 'enrol_lmb'), 0));
+    unset($options);
+    $options = array(0 => '0%', 5 => '5%', 10 => '10%', 20 => '20%', 30 => '30%', 40 => '40%',
+            50 => '50%', 60 => '60%', 70 => '70%', 80 => '80%', 90 => '90%', 100 => '100%');
+    $settingslmb->add(new admin_setting_configselect('enrol_lmb/dropprecentlimit', get_string('dropprecentlimit', 'enrol_lmb'),
+            get_string('dropprecentlimit_help', 'enrol_lmb'), '10', $options));
+//     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/usestatusfiles', get_string('usestatusfiles', 'enrol_lmb'),
+//             get_string('usestatusfileshelp', 'enrol_lmb'), 0));
+
     // Parse Person --------------------------------------------------------------------------------.
     $settingslmb->add(new admin_setting_heading('enrol_lmb_parseperson', get_string('parseperson', 'enrol_lmb'), ''));
 
@@ -116,6 +135,10 @@ if ($ADMIN->fulltree) {
     $modules = \core\plugininfo\auth::get_enabled_plugins();
     $options = array();
     foreach ($modules as $module => $path) {
+        if (empty($module)) {
+            // In some cases we may get a blank module back.
+            continue;
+        }
         $options[$module] = get_string("pluginname", "auth_".$module);
     }
     $settingslmb->add(new admin_setting_configselect('enrol_lmb/auth', get_string('authmethod', 'enrol_lmb'),
@@ -205,9 +228,9 @@ if ($ADMIN->fulltree) {
 
     unset($options);
     $options = array();
-    $options[settings::CREATE_COURSE_VISIBLE] = get_string('coursehiddenhidden', 'enrol_lmb');
+    $options[settings::CREATE_COURSE_VISIBLE] = get_string('coursehiddenvisible', 'enrol_lmb');
     $options[settings::CREATE_COURSE_CRON] = get_string('coursehiddencron', 'enrol_lmb');
-    $options[settings::CREATE_COURSE_HIDDEN] = get_string('coursehiddenvisible', 'enrol_lmb');
+    $options[settings::CREATE_COURSE_HIDDEN] = get_string('coursehiddenhidden', 'enrol_lmb');
     $settingslmb->add(new admin_setting_configselect('enrol_lmb/coursehidden', get_string('coursehidden', 'enrol_lmb'),
             get_string('coursehidden_help', 'enrol_lmb'), settings::CREATE_COURSE_VISIBLE, $options));
 
@@ -228,14 +251,26 @@ if ($ADMIN->fulltree) {
     $settingslmb->add(new admin_setting_configselect('enrol_lmb/cattype', get_string('categorytype', 'enrol_lmb'),
             get_string('categorytype_help', 'enrol_lmb'), settings::COURSE_CATS_TERMS, $options));
 
-    //$displaylist = coursecat::make_categories_list();
-    $displaylist = core_course_category::make_categories_list();
+    // For depreciation of coursecat in Moodle 3.6. Remove at a later date.
+    if (class_exists('\\core_course_category')) {
+        $displaylist = core_course_category::make_categories_list();
+    } else {
+        $displaylist = coursecat::make_categories_list();
+    }
+
+    $firstkey = key($displaylist);
 
     $settingslmb->add(new admin_setting_configselect('enrol_lmb/catselect', get_string('catselect', 'enrol_lmb'),
-            get_string('catselect_help', 'enrol_lmb'), 1, $displaylist));
+            get_string('catselect_help', 'enrol_lmb'), $firstkey, $displaylist));
+
+    $settingslmb->add(new admin_setting_configselect('enrol_lmb/unknowncat', get_string('unknowncat', 'enrol_lmb'),
+            get_string('unknowncat_help', 'enrol_lmb'), $firstkey, $displaylist));
 
     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/cathidden', get_string('cathidden', 'enrol_lmb'),
             get_string('cathidden_help', 'enrol_lmb'), 0));
+
+    $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/catinselected', get_string('catinselected', 'enrol_lmb'),
+            get_string('catinselected_help', 'enrol_lmb'), 0));
 
     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/forcecat', get_string('forcecat', 'enrol_lmb'),
             get_string('forcecat_help', 'enrol_lmb'), 1));
@@ -325,6 +360,17 @@ if ($ADMIN->fulltree) {
 
     $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/xlsmergegroups', get_string('xlsmergegroups', 'enrol_lmb'),
             get_string('xlsmergegroups_help', 'enrol_lmb'), 1));
+
+    // LMB Quirks ----------------------------------------------------------------------------------.
+    $settingslmb->add(new admin_setting_heading('enrol_lmb_quirks', get_string('quirks', 'enrol_lmb'), ''));
+
+    $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/quirksectiondatebulk',
+            get_string('quirksectiondatebulk', 'enrol_lmb'),
+            get_string('quirksectiondatebulk_help', 'enrol_lmb'), 1));
+
+    $settingslmb->add(new admin_setting_configcheckbox('enrol_lmb/quirktimezoneoffsets',
+            get_string('quirktimezoneoffsets', 'enrol_lmb'),
+            get_string('quirktimezoneoffsets_help', 'enrol_lmb'), 1));
 }
 
 $settings->add('enrolsettingscat', $settingslmb);
