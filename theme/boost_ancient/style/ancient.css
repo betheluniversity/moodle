@@ -1,0 +1,19 @@
+#page {
+	font-family: "Times New Roman", Times, serif !important;
+	font-size: 1.2em;
+}
+#page span {
+    height: 100% !important;
+}
+#page i.icon, #page img.icon {
+    vertical-align: unset !important;
+}
+#page img.icon {
+    margin-top: inherit;
+}
+#page.icon {
+	margin-top: .2em;
+}
+#page span.drag {
+    height: unset !important;
+}

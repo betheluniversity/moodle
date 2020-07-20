@@ -1,0 +1,74 @@
+Change List
+=========
+Version 1.0.15 (Build 2020012200)
+-added languages(arabic, chinese, portuguese, japanese, tamil, telegu, dutch, farsi, wales english, ireland english, scotland english, russian, turkish, malay, indonesian,hebrew, swiss german)
+-added user tagging
+
+Version 1.0.14 (Build 2019112100)
+-added better reporting of poor Cloud Poodll config settings
+-made recorder title customizable
+-corrected strings referringto ReadAloud
+-fixed incorrect en-UK lang code (correct is en-GB)
+-added word count to transcript display
+-display shortened transcript and word count on view submissions page
+-display view page link on view submissions page
+-Optimisations of cron task
+-Fixed styles on transcript container
+
+Version 1.0.13 (Build 2019091300)
+-Fixed issue where incorrect privacy function declaration broke plugin privacy registry on load
+
+Version 1.0.12 (Build 2019082000)
+-Fixed enabletranscode control on form which always appeared checked
+
+Version 1.0.11 (Build 2019052000)
+-added  toggle button to improve display of current submission
+-added option to show student transcript to student
+-added fast transcription
+-added more transcription languages
+
+Version 1.0.10 (Build 2019041200)
+-added support for transcription of users speaking to speed up grading
+
+Version 1.0.9 (Build 2019012000)
+- better error reporting if api creds have issue
+-Added better cron calling
+-Added support for fast poodll loading in poodllloader.html (used by safari's mainly)
+
+Version 1.0.8 (Build 2018112600)
+-improved reliability of cron call to fetch token
+-better privacy api integration
+
+Version 1.0.7 (Build 2018111800)
+-added support for auth details in token
+-refresh link on the user settings page
+
+Version 1.0.6 (Build 2018111200)
+-added support for Ottawa, London, Sao Paulo, Frankfurt regions (slow best for short recordings)
+
+Version 1.0.5 (Build 2018102501)
+-addition of MOODLE_INTERNAL check
+- better implementation of data provider in dataprivacy classes
+
+Version 1.0.4 (Build 2018102301)
+- Fixed recorder sizes
+- Setup instance form to disable/enable correctly
+- Added upload recorder
+- Set minimum version Moodle 2.9
+
+Version 1.0.3 (Build 2018101202)
+-fixed language strings and version
+
+Version 1.0.2 (Build 20181012001)
+-messed up version numbers ouch
+- fixed size of video on 123 recorder
+- changed the labels for settings on instance page
+- added margin for delete current submission button
+- gave it a cloud icon (no imagination recently )
+
+Version 1.0.1 (Build 2018191201)
+- Added fallback option for non-HTML5 compatible browsers.
+
+Version 1.0.0(Build 20180912000)
+-First release of Cloud Poodll Assignment Submission
+

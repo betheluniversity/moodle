@@ -1,0 +1,83 @@
+Version 1.0.21 (Build 2020060300)
+-Improved support for uploaded files with hard to predict file extensions
+
+Version 1.0.20 (Build 2020041700)
+-fixed no download setting
+-made subtitle track insert work better
+
+Version 1.0.19 (Build 2020040900)
+-Fixed broken responsive display on small screens outside of forum posts (urgh)
+
+Version 1.0.18 (Build 2020040500)
+-Improved responsive display on small screens
+
+Version 1.0.17 (Build 2020021000)
+-Added history tab so user can select from their previous recordings
+
+Version 1.0.16 (Build 2020020700)
+-nothing special, version bump for internal reasons
+
+Version 1.0.15 (Build 2020012300)
+-added languages(arabic, chinese, portuguese, japanese, tamil, telegu, dutch, farsi, wales english, ireland english, scotland english, russian, turkish, malay, indonesian,hebrew, swiss german)
+-added user tagging
+
+Version 1.0.14 (Build 2019112100)
+-Added better reporting of poor api settings config
+-Fixed broken en-GB region transcription
+
+Version 1.0.13 (Build 2019071300)
+-Fixed default permission for authenticated user
+
+
+Version 1.0.12 (Build 2019053100)
+-fixes for audio track when .wav in player
+-Added support for languages Korean (ko-kr), German (de-de) , English(India) (en-in) and Hindi (hi-in)
+
+Version 1.0.11 (Build 2019031901)
+-fixes for sourcemimetype and added it-IT, fr-FR and pt-BR languages for subtitles
+
+Version 1.0.10
+- added better error handling if api creds fails
+-Added better cron calling
+-Added support for fast cloudpoodll loading in poodllloader.html (used by safari's mainly)
+
+Version 1.0.9 (Build 2018112600)
+- improved reliability of cron call to fetch token
+
+Version 1.0.8
+-reinstated the respecting of $config->enablesubtitling
+-supported license info with token
+-changed appid to atto_cloudpoodll
+
+Version 1.0.7 (Build 2018111400)
+-fixed issue with privacy class definitions breaking on cron in some cases
+
+Version 1.0.7 (Build 2018111200)
+-Added Sao Paulo,  Frankfurt, London regions (no subtitles)
+-Added support for Ottawa region (yes subtitles)
+-Support for accents (en-UK, en-AU) and Canadian French (fr-CA) in subtitle regions
+
+Version 1.0.6 (Build 2018102502)
+-=Better application of context
+
+Version 1.0.5 (Build 2018102501)
+-Changes requested in plugin review
+-addition of MOODLE_INTERNAL check
+-addition of is full admin tree check
+-implementation of non null provider in dataprivacy classes
+
+Version 1.0.4 (Build 2018101004)
+-fixed loading in Safari
+
+Version 1.0.3 (Build 2018101003)
+-fixed loading on iOS
+-fixed missing lang string in permissions system
+
+Version 1.0.2 (Build 2018101002)
+-more fixes for sizes and popup attributes
+
+Version 1.0.1 (Build 2018101001)
+-Fixed sizes and CSS issues
+
+Version 1.0.0 (Build 2018101000)
+-First release of Cloud Poodll

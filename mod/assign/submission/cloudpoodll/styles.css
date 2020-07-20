@@ -1,0 +1,103 @@
+
+
+.assignsubmission_cloudpoodll_recording_cont {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    background-image: url([[pix:assignsubmission_cloudpoodll|loader]]);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.assignsubmission_cloudpoodll_center {
+    text-align: center;
+}
+.assignsubmission_cloudpoodll_center > div, .assignsubmission_cloudpoodll_center > table /* insert any other block-level elements here */ {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button.assignsubmission_cloudpoodll_deletesubmissionbutton {
+    margin-top: 10px;
+    max-width: 180px;
+}
+
+/* interactive transcript */
+.assignsubmission_cloudpoodll_transcriptcontainer {
+    max-width: 610px;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    /* overflow-x: scroll; */
+    /* max-height: 298px; */
+    border: 1px solid #111;
+}
+
+.assignsubmission_cloudpoodll_transcript-header {
+    height: 19px;
+    padding: 1px;
+    font-weight: bold;
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+.assignsubmission_cloudpoodll_transcript-selector {
+    height: 25px;
+}
+.assignsubmission_cloudpoodll_transcript-body {
+    /* width: 600px; */
+    overflow-y: scroll;
+    background-color: #e7e7e7;
+    max-height: 298px;
+    position: relative;
+    margin: auto;
+}
+
+.assignsubmission_cloudpoodll_transcript-line {
+    position: relative;
+    padding: 5px;
+    cursor: pointer;
+    line-height: 1.3;
+}
+
+.assignsubmission_cloudpoodll_transcript-line:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+
+.assignsubmission_cloudpoodll_transcript-timestamp {
+    position: absolute;
+    display: inline-block;
+    color: #333;
+    width: 50px;
+}
+
+.assignsubmission_cloudpoodll_transcript-text {
+    display: block;
+    margin-left: 50px;
+}
+
+.assignsubmission_cloudpoodll_transcript-line:hover,
+.assignsubmission_cloudpoodll_transcript-line:hover .assignsubmission_cloudpoodll_transcript-timestamp,
+.assignsubmission_cloudpoodll_transcript-line:hover .assignsubmission_cloudpoodll_transcript-text {
+    background-color: #777;
+    color: #e7e7e7;
+}
+
+.assignsubmission_cloudpoodll_transcript-line.is-active,
+.assignsubmission_cloudpoodll_transcript-line.is-active .assignsubmission_cloudpoodll_transcript-timestamp,
+.assignsubmission_cloudpoodll_transcript-line.is-active .assignsubmission_cloudpoodll_transcript-text {
+    background-color: #555;
+    color: #e7e7e7;
+    width: auto;
+}
+
+.assignsubmission_cloudpoodll_currentsubmission {
+    display: grid;
+}
+.assignsubmission_cloudpoodll_togglecontainer .toggletext {
+    padding: 5px;
+}
+.assignsubmission_cloudpoodll_togglecontainer {
+    margin-bottom: 8px;
+}
