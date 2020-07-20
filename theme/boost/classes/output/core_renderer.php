@@ -37,4 +37,9 @@ class core_renderer extends \core_renderer {
     public function edit_button(moodle_url $url) {
         return '';
     }
+
+    /* Fix for 3.7 Boost logo pixelation JT */
+    public function get_compact_logo_url($maxwidth = 100, $maxheight = 100) {
+        return parent::get_compact_logo_url(null, 70);
+    }
 }
