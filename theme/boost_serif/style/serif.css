@@ -2,3 +2,11 @@
 	font-family: "Times New Roman", Times, serif !important;
 	font-size: 1.1em !important;
 }
+.navbar-expand .btn.nav-link, .navbar-expand #page-grade-grading-manage .actions .nav-link.action,
+#page-grade-grading-manage .actions .navbar-expand .nav-link.action, .navbar-expand .btn.nav-link:hover,
+.navbar-expand #page-grade-grading-manage .actions .nav-link.action:hover,
+#page-grade-grading-manage .actions .navbar-expand .nav-link.action:hover, .navbar-expand .btn.nav-link:focus,
+.navbar-expand #page-grade-grading-manage .actions .nav-link.action:focus, #page-grade-grading-manage .actions .navbar-expand .nav-link.action:focus,
+.navbar-expand .btn.nav-link:active, .navbar-expand #page-grade-grading-manage .actions .nav-link.action:active, #page-grade-grading-manage .actions .navbar-expand .nav-link.action:active {
+		background-color: #123563 !important;
+}
