@@ -2,6 +2,6 @@
 	font-family: "Times New Roman", Times, serif !important;
 	font-size: 1.1em !important;
 }
-.navbar-expand .btn.nav-link {
+.navbar-expand .btn.nav-link.bg-gray {
     background-color: #123563 !important;
 }

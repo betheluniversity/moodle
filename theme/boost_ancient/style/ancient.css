@@ -17,6 +17,6 @@
 #page span.drag {
     height: unset !important;
 }
-.navbar-expand .btn.nav-link {
+.navbar-expand .btn.nav-link.bg-gray {
     background-color: #123563 !important;
 }
