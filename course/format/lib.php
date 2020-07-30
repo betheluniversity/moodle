@@ -279,9 +279,15 @@ abstract class format_base {
      */
     public function get_last_section_number() {
         $course = $this->get_course();
-        if (isset($course->numsections)) {
-            return $course->numsections;
-        }
+        // the db had wrong number of sections for some courses, but the code below seems to work for them.
+        // For now, just ignore this code and use the new code. 
+        // If this doesn't cause issues, considering backing up data and then running SQL:
+        // delete from mdl_course_format_options where name='numsections';
+        
+        
+        //if (isset($course->numsections)) {
+        //    return $course->numsections;
+        //}
         $modinfo = get_fast_modinfo($course);
         $sections = $modinfo->get_section_info_all();
         return (int)max(array_keys($sections));
